@@ -1,10 +1,14 @@
 import api from "./api";
 
 const userLogin = async (email: string, password: string) => {
-  return await api.post("/auth/login", {
-    email,
-    password,
-  });
+  try {
+    return await api.post("/auth/login", {
+      email,
+      password,
+    });
+  } catch (error) {
+    throw error;
+  }
 };
 
 const userRegister = async ({
@@ -16,15 +20,30 @@ const userRegister = async ({
   password: string;
   name: string;
 }) => {
-  return await api.post("/auth/register", {
-    email,
-    password,
-    name,
-  });
+  try {
+    return await api.post("/auth/register", {
+      email,
+      password,
+      name,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+const userLogout = async () => {
+  try {
+    return await api.post("/auth/logout");
+  } catch (error) {
+    throw error;
+  }
 };
 const googleLogin = async (access_token: string) => {
-  return await api.post("/auth/google", {
-    access_token,
-  });
+  try {
+    return await api.post("/auth/google", {
+      access_token,
+    });
+  } catch (error) {
+    throw error;
+  }
 };
-export { userLogin, userRegister, googleLogin };
+export { userLogin, userRegister, userLogout, googleLogin };

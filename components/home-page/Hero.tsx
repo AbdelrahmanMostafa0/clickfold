@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useUser } from "@/context/UserContext";
 
 const exampleSlugs = [
   "free-iphone-claim",
@@ -21,7 +22,7 @@ export default function Hero() {
     }, 2000);
     return () => clearInterval(interval);
   }, []);
-
+  const { user } = useUser();
   return (
     <section className="relative min-h-screen flex items-center justify-center px-6 pt-16 noise-bg overflow-hidden">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff2d2d]/5 rounded-full blur-[120px] pointer-events-none" />

@@ -7,7 +7,6 @@ export default function GoogleOAuthWrapper({
 }: {
   children: React.ReactNode;
 }) {
-  console.log(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
   return (
     <GoogleOAuthProvider
       clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || ""}

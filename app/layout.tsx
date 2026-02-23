@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Bebas_Neue, IBM_Plex_Mono } from "next/font/google";
 import GoogleOAuthWrapper from "@/components/GoogleOAuthWrapper";
+import { UserProvider } from "@/context/UserContext";
 import "./globals.css";
 import Navbar from "@/components/navigations/Navbar";
 import Footer from "@/components/navigations/Footer";
+import { Toaster } from "sonner";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -34,9 +36,12 @@ export default function RootLayout({
         className={`${bebasNeue.variable} ${ibmPlexMono.variable} antialiased`}
       >
         <GoogleOAuthWrapper>
-          <Navbar />
-          {children}
-          <Footer />
+          <UserProvider>
+            <Navbar />
+            {children}
+            <Toaster />
+            <Footer />
+          </UserProvider>
         </GoogleOAuthWrapper>
       </body>
     </html>
