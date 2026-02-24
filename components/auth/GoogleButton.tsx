@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useGoogleLogin } from "@react-oauth/google";
 
 import { Button } from "@/components/ui/button";
 import { GoogleIcon } from "@/components/icons/GoogleIcon";
 import { Loader2 } from "lucide-react";
 import { googleLogin } from "@/services/auth";
+import { useUser } from "@/context/UserContext";
 
 interface GoogleLoginButtonProps {
   onError?: (error: string) => void;
@@ -20,7 +21,9 @@ export default function GoogleLoginButton({
 }: GoogleLoginButtonProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-
+  const { refetchUser } = useUser();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       setLoading(true);
@@ -28,8 +31,9 @@ export default function GoogleLoginButton({
         const res = await googleLogin(tokenResponse.access_token);
 
         if (res.data.success) {
-          router.push("/");
-          router.refresh();
+          refetchUser();
+          router.replace(callbackUrl || "/");
+          // router.refresh();
         }
       } catch (error) {
         console.error("Google login error:", error);

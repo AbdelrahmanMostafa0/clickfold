@@ -15,14 +15,6 @@ export default function PrivacyPage() {
         transition={{ duration: 0.6 }}
         className="max-w-3xl mx-auto relative z-10"
       >
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-[#666] hover:text-white text-sm mb-12 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </Link>
-
         {/* Header */}
         <div className="mb-16">
           <h1

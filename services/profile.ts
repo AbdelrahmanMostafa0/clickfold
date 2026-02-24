@@ -9,4 +9,17 @@ const getProfile = async () => {
   }
 };
 
-export default getProfile;
+const updateProfile = async (data: any) => {
+  try {
+    const response = await api.patch("/profile", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { getProfile, updateProfile };

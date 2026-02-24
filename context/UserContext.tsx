@@ -1,70 +1,70 @@
 "use client";
 
 import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-    useCallback,
-    ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  ReactNode,
 } from "react";
 import api from "@/services/api";
-import getProfile from "@/services/profile";
+import { getProfile } from "@/services/profile";
 
 interface User {
-    _id: string;
-    name: string;
-    email: string;
-    avatar?: string;
-    [key: string]: unknown;
+  _id: string;
+  name: string;
+  email: string;
+  avatar?: string;
+  [key: string]: unknown;
 }
 
 interface UserContextType {
-    user: User | null;
-    isLoading: boolean;
-    error: string | null;
-    refetchUser: () => Promise<void>;
+  user: User | null;
+  isLoading: boolean;
+  error: string | null;
+  refetchUser: () => Promise<void>;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    const fetchUser = useCallback(async () => {
-        setIsLoading(true);
-        setError(null);
+  const fetchUser = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
 
-        try {
-            const { data } = await getProfile();
-            setUser(data);
-        } catch {
-            setUser(null);
-            setError("Failed to fetch user");
-        } finally {
-            setIsLoading(false);
-        }
-    }, []);
+    try {
+      const { data } = await getProfile();
+      setUser(data);
+    } catch {
+      setUser(null);
+      setError("Failed to fetch user");
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
-    useEffect(() => {
-        fetchUser();
-    }, [fetchUser]);
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
 
-    return (
-        <UserContext.Provider
-            value={{ user, isLoading, error, refetchUser: fetchUser }}
-        >
-            {children}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider
+      value={{ user, isLoading, error, refetchUser: fetchUser }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 }
 
 export function useUser() {
-    const context = useContext(UserContext);
-    if (context === undefined) {
-        throw new Error("useUser must be used within a UserProvider");
-    }
-    return context;
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 }

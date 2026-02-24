@@ -6,12 +6,13 @@ import { GoogleLogin } from "@react-oauth/google";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import api from "@/services/api";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { userRegister } from "@/services/auth";
 import GoogleLoginButton from "./GoogleButton";
+import { useUser } from "@/context/UserContext";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -25,7 +26,9 @@ export default function RegisterPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const { refetchUser } = useUser();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const {
     register,
     handleSubmit,
@@ -43,7 +46,8 @@ export default function RegisterPage() {
         email: data.email,
         password: data.password,
       });
-      router.push("/");
+      refetchUser();
+      router.replace(callbackUrl || "/");
     } catch (err: unknown) {
       const axiosError = err as { response?: { data?: { message?: string } } };
       setError(axiosError.response?.data?.message || "Registration failed");
@@ -58,14 +62,6 @@ export default function RegisterPage() {
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md"
       >
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-[#666] hover:text-white text-sm mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </Link>
-
         <div className="bg-[#111] border border-white/5 rounded-2xl p-8">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-4">
@@ -195,7 +191,7 @@ export default function RegisterPage() {
           <p className="text-center text-[#555] text-sm mt-6">
             Already have an account?{" "}
             <Link
-              href="/login"
+              href={`/login${callbackUrl ? `?callbackUrl=${callbackUrl}` : ""}`}
               className="text-[#ff2d2d] hover:text-[#ff4444] transition-colors"
             >
               Log in

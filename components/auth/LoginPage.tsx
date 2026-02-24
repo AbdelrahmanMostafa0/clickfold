@@ -6,12 +6,13 @@ import { GoogleLogin } from "@react-oauth/google";
 import Link from "next/link";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import api from "@/services/api";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { userLogin } from "@/services/auth";
 import GoogleLoginButton from "./GoogleButton";
+import { useUser } from "@/context/UserContext";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -24,7 +25,9 @@ export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-
+  const { refetchUser } = useUser();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   const {
     register,
     handleSubmit,
@@ -38,7 +41,8 @@ export default function LoginPage() {
 
     try {
       await userLogin(data.email, data.password);
-      router.push("/");
+      refetchUser();
+      router.replace(callbackUrl || "/");
     } catch (err: unknown) {
       const axiosError = err as { response?: { data?: { message?: string } } };
       setError(axiosError.response?.data?.message || "Invalid credentials");
@@ -47,21 +51,12 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 mx-auto container relative">
-
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="relative z-10 w-full max-w-md"
       >
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-[#666] hover:text-white text-sm mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to home
-        </Link>
-
         <div className="bg-[#111] border border-white/5 rounded-2xl p-8">
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-4">
@@ -172,7 +167,7 @@ export default function LoginPage() {
           <p className="text-center text-[#555] text-sm mt-6">
             Don&apos;t have an account?{" "}
             <Link
-              href="/signup"
+              href={`/signup${callbackUrl ? `?callbackUrl=${callbackUrl}` : ""}`}
               className="text-[#ff2d2d] hover:text-[#ff4444] transition-colors"
             >
               Sign up
