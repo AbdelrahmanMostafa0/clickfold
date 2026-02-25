@@ -6,8 +6,8 @@ import { Link } from "@/types/link";
  * - "custom" / "original" → uses link.og (API populates it for both)
  * - "none" → disables OG with noindex
  */
-export function buildLinkMetadata(og: any): Metadata {
-  if (og.ogMode === "none") {
+export function buildLinkMetadata(link: Link): Metadata {
+  if (link.ogMode === "none") {
     return {
       title: "",
       description: "",
@@ -16,7 +16,7 @@ export function buildLinkMetadata(og: any): Metadata {
     };
   }
 
-  const { title, description, image } = og;
+  const { title, description, image } = link.og;
 
   return {
     title,
