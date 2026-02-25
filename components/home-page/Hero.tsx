@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useUser } from "@/context/UserContext";
+import { useRouter } from "next/navigation";
+import CTAButton from "./CTAButton";
 
 const exampleSlugs = [
   "free-iphone-claim",
@@ -15,7 +17,7 @@ const exampleSlugs = [
 export default function Hero() {
   const [slug, setSlug] = useState("");
   const [currentExample, setCurrentExample] = useState(0);
-
+  const router = useRouter();
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentExample((prev) => (prev + 1) % exampleSlugs.length);
@@ -52,27 +54,29 @@ export default function Hero() {
           Create bait links that look sus, go anywhere. Perfect for pranks,
           social experiments, and chaos.
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="h-8 flex items-center justify-center"
-        >
-          <span className="text-[#555] text-xs mr-2">try:</span>
-          <AnimatePresence mode="wait">
-            <motion.span
-              key={currentExample}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-[#00ff88] text-sm font-mono"
-            >
-              b8lnk.com/{exampleSlugs[currentExample]}
-            </motion.span>
-          </AnimatePresence>
-        </motion.div>
+        <div className="flex flex-col gap-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="h-8 flex items-center justify-center"
+          >
+            <span className="text-[#555] text-xs mr-2">try:</span>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={currentExample}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="text-[#00ff88] text-sm font-mono"
+              >
+                b8lnk.com/{exampleSlugs[currentExample]}
+              </motion.span>
+            </AnimatePresence>
+          </motion.div>
+          <CTAButton />
+        </div>
       </div>
     </section>
   );

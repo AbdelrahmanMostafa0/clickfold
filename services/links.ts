@@ -16,7 +16,15 @@ export const redirectLink = async (slug: string) => {
     return null;
   }
 };
-
+export const getLinkOg = async (slug: string) => {
+  try {
+    const { data } = await api.get(`/links/og/${slug}`);
+    return data;
+  } catch (error) {
+    console.error("Error getting link OG:", error);
+    return null;
+  }
+};
 export const userLinksStats = async () => {
   try {
     const { data } = await api.get(`/links/stats`);

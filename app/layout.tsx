@@ -23,6 +23,20 @@ export const metadata: Metadata = {
   title: "b8lnk — Make them click. Make them regret.",
   description:
     "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+  openGraph: {
+    title: "b8lnk — Make them click. Make them regret.",
+    description:
+      "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+    images: ["/og-image.png"],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "b8lnk — Make them click. Make them regret.",
+    description:
+      "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+    images: ["/og-image.png"],
+  },
 };
 
 export default function RootLayout({

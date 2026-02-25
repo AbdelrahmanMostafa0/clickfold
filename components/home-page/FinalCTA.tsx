@@ -1,8 +1,13 @@
 "use client";
 
+import { useUser } from "@/context/UserContext";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import CTAButton from "./CTAButton";
 
 export default function FinalCTA() {
+  const { user } = useUser();
+  const router = useRouter();
   return (
     <section className="py-32 px-6 relative noise-bg overflow-hidden">
       {/* Background glow */}
@@ -27,18 +32,7 @@ export default function FinalCTA() {
           No credit card. No shame. Just chaos.
         </p>
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="px-8 py-4 bg-[#ff2d2d] hover:bg-[#e62626] text-white text-lg rounded-lg transition-colors glow-red"
-          style={{ fontFamily: "var(--font-display)", letterSpacing: "0.05em" }}
-        >
-          Create My First Bait Link
-        </motion.button>
-
-        <p className="text-[#444] text-xs mt-6">
-          Free forever · No sign-up required to try
-        </p>
+        <CTAButton />
       </motion.div>
     </section>
   );
