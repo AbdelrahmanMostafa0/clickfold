@@ -15,6 +15,9 @@ import {
   AlertTriangle,
   Info,
   Eye,
+  Globe,
+  EyeOff,
+  Palette,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -23,35 +26,98 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { suggestedSlugs } from "@/data/slugs";
 import { createLink } from "@/services/links";
-import { toast } from "sonner";
+import { goeyToast } from "goey-toast";
 import SusPopups from "@/components/ui/SusPopups";
 import { Switch } from "@/components/ui/switch";
+import SuccessView from "./SuccessView";
+import OgInputs from "./OgInputs";
 
-const schema = z.object({
-  slug: z
-    .string()
-    .min(1, "Slug is required")
-    .regex(
-      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      "Only lowercase letters, numbers, and hyphens",
-    ),
-  destination: z
-    .string()
-    .min(1, "Destination URL is required")
-    .url("Must be a valid URL"),
-  ogTitle: z.string().optional(),
-  ogDescription: z.string().optional(),
-  susPopups: z.boolean(),
-});
+const schema = z
+  .object({
+    slug: z
+      .string()
+      .min(1, "Slug is required")
+      .regex(
+        /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+        "Only lowercase letters, numbers, and hyphens",
+      ),
+    destination: z
+      .string()
+      .min(1, "Destination URL is required")
+      .url("Must be a valid URL"),
+    ogTitle: z.string().optional(),
+    ogDescription: z.string().optional(),
+    ogMode: z.enum(["custom", "original", "none"]),
+    susPopups: z.boolean(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.ogMode === "custom") {
+      if (!data.ogTitle || data.ogTitle.trim().length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "OG Title is required in custom mode",
+          path: ["ogTitle"],
+        });
+      }
+      if (!data.ogDescription || data.ogDescription.trim().length === 0) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "OG Description is required in custom mode",
+          path: ["ogDescription"],
+        });
+      }
+    }
+  });
 
 type FormValues = z.infer<typeof schema>;
+
+type OgMode = "custom" | "original" | "none";
+
+const ogModeOptions: {
+  value: OgMode;
+  label: string;
+  icon: React.ReactNode;
+  description: string;
+}[] = [
+  {
+    value: "custom",
+    label: "Custom",
+    icon: <Palette className="size-3.5" />,
+    description: "Set your own OG metadata",
+  },
+  {
+    value: "original",
+    label: "Use Original",
+    icon: <Globe className="size-3.5" />,
+    description: "Use destination page's OG data",
+  },
+  {
+    value: "none",
+    label: "No OG",
+    icon: <EyeOff className="size-3.5" />,
+    description: "Disable all OG metadata",
+  },
+];
+
+interface CreatedLinkData {
+  slug: string;
+  destination: string;
+  ogMode: OgMode;
+  og?: {
+    title?: string;
+    description?: string;
+    image?: string;
+  };
+}
 
 export default function CreateLinkForm() {
   const [ogImage, setOgImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slugFocused, setSlugFocused] = useState(false);
   const [showPreview, setShowPreview] = useState(false);
+  const [createdLink, setCreatedLink] = useState<CreatedLinkData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const slugContainerRef = useRef<HTMLDivElement>(null);
 
@@ -60,6 +126,7 @@ export default function CreateLinkForm() {
     handleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -68,11 +135,13 @@ export default function CreateLinkForm() {
       destination: "",
       ogTitle: "",
       ogDescription: "",
+      ogMode: "custom",
       susPopups: false,
     },
   });
 
   const slugValue = watch("slug");
+  const ogMode = watch("ogMode");
 
   /* Filter suggestions */
   const filteredSuggestions = slugValue
@@ -100,15 +169,16 @@ export default function CreateLinkForm() {
   /* Image handlers */
   function handleImageSelect(file: File) {
     if (!file.type.startsWith("image/")) {
-      toast.error("Please select an image file");
+      goeyToast.error("Please select an image file");
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be less than 5MB");
+      goeyToast.error("Image must be less than 5MB");
       return;
     }
     setOgImage(file);
     setImagePreview(URL.createObjectURL(file));
+    setImageError(null);
   }
 
   function handleDrop(e: React.DragEvent) {
@@ -126,24 +196,66 @@ export default function CreateLinkForm() {
 
   /* Submit */
   async function onSubmit(values: FormValues) {
+    if (values.ogMode === "custom" && !ogImage) {
+      setImageError("OG Image is required in custom mode");
+      return;
+    }
+    setImageError(null);
     setIsSubmitting(true);
     try {
       const formData = new FormData();
       formData.append("slug", values.slug);
       formData.append("destination", values.destination);
-      if (values.ogTitle) formData.append("ogTitle", values.ogTitle);
-      if (values.ogDescription)
-        formData.append("ogDescription", values.ogDescription);
-      if (ogImage) formData.append("ogImage", ogImage);
+      formData.append("ogMode", values.ogMode);
+
+      if (values.ogMode === "custom") {
+        if (values.ogTitle) formData.append("ogTitle", values.ogTitle);
+        if (values.ogDescription)
+          formData.append("ogDescription", values.ogDescription);
+        if (ogImage) formData.append("ogImage", ogImage);
+      }
+
       formData.append("susPopups", String(values.susPopups));
 
-      await createLink(formData);
-      toast.success("Link created successfully!");
-    } catch {
-      toast.error("Failed to create link. Try again.");
+      const res = await createLink(formData);
+      console.log(res);
+
+      // Build the created link data for success view
+      const linkData: CreatedLinkData = {
+        slug: values.slug,
+        destination: values.destination,
+        ogMode: values.ogMode,
+      };
+
+      if (values.ogMode === "custom") {
+        linkData.og = {
+          title: values.ogTitle || undefined,
+          description: values.ogDescription || undefined,
+          image: imagePreview || undefined,
+        };
+      }
+
+      setCreatedLink(linkData);
+      goeyToast.success("Link created successfully!");
+    } catch (error: any) {
+      console.log(error.response.data.message);
+      goeyToast.error(error.response.data.message);
     } finally {
       setIsSubmitting(false);
     }
+  }
+
+  function handleCreateAnother() {
+    setCreatedLink(null);
+    reset();
+    removeImage();
+  }
+
+  /* Success View */
+  if (createdLink) {
+    return (
+      <SuccessView link={createdLink} onCreateAnother={handleCreateAnother} />
+    );
   }
 
   return (
@@ -166,9 +278,7 @@ export default function CreateLinkForm() {
           >
             Create a <span className="text-[#ff2d2d] glow-red-text">b8lnk</span>
           </h1>
-          <p className="text-[#666] text-sm">
-            Set the trap. Choose your bait wisely.
-          </p>
+          <p className=" text-sm">Set the trap. Choose your bait wisely.</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="relative space-y-6">
@@ -182,7 +292,7 @@ export default function CreateLinkForm() {
           >
             <Label
               htmlFor="slug"
-              className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
+              className=" text-xs uppercase tracking-wider mb-2 block"
             >
               Slug <span className="text-[#ff2d2d]">*</span>
             </Label>
@@ -231,7 +341,7 @@ export default function CreateLinkForm() {
                           setValue("slug", slug, { shouldValidate: true });
                           setSlugFocused(false);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-md text-sm text-[#888] hover:bg-[#1a1a1a] hover:text-[#ff2d2d] transition-colors flex items-center gap-2"
+                        className="w-full text-left px-3 py-2 rounded-md text-sm  hover:bg-[#1a1a1a] hover:text-[#ff2d2d] transition-colors flex items-center gap-2"
                       >
                         <Link2 className="size-3 text-[#444]" />
                         <span className="text-[#444]">b8lnk.com/</span>
@@ -252,7 +362,7 @@ export default function CreateLinkForm() {
           >
             <Label
               htmlFor="destination"
-              className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
+              className=" text-xs uppercase tracking-wider mb-2 block"
             >
               Destination URL <span className="text-[#ff2d2d]">*</span>
             </Label>
@@ -269,128 +379,77 @@ export default function CreateLinkForm() {
             )}
           </motion.div>
 
-          {/* ── Divider ── */}
+          {/* ── OG Divider with Mode Toggle ── */}
           <div className="relative py-2">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-white/5" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[#111] px-3 text-[10px] uppercase tracking-widest text-[#444]">
-                OG Meta — optional
+              <span className="bg-[#111] px-3 text-[10px] uppercase tracking-widest">
+                OG Meta
               </span>
             </div>
           </div>
 
-          {/* ── OG Title ── */}
+          {/* ── OG Mode Selector ── */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.25 }}
           >
-            <Label
-              htmlFor="ogTitle"
-              className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
-            >
-              OG Title
-            </Label>
-            <Input
-              id="ogTitle"
-              placeholder="You Won a Free iPhone 16 Pro"
-              className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20"
-              {...register("ogTitle")}
-            />
-          </motion.div>
-
-          {/* ── OG Description ── */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.35 }}
-          >
-            <Label
-              htmlFor="ogDescription"
-              className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
-            >
-              OG Description
-            </Label>
-            <Textarea
-              id="ogDescription"
-              placeholder="Click to claim your prize before it expires…"
-              rows={3}
-              className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20 resize-none"
-              {...register("ogDescription")}
-            />
-          </motion.div>
-
-          {/* ── OG Image Upload ── */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
-              OG Image
-            </Label>
-
-            {imagePreview ? (
-              <div className="relative group rounded-lg overflow-hidden border border-white/8">
-                <img
-                  src={imagePreview}
-                  alt="OG preview"
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <div className="grid grid-cols-3 gap-2">
+              {ogModeOptions.map((option) => {
+                const isActive = ogMode === option.value;
+                return (
                   <button
+                    key={option.value}
                     type="button"
-                    onClick={removeImage}
-                    className="bg-[#ff2d2d] text-white rounded-full p-2 hover:bg-[#ff2d2d]/80 transition-colors"
+                    onClick={() =>
+                      setValue("ogMode", option.value, { shouldValidate: true })
+                    }
+                    className={`relative flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-all cursor-pointer ${
+                      isActive
+                        ? "border-[#00ff88]/40 bg-[#00ff88]/5 text-white"
+                        : "border-white/8 bg-[#0a0a0a]  hover:border-white/15 hover:bg-[#0a0a0a]/80"
+                    }`}
                   >
-                    <X className="size-4" />
+                    <div
+                      className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+                        isActive
+                          ? "bg-[#00ff88]/15 text-[#00ff88]"
+                          : "bg-white/5 text-[#555]"
+                      }`}
+                    >
+                      {option.icon}
+                    </div>
+                    <span className="text-[11px] font-medium">
+                      {option.label}
+                    </span>
                   </button>
-                </div>
-                <div className="absolute bottom-2 left-2 bg-black/70 rounded px-2 py-1">
-                  <span className="text-[10px] text-[#888]">
-                    {ogImage?.name}
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <div
-                onDragOver={(e) => e.preventDefault()}
-                onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-white/8 rounded-lg p-8 text-center cursor-pointer hover:border-[#00ff88]/30 hover:bg-[#00ff88]/2 transition-all group"
-              >
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#1a1a1a] flex items-center justify-center group-hover:bg-[#00ff88]/10 transition-colors">
-                    <Upload className="size-5 text-[#555] group-hover:text-[#00ff88] transition-colors" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#888]">
-                      Drop an image here or{" "}
-                      <span className="text-[#00ff88] underline underline-offset-2">
-                        browse
-                      </span>
-                    </p>
-                    <p className="text-[10px] text-[#444] mt-1">
-                      PNG, JPG, WebP — Max 5MB
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) handleImageSelect(file);
-              }}
-            />
+                );
+              })}
+            </div>
+            <p className="text-[10px] mt-2 text-center">
+              {ogModeOptions.find((o) => o.value === ogMode)?.description}
+            </p>
           </motion.div>
+
+          {/* ── OG Fields (only when custom) ── */}
+          <AnimatePresence>
+            {ogMode === "custom" && (
+              <OgInputs
+                register={register}
+                errors={errors}
+                imagePreview={imagePreview}
+                handleDrop={handleDrop}
+                fileInputRef={fileInputRef}
+                handleImageSelect={handleImageSelect}
+                removeImage={removeImage}
+                imageError={imageError}
+                ogImage={ogImage}
+              />
+            )}
+          </AnimatePresence>
 
           {/* ── Divider ── */}
           <div className="relative py-2">
@@ -433,21 +492,6 @@ export default function CreateLinkForm() {
                     setValue("susPopups", checked)
                   }
                 />
-                {/* <button
-                  type="button"
-                  role="switch"
-                  aria-checked={watch("susPopups")}
-                  onClick={() => setValue("susPopups", !watch("susPopups"))}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff2d2d]/50 ${
-                    watch("susPopups") ? "bg-[#ff2d2d]" : "bg-[#333]"
-                  }`}
-                >
-                  <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-sm transition-transform duration-200 ${
-                      watch("susPopups") ? "translate-x-6" : "translate-x-1"
-                    }`}
-                  />
-                </button> */}
               </div>
 
               {/* Expanded description when enabled */}
@@ -463,7 +507,7 @@ export default function CreateLinkForm() {
                     <div className="mt-3 flex items-start gap-2 bg-[#ff2d2d]/5 border border-[#ff2d2d]/10 rounded-md px-3 py-2.5">
                       <Info className="size-3.5 text-[#ff2d2d] mt-0.5 shrink-0" />
                       <div>
-                        <p className="text-[11px] leading-relaxed text-[#888]">
+                        <p className="text-[11px] leading-relaxed ">
                           When enabled, visitors will be bombarded with
                           retro-style pop-up windows before reaching the
                           destination. Maximum chaos — perfect for pranks!
@@ -476,7 +520,6 @@ export default function CreateLinkForm() {
                       onClick={() => setShowPreview(true)}
                       disabled={showPreview}
                       className="mt-2"
-                      // className="mt-2 inline-flex items-center gap-1.5 text-[11px] font-medium text-[#ff2d2d] hover:text-[#ff2d2d]/80 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     >
                       <Eye className="size-3" />
                       {showPreview ? "Previewing…" : "Preview popups"}

@@ -3,8 +3,8 @@ import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { useUser } from "@/context/UserContext";
-import { updateProfile } from "@/services/profile";
-import { toast } from "sonner";
+import { updateAvatar } from "@/services/profile";
+import { goeyToast } from "goey-toast";
 
 interface AvatarUpdateProps {
   avatarPreview: string | null;
@@ -26,11 +26,11 @@ const AvatarUpdate = ({
     const formData = new FormData();
     formData.append("avatar", avatarFile);
     try {
-      const { data } = await updateProfile(formData);
-      toast.success("Avatar updated successfully");
+      const { data } = await updateAvatar(formData);
+      goeyToast.success("Avatar updated successfully");
       refetchUser();
     } catch (error) {
-      toast.error("Failed to update avatar");
+      goeyToast.error("Failed to update avatar");
     } finally {
       setAvatarPreview(null);
       setAvatarFile(null);
@@ -41,11 +41,11 @@ const AvatarUpdate = ({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      toast.error("Please select an valid image file");
+      goeyToast.error("Please select an valid image file");
       return;
     }
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("Image must be less than 5MB");
+      goeyToast.error("Image must be less than 5MB");
       return;
     }
 

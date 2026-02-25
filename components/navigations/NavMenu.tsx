@@ -55,7 +55,7 @@ function UserAvatar({ className }: { className?: string }) {
 
 const NAV_LINKS = [
   { href: "/profile", label: "Profile", icon: User },
-  { href: "/links", label: "My Links", icon: Link2 },
+  { href: "/profile/my-links", label: "My Links", icon: Link2 },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
   { href: "/settings", label: "Settings", icon: Settings },
   { href: "/about", label: "About", icon: Info },

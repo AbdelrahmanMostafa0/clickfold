@@ -11,21 +11,9 @@ import InfoUpdate from "./InfoUpdate";
 import ProfileSecurity from "./ProfileSecurity";
 
 export default function ProfilePageClient() {
-  const { user, isLoading, refetchUser } = useUser();
+  const { user } = useUser();
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-
-  if (isLoading) {
-    return (
-      <main className="min-h-screen flex items-center justify-center px-4 noise-bg">
-        <div className="w-8 h-8 border-2 border-[#ff2d2d] border-t-transparent rounded-full animate-spin" />
-      </main>
-    );
-  }
-
-  if (!user) {
-    return <UnAutorithed />;
-  }
 
   const userInitials = user?.name
     ? user.name

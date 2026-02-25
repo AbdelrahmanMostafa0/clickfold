@@ -2,6 +2,7 @@ export interface Link {
   _id: string;
   slug: string;
   susPopups: boolean;
+  ogMode: "custom" | "original" | "none";
   og: {
     title: string;
     description: string;
@@ -11,4 +12,5 @@ export interface Link {
   destination: string;
   createdAt: Date;
   updatedAt: Date;
+  clicks: number;
 }

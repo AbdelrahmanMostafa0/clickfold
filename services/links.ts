@@ -26,3 +26,27 @@ export const userLinksStats = async () => {
     return null;
   }
 };
+
+export const userLinks = async ({
+  page,
+  limit,
+  sortBy,
+}: {
+  page: number;
+  limit: number;
+  sortBy: string | undefined;
+}) => {
+  try {
+    const { data } = await api.get(`/links`, {
+      params: {
+        page,
+        limit,
+        sortBy,
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error getting user links:", error);
+    return null;
+  }
+};

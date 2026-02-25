@@ -6,7 +6,7 @@ import { Button } from "../ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useUser } from "@/context/UserContext";
-import { toast } from "sonner";
+import { goeyToast } from "goey-toast";
 import { updateProfile } from "@/services/profile";
 import { Save } from "lucide-react";
 import { z } from "zod";
@@ -34,10 +34,10 @@ const InfoUpdate = () => {
     formData.append("name", data.name);
     try {
       const { data } = await updateProfile(formData);
-      toast.success("Profile updated successfully");
+      goeyToast.success("Profile updated successfully");
       refetchUser();
     } catch (error) {
-      toast.error("Failed to update profile");
+      goeyToast.error("Failed to update profile");
     }
   };
   useEffect(() => {

@@ -5,7 +5,7 @@ import { UserProvider } from "@/context/UserContext";
 import "./globals.css";
 import Navbar from "@/components/navigations/Navbar";
 import Footer from "@/components/navigations/Footer";
-import { Toaster } from "sonner";
+import { GoeyToasterProvider } from "@/components/ui/goey-toaster";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -39,7 +39,7 @@ export default function RootLayout({
           <UserProvider>
             <Navbar />
             {children}
-            <Toaster />
+            <GoeyToasterProvider />
             <Footer />
           </UserProvider>
         </GoogleOAuthWrapper>

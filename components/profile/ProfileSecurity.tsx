@@ -1,19 +1,21 @@
 import { motion } from "framer-motion";
-import { Settings, ShieldAlert, Trash2 } from "lucide-react";
+import { Settings, ShieldAlert } from "lucide-react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Button } from "../ui/button";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
+import { goeyToast } from "goey-toast";
+import DeleteAccountDialog from "./DeleteAccountDialog";
+import { updatePassword } from "@/services/profile";
 import { useState } from "react";
 
 const ProfileSecurity = () => {
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const passwordSchema = z
     .object({
-      currentPassword: z.string().min(1, "Current password is required"),
+      password: z.string().min(1, "Current password is required"),
       newPassword: z
         .string()
         .min(6, "New password must be at least 6 characters"),
@@ -35,21 +37,15 @@ const ProfileSecurity = () => {
   });
 
   const onPasswordUpdate = async (data: PasswordValues) => {
-    toast.info("Password update API not implemented yet");
-    resetPassword();
-  };
-
-  const onDeleteAccount = async () => {
-    if (
-      confirm(
-        "Are you absolute sure you want to delete your account? This action cannot be undone.",
-      )
-    ) {
-      setIsDeleting(true);
-      setTimeout(() => {
-        toast.error("Account deletion API not implemented yet");
-        setIsDeleting(false);
-      }, 1000);
+    setPasswordError(null);
+    try {
+      await updatePassword(data);
+      goeyToast.success("Password updated successfully");
+      resetPassword();
+    } catch (error: any) {
+      setPasswordError(
+        error.response?.data?.message || "Failed to update password",
+      );
     }
   };
 
@@ -75,12 +71,12 @@ const ProfileSecurity = () => {
             </Label>
             <Input
               type="password"
-              {...registerPassword("currentPassword")}
+              {...registerPassword("password")}
               className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
             />
-            {passwordErrors.currentPassword && (
+            {passwordErrors.password && (
               <p className="text-[#ff2d2d] text-xs mt-1.5">
-                {passwordErrors.currentPassword.message}
+                {passwordErrors.password.message}
               </p>
             )}
           </div>
@@ -116,6 +112,10 @@ const ProfileSecurity = () => {
               </p>
             )}
           </div>
+
+          {passwordError && (
+            <p className="text-[#ff2d2d] text-xs mt-1.5">{passwordError}</p>
+          )}
         </div>
 
         <div className="flex justify-end pt-2">
@@ -139,15 +139,7 @@ const ProfileSecurity = () => {
           Permanently delete your account and all associated b8lnks. This action
           cannot be reversed.
         </p>
-        <Button
-          variant="destructive"
-          onClick={onDeleteAccount}
-          disabled={isDeleting}
-          className="bg-transparent border border-[#ff2d2d]/30 text-[#ff2d2d] hover:bg-[#ff2d2d] hover:text-white transition-all w-full sm:w-auto"
-        >
-          <Trash2 className="size-4 mr-2" />
-          {isDeleting ? "Deleting..." : "Delete Account"}
-        </Button>
+        <DeleteAccountDialog />
       </div>
     </motion.section>
   );
