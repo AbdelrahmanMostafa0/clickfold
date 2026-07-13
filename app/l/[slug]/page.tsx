@@ -36,6 +36,12 @@ async function recordClickAndResolve(
           incomingHeaders.get("x-forwarded-for") ??
           incomingHeaders.get("x-real-ip") ??
           "",
+        // This fetch is server-to-server (Next.js server -> API), so Vercel
+        // would otherwise stamp geo headers for that hop instead of the
+        // visitor's. Forward the visitor's own geo headers from the
+        // original browser request through explicitly.
+        "x-vercel-ip-country": incomingHeaders.get("x-vercel-ip-country") ?? "",
+        "x-vercel-ip-city": incomingHeaders.get("x-vercel-ip-city") ?? "",
       },
       cache: "no-store",
     },
