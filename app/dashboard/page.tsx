@@ -1,11 +1,11 @@
 import DashboardPage from "@/components/dashboard/DashboardPage";
-import AuthPageWarpper from "@/components/auth/AuthPageWarpper";
+import AuthPageWrapper from "@/components/auth/AuthPageWrapper";
 
 const page = () => {
   return (
-    <AuthPageWarpper>
+    <AuthPageWrapper>
       <DashboardPage />
-    </AuthPageWarpper>
+    </AuthPageWrapper>
   );
 };
 

@@ -1,12 +1,12 @@
 import CampaignDetailPage from "@/components/campaigns/CampaignDetailPage";
-import AuthPageWarpper from "@/components/auth/AuthPageWarpper";
+import AuthPageWrapper from "@/components/auth/AuthPageWrapper";
 
 const page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   return (
-    <AuthPageWarpper>
+    <AuthPageWrapper>
       <CampaignDetailPage id={id} />
-    </AuthPageWarpper>
+    </AuthPageWrapper>
   );
 };
 

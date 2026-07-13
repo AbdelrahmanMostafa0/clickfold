@@ -1,12 +1,12 @@
 import MyLinksPage from "@/components/links/my-links/MyLinksPage";
 import React from "react";
-import AuthPageWarpper from "@/components/auth/AuthPageWarpper";
+import AuthPageWrapper from "@/components/auth/AuthPageWrapper";
 
 const page = () => {
   return (
-    <AuthPageWarpper>
+    <AuthPageWrapper>
       <MyLinksPage />
-    </AuthPageWarpper>
+    </AuthPageWrapper>
   );
 };
 

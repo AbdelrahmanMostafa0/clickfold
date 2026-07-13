@@ -1,10 +1,10 @@
 import ProfilePageClient from "@/components/profile/ProfilePageClient";
-import AuthPageWarpper from "@/components/auth/AuthPageWarpper";
+import AuthPageWrapper from "@/components/auth/AuthPageWrapper";
 
 export default function ProfilePage() {
   return (
-    <AuthPageWarpper>
+    <AuthPageWrapper>
       <ProfilePageClient />
-    </AuthPageWarpper>
+    </AuthPageWrapper>
   );
 }

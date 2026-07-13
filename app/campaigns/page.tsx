@@ -1,11 +1,11 @@
 import CampaignsPage from "@/components/campaigns/CampaignsPage";
-import AuthPageWarpper from "@/components/auth/AuthPageWarpper";
+import AuthPageWrapper from "@/components/auth/AuthPageWrapper";
 
 const page = () => {
   return (
-    <AuthPageWarpper>
+    <AuthPageWrapper>
       <CampaignsPage />
-    </AuthPageWarpper>
+    </AuthPageWrapper>
   );
 };
 

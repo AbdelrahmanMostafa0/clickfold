@@ -1,4 +1,4 @@
-import PrivacyPage from "@/components/content/PrivayPage";
+import PrivacyPage from "@/components/content/PrivacyPage";
 
 const page = () => {
   return <PrivacyPage />;

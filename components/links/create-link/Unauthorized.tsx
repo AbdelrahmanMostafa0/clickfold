@@ -3,7 +3,7 @@ import { Lock, LogIn, UserPlus } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-const UnAutorithed = () => {
+const Unauthorized = () => {
   return (
     <main className="min-h-screen flex items-center justify-center px-4 py-24 noise-bg relative">
       <motion.div
@@ -58,4 +58,4 @@ const UnAutorithed = () => {
   );
 };
 
-export default UnAutorithed;
+export default Unauthorized;

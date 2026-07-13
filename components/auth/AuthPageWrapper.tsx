@@ -1,9 +1,9 @@
 "use client";
 import { useUser } from "@/context/UserContext";
 import React from "react";
-import UnAutorithed from "../links/create-link/UnAutorithed";
+import Unauthorized from "../links/create-link/Unauthorized";
 
-const AuthPageWarpper = ({ children }: { children: React.ReactNode }) => {
+const AuthPageWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, isLoading } = useUser();
   if (isLoading) {
     return (
@@ -13,10 +13,10 @@ const AuthPageWarpper = ({ children }: { children: React.ReactNode }) => {
     );
   }
   if (!user) {
-    return <UnAutorithed />;
+    return <Unauthorized />;
   }
 
   return <>{children}</>;
 };
 
-export default AuthPageWarpper;
+export default AuthPageWrapper;
