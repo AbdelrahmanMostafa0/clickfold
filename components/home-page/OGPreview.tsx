@@ -232,7 +232,7 @@ export default function OGPreview() {
             className="text-4xl sm:text-5xl text-white mb-3"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Look good <span className="text-[#ff2d2d]">everywhere it's shared</span>
+            Look good <span className="text-[#ff2d2d]">everywhere it&apos;s shared</span>
           </h2>
           <p className="text-[#666] text-sm max-w-md mx-auto">
             Customize your link&apos;s title, description, and preview image.

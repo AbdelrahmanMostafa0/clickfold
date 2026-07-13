@@ -8,6 +8,7 @@ import { goeyToast } from "goey-toast";
 import { useRouter, useParams } from "next/navigation";
 import { confirmDeleteAccount } from "@/services/profile";
 import { useUser } from "@/context/UserContext";
+import { getApiErrorMessage } from "@/lib/utils";
 
 export default function DeleteAccountConfirmPage() {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -23,10 +24,12 @@ export default function DeleteAccountConfirmPage() {
       await confirmDeleteAccount(token);
       setIsSuccess(true);
       refetchUser();
-    } catch (error: any) {
+    } catch (error: unknown) {
       goeyToast.error(
-        error.response?.data?.message ||
+        getApiErrorMessage(
+          error,
           "Failed to delete account. The link may be expired or invalid.",
+        ),
       );
     } finally {
       setIsDeleting(false);
@@ -51,7 +54,7 @@ export default function DeleteAccountConfirmPage() {
           </h1>
           <p className="text-[#888] mb-8 text-sm">
             Your account and all associated data have been successfully deleted.
-            We're sorry to see you go!
+            We&apos;re sorry to see you go!
           </p>
           <Button
             variant="outline"

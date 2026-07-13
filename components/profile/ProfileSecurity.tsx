@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { goeyToast } from "goey-toast";
 import DeleteAccountDialog from "./DeleteAccountDialog";
 import { updatePassword } from "@/services/profile";
+import { getApiErrorMessage } from "@/lib/utils";
 import { useState } from "react";
 
 const ProfileSecurity = () => {
@@ -42,10 +43,8 @@ const ProfileSecurity = () => {
       await updatePassword(data);
       goeyToast.success("Password updated successfully");
       resetPassword();
-    } catch (error: any) {
-      setPasswordError(
-        error.response?.data?.message || "Failed to update password",
-      );
+    } catch (error: unknown) {
+      setPasswordError(getApiErrorMessage(error, "Failed to update password"));
     }
   };
 

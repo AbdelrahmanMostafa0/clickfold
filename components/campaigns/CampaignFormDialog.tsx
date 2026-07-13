@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { goeyToast } from "goey-toast";
 import { createCampaign, updateCampaign } from "@/services/campaigns";
 import type { Campaign } from "@/types/campaign";
+import { getApiErrorMessage } from "@/lib/utils";
 
 export default function CampaignFormDialog({
   campaign,
@@ -55,10 +56,8 @@ export default function CampaignFormDialog({
       }
       setOpen(false);
       onSaved();
-    } catch (error: any) {
-      goeyToast.error(
-        error.response?.data?.message || "Failed to save campaign",
-      );
+    } catch (error: unknown) {
+      goeyToast.error(getApiErrorMessage(error, "Failed to save campaign"));
     } finally {
       setIsSubmitting(false);
     }

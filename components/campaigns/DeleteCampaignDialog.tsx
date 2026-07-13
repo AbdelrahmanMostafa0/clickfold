@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { goeyToast } from "goey-toast";
 import { deleteCampaign } from "@/services/campaigns";
+import { getApiErrorMessage } from "@/lib/utils";
 
 export default function DeleteCampaignDialog({
   campaignId,
@@ -34,10 +35,8 @@ export default function DeleteCampaignDialog({
       goeyToast.success("Campaign deleted");
       setOpen(false);
       onDeleted();
-    } catch (error: any) {
-      goeyToast.error(
-        error.response?.data?.message || "Failed to delete campaign",
-      );
+    } catch (error: unknown) {
+      goeyToast.error(getApiErrorMessage(error, "Failed to delete campaign"));
     } finally {
       setIsDeleting(false);
     }

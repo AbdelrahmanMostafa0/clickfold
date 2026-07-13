@@ -26,6 +26,7 @@ import { suggestedSlugs } from "@/data/slugs";
 import { createLink } from "@/services/links";
 import { getCampaigns } from "@/services/campaigns";
 import type { Campaign } from "@/types/campaign";
+import { getApiErrorMessage } from "@/lib/utils";
 import { goeyToast } from "goey-toast";
 import SuccessView from "./SuccessView";
 import OgInputs from "./OgInputs";
@@ -71,7 +72,7 @@ const schema = z
     }
   });
 
-type FormValues = z.infer<typeof schema>;
+export type FormValues = z.infer<typeof schema>;
 
 type OgMode = "custom" | "original" | "none";
 
@@ -272,9 +273,8 @@ export default function CreateLinkForm() {
 
       setCreatedLink(linkData);
       goeyToast.success("Link created successfully!");
-    } catch (error: any) {
-      console.log(error.response.data.message);
-      goeyToast.error(error.response.data.message);
+    } catch (error: unknown) {
+      goeyToast.error(getApiErrorMessage(error, "Failed to create link"));
     } finally {
       setIsSubmitting(false);
     }

@@ -31,7 +31,6 @@ import {
   Info,
 } from "lucide-react";
 import { userLogout } from "@/services/auth";
-import { useRouter } from "next/router";
 
 function UserAvatar({ className }: { className?: string }) {
   const { user } = useUser();
@@ -64,12 +63,10 @@ const NAV_LINKS = [
 export default function NavMenu() {
   const { user, isLoading, refetchUser } = useUser();
   const isSignedIn = !!user && !isLoading;
-  //   const router = useRouter();
 
   const handleLogout = async () => {
     await userLogout();
     refetchUser();
-    // router.push("/");
   };
   return (
     <>

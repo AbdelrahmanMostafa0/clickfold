@@ -1,9 +1,23 @@
 import React from "react";
+import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Upload, X } from "lucide-react";
+import type { FormValues } from "./CreateLinkForm";
+
+interface OgInputsProps {
+  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<FormValues>;
+  imagePreview: string | null;
+  handleDrop: (e: React.DragEvent) => void;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  handleImageSelect: (file: File) => void;
+  removeImage: () => void;
+  imageError: string | null;
+  ogImage: File | null;
+}
 
 const OgInputs = ({
   register,
@@ -15,7 +29,7 @@ const OgInputs = ({
   removeImage,
   imageError,
   ogImage,
-}: any) => {
+}: OgInputsProps) => {
   return (
     <motion.div
       initial={{ height: 0, opacity: 0 }}

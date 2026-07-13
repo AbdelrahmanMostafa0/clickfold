@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, Rocket, Shield, Zap } from "lucide-react";
+import { Rocket, Shield, Zap } from "lucide-react";
 
 export default function AboutPage() {
   const containerVariants = {
@@ -93,13 +93,14 @@ export default function AboutPage() {
             Our Mission
           </h2>
           <p className="text-lg">
-            We built LinkPulse because most link shorteners stop at "here's
-            your short URL." We wanted a tool that helps you organize links
-            into campaigns and actually understand how they perform — who's
-            clicking, from where, and on what device.
+            We built LinkPulse because most link shorteners stop at
+            &quot;here&apos;s your short URL.&quot; We wanted a tool that
+            helps you organize links into campaigns and actually understand
+            how they perform — who&apos;s clicking, from where, and on what
+            device.
           </p>
           <p className="text-lg">
-            Whether you're running a product launch, a newsletter, or a
+            Whether you&apos;re running a product launch, a newsletter, or a
             multi-channel ad campaign, LinkPulse gives you one place to manage
             and measure all of it.
           </p>

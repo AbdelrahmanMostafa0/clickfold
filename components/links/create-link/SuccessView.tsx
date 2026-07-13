@@ -8,7 +8,6 @@ import {
   ExternalLink,
   Globe,
   EyeOff,
-  Palette,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { goeyToast } from "goey-toast";
