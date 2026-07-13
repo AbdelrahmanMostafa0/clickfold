@@ -9,6 +9,8 @@ export interface Link {
   };
   isActive: boolean;
   destination: string;
+  campaignId: string | null;
+  tags: string[];
   createdAt: Date;
   updatedAt: Date;
   clicks: number;

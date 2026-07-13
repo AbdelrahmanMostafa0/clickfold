@@ -23,6 +23,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { suggestedSlugs } from "@/data/slugs";
 import { createLink } from "@/services/links";
+import { getCampaigns } from "@/services/campaigns";
+import type { Campaign } from "@/types/campaign";
 import { goeyToast } from "goey-toast";
 import SuccessView from "./SuccessView";
 import OgInputs from "./OgInputs";
@@ -43,6 +45,8 @@ const schema = z
     ogTitle: z.string().optional(),
     ogDescription: z.string().optional(),
     ogMode: z.enum(["custom", "original", "none"]),
+    campaignId: z.string().optional(),
+    tags: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.ogMode === "custom") {
@@ -111,8 +115,15 @@ export default function CreateLinkForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slugFocused, setSlugFocused] = useState(false);
   const [createdLink, setCreatedLink] = useState<CreatedLinkData | null>(null);
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const slugContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getCampaigns().then((res) => {
+      if (res?.success) setCampaigns(res.data as Campaign[]);
+    });
+  }, []);
 
   const {
     register,
@@ -129,6 +140,8 @@ export default function CreateLinkForm() {
       ogTitle: "",
       ogDescription: "",
       ogMode: "custom",
+      campaignId: "",
+      tags: "",
     },
   });
 
@@ -206,6 +219,9 @@ export default function CreateLinkForm() {
           formData.append("ogDescription", values.ogDescription);
         if (ogImage) formData.append("ogImage", ogImage);
       }
+
+      if (values.campaignId) formData.append("campaignId", values.campaignId);
+      if (values.tags) formData.append("tags", values.tags);
 
       const res = await createLink(formData);
       console.log(res);
@@ -367,6 +383,49 @@ export default function CreateLinkForm() {
                 {errors.destination.message}
               </p>
             )}
+          </motion.div>
+
+          {/* ── Campaign & Tags ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.22 }}
+            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+          >
+            <div>
+              <Label
+                htmlFor="campaignId"
+                className=" text-xs uppercase tracking-wider mb-2 block"
+              >
+                Campaign
+              </Label>
+              <select
+                id="campaignId"
+                {...register("campaignId")}
+                className="w-full h-10 rounded-md bg-[#0a0a0a] border border-white/8 text-white text-sm px-3 outline-none focus-visible:border-[#ff2d2d]/50 focus-visible:ring-1 focus-visible:ring-[#ff2d2d]/20"
+              >
+                <option value="">No campaign</option>
+                {campaigns.map((campaign) => (
+                  <option key={campaign._id} value={campaign._id}>
+                    {campaign.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label
+                htmlFor="tags"
+                className=" text-xs uppercase tracking-wider mb-2 block"
+              >
+                Tags
+              </Label>
+              <Input
+                id="tags"
+                placeholder="launch, email, q3"
+                className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                {...register("tags")}
+              />
+            </div>
           </motion.div>
 
           {/* ── OG Divider with Mode Toggle ── */}

@@ -1,4 +1,5 @@
 import React from "react";
+import NextLink from "next/link";
 import {
   Table,
   TableBody,
@@ -7,7 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ExternalLink, Copy, Trash2, Edit, MoreHorizontal } from "lucide-react";
+import {
+  ExternalLink,
+  Copy,
+  Trash2,
+  Edit,
+  MoreHorizontal,
+  BarChart3,
+} from "lucide-react";
 import { goeyToast } from "goey-toast";
 import { Link } from "@/types/link";
 import {
@@ -65,9 +73,12 @@ const LinksTable = ({
               >
                 <TableCell>
                   <div className="flex flex-col max-w-[200px] sm:max-w-[300px]">
-                    <span className="font-medium text-white truncate">
+                    <NextLink
+                      href={`/profile/my-links/${link.slug}`}
+                      className="font-medium text-white truncate hover:text-[#ff2d2d] transition-colors"
+                    >
                       {link.og?.title || link.slug}
-                    </span>
+                    </NextLink>
                     <a
                       href={link.destination}
                       target="_blank"
@@ -136,6 +147,15 @@ const LinksTable = ({
                       >
                         <Copy className="size-4 mr-2" />
                         Copy Link
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        asChild
+                        className="hover:bg-white/10 cursor-pointer focus:bg-white/10 focus:text-white"
+                      >
+                        <NextLink href={`/profile/my-links/${link.slug}`}>
+                          <BarChart3 className="size-4 mr-2" />
+                          View Analytics
+                        </NextLink>
                       </DropdownMenuItem>
                       <DropdownMenuItem className="hover:bg-white/10 cursor-pointer focus:bg-white/10 focus:text-white">
                         <Edit className="size-4 mr-2" />

@@ -25,7 +25,7 @@ import {
   User,
   Link2,
   BarChart3,
-  Settings,
+  Megaphone,
   LogOut,
   Menu,
   Info,
@@ -54,10 +54,10 @@ function UserAvatar({ className }: { className?: string }) {
 }
 
 const NAV_LINKS = [
-  { href: "/profile", label: "Profile", icon: User },
+  { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { href: "/profile/my-links", label: "My Links", icon: Link2 },
-  { href: "/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/settings", label: "Settings", icon: Settings },
+  { href: "/campaigns", label: "Campaigns", icon: Megaphone },
+  { href: "/profile", label: "Profile", icon: User },
   { href: "/about", label: "About", icon: Info },
 ];
 

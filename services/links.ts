@@ -25,12 +25,26 @@ export const getLinkOg = async (slug: string) => {
     return null;
   }
 };
-export const userLinksStats = async () => {
+export const userLinksStats = async (days?: number) => {
   try {
-    const { data } = await api.get(`/links/stats`);
+    const { data } = await api.get(`/links/stats`, {
+      params: days ? { days } : undefined,
+    });
     return data;
   } catch (error) {
     console.error("Error getting user links stats:", error);
+    return null;
+  }
+};
+
+export const getLinkAnalytics = async (slug: string, days?: number) => {
+  try {
+    const { data } = await api.get(`/links/analytics/${slug}`, {
+      params: days ? { days } : undefined,
+    });
+    return data;
+  } catch (error) {
+    console.error("Error getting link analytics:", error);
     return null;
   }
 };

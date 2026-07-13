@@ -34,7 +34,7 @@ const OgInputs = ({
         </Label>
         <Input
           id="ogTitle"
-          placeholder="You Won a Free iPhone 16 Pro"
+          placeholder="Introducing our Summer Sale"
           className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20"
           {...register("ogTitle")}
         />
@@ -55,7 +55,7 @@ const OgInputs = ({
         </Label>
         <Textarea
           id="ogDescription"
-          placeholder="Click to claim your prize before it expires…"
+          placeholder="20% off everything, this week only."
           rows={3}
           className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20 resize-none"
           {...register("ogDescription")}
