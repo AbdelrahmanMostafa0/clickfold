@@ -1,17 +1,61 @@
+import { cache } from "react";
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
 import { getLinkOg } from "@/services/links";
 import { Link } from "@/types/link";
 import { buildLinkMetadata } from "@/lib/og";
-import LinkRedirectClient from "@/components/links/LinkRedirectClient";
+import LinkNotFound from "@/components/links/LinkNotFound";
+import LinkInactive from "@/components/links/LinkInactive";
+
+const BOT_UA_PATTERN =
+  /bot|crawl|spider|facebookexternalhit|Twitterbot|Slackbot|Discordbot|LinkedInBot|TelegramBot|WhatsApp|SkypeUriPreview|Applebot|Pinterest|vkShare|redditbot/i;
+
+// Shared between generateMetadata and the page render for a single request.
+const fetchLinkOg = cache(async (slug: string) => {
+  const res = await getLinkOg(slug);
+  return (res?.data as Link | null) ?? null;
+});
+
+type RedirectResult =
+  | { status: "not-found" }
+  | { status: "inactive" }
+  | { status: "active"; destination: string };
+
+async function recordClickAndResolve(
+  slug: string,
+  incomingHeaders: Headers,
+): Promise<RedirectResult> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/links/redirect/${slug}`,
+    {
+      headers: {
+        "user-agent": incomingHeaders.get("user-agent") ?? "",
+        referer: incomingHeaders.get("referer") ?? "",
+        "x-forwarded-for":
+          incomingHeaders.get("x-forwarded-for") ??
+          incomingHeaders.get("x-real-ip") ??
+          "",
+      },
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) return { status: "not-found" };
+
+  const body = await res.json().catch(() => null);
+  const link: Link | null = body?.data ?? null;
+  if (!link) return { status: "not-found" };
+  if (!link.isActive) return { status: "inactive" };
+  return { status: "active", destination: link.destination };
+}
 
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-
-  const res = await getLinkOg(slug);
-  const link: Link | null = res?.data ?? null;
+  const link = await fetchLinkOg(slug);
 
   if (!link) {
     return { title: "Link Not Found" };
@@ -24,9 +68,29 @@ export async function generateMetadata({
   return buildLinkMetadata(link);
 }
 
-const page = async ({ params }: { params: { slug: string } }) => {
+export default async function LinkRedirectPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
-  return <LinkRedirectClient slug={slug} />;
-};
+  const incomingHeaders = await headers();
+  const userAgent = incomingHeaders.get("user-agent") ?? "";
+  const isBot = BOT_UA_PATTERN.test(userAgent);
 
-export default page;
+  if (isBot) {
+    // Crawlers don't run JS and don't need a click recorded — they only
+    // need generateMetadata's OG tags, already resolved for this request.
+    const link = await fetchLinkOg(slug);
+    if (!link) return <LinkNotFound />;
+    if (!link.isActive) return <LinkInactive />;
+    return null;
+  }
+
+  const result = await recordClickAndResolve(slug, incomingHeaders);
+
+  if (result.status === "not-found") return <LinkNotFound />;
+  if (result.status === "inactive") return <LinkInactive />;
+
+  redirect(result.destination);
+}

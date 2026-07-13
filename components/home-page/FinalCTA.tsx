@@ -24,12 +24,12 @@ export default function FinalCTA() {
           className="text-5xl sm:text-6xl md:text-7xl text-white mb-4 leading-[0.95]"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Start baiting{" "}
+          Start tracking{" "}
           <span className="text-[#ff2d2d] glow-red-text">for free.</span>
         </h2>
 
         <p className="text-[#888] text-base sm:text-lg mb-10">
-          No credit card. No shame. Just chaos.
+          No credit card required. Set up your first campaign in minutes.
         </p>
 
         <CTAButton />

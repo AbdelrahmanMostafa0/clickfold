@@ -7,11 +7,11 @@ const platforms = ["iMessage", "WhatsApp", "Discord"] as const;
 type Platform = (typeof platforms)[number];
 
 const ogData = {
-  title: "You Won a Free iPhone 16 Pro",
+  title: "Introducing our Summer Sale",
   description:
-    "Congratulations! Click to claim your prize before it expires. Limited time offer.",
-  url: "b8lnk.com/free-iphone-claim",
-  siteName: "b8lnk.com",
+    "20% off everything, this week only. Free shipping on orders over $50.",
+  url: "linkpulse.app/summer-sale",
+  siteName: "linkpulse.app",
 };
 
 function IMessagePreview() {
@@ -25,7 +25,7 @@ function IMessagePreview() {
             J
           </div>
           <div>
-            <p className="text-white text-sm font-medium">Jake</p>
+            <p className="text-white text-sm font-medium">Jordan</p>
             <p className="text-[#666] text-xs">iMessage</p>
           </div>
         </div>
@@ -34,7 +34,9 @@ function IMessagePreview() {
         <div className="space-y-3">
           <div className="flex justify-start">
             <div className="bg-[#333] rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">yo check this out 💀</p>
+              <p className="text-white text-sm">
+                hey check out the new sale 👀
+              </p>
             </div>
           </div>
 
@@ -44,9 +46,9 @@ function IMessagePreview() {
               {/* OG Image */}
               <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-32 flex items-center justify-center border-b border-white/5">
                 <div className="text-center">
-                  <div className="text-4xl mb-1">🎉</div>
+                  <div className="text-4xl mb-1">🛍️</div>
                   <span className="text-[#ff2d2d] text-xs font-bold">
-                    CLAIM NOW
+                    SHOP NOW
                   </span>
                 </div>
               </div>
@@ -67,7 +69,7 @@ function IMessagePreview() {
 
           <div className="flex justify-end">
             <div className="bg-[#0b84fe] rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">bro what is this 😂</p>
+              <p className="text-white text-sm">nice, adding to cart 🛒</p>
             </div>
           </div>
         </div>
@@ -86,7 +88,7 @@ function WhatsAppPreview() {
             M
           </div>
           <div>
-            <p className="text-white text-sm font-medium">Mike 🐐</p>
+            <p className="text-white text-sm font-medium">Marketing Team</p>
             <p className="text-[#667781] text-xs">online</p>
           </div>
         </div>
@@ -99,9 +101,9 @@ function WhatsAppPreview() {
               <div className="border-l-4 border-[#00a884]">
                 <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-28 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-3xl mb-1">📱</div>
+                    <div className="text-3xl mb-1">📣</div>
                     <span className="text-[#ff2d2d] text-xs font-bold">
-                      FREE iPHONE
+                      SUMMER SALE
                     </span>
                   </div>
                 </div>
@@ -125,7 +127,7 @@ function WhatsAppPreview() {
 
           <div className="flex justify-end">
             <div className="bg-[#005c4b] rounded-xl rounded-br-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">No way this is real 💀💀</p>
+              <p className="text-white text-sm">sending this to the list 📤</p>
             </div>
           </div>
         </div>
@@ -141,7 +143,7 @@ function DiscordPreview() {
         {/* Channel header */}
         <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
           <span className="text-[#80848e] text-lg">#</span>
-          <span className="text-white text-sm font-medium">general</span>
+          <span className="text-white text-sm font-medium">announcements</span>
         </div>
 
         {/* Messages */}
@@ -153,14 +155,14 @@ function DiscordPreview() {
             <div className="flex-1">
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="text-[#f3b3e1] text-sm font-semibold">
-                  darklord42
+                  devon
                 </span>
                 <span className="text-[#80848e] text-[10px]">
                   Today at 4:20 PM
                 </span>
               </div>
               <p className="text-[#dbdee1] text-sm mb-2">
-                @everyone check this out lmao
+                @everyone the summer sale is live
               </p>
 
               {/* Discord embed */}
@@ -176,9 +178,9 @@ function DiscordPreview() {
                 </div>
                 <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-32 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-4xl mb-1">🏆</div>
+                    <div className="text-4xl mb-1">🎉</div>
                     <span className="text-[#ff2d2d] text-xs font-bold">
-                      WINNER!
+                      20% OFF
                     </span>
                   </div>
                 </div>
@@ -193,14 +195,14 @@ function DiscordPreview() {
             <div>
               <div className="flex items-baseline gap-2 mb-1">
                 <span className="text-[#e8c358] text-sm font-semibold">
-                  skeptic_steve
+                  sam
                 </span>
                 <span className="text-[#80848e] text-[10px]">
                   Today at 4:21 PM
                 </span>
               </div>
               <p className="text-[#dbdee1] text-sm">
-                bruh thats definitely a b8lnk 😭
+                clean preview, nice 👍
               </p>
             </div>
           </div>
@@ -230,12 +232,11 @@ export default function OGPreview() {
             className="text-4xl sm:text-5xl text-white mb-3"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            They&apos;ll never know{" "}
-            <span className="text-[#ff2d2d]">what hit them</span>
+            Look good <span className="text-[#ff2d2d]">everywhere it's shared</span>
           </h2>
           <p className="text-[#666] text-sm max-w-md mx-auto">
             Customize your link&apos;s title, description, and preview image.
-            Here&apos;s what it looks like when someone shares your bait.
+            Here&apos;s what it looks like when someone shares it.
           </p>
         </motion.div>
 

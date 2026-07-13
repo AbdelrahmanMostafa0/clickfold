@@ -1,7 +1,6 @@
 export interface Link {
   _id: string;
   slug: string;
-  susPopups: boolean;
   ogMode: "custom" | "original" | "none";
   og: {
     title: string;

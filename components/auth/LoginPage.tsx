@@ -64,7 +64,7 @@ export default function LoginPage() {
                 className="text-3xl text-white tracking-wider"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                b8lnk
+                LinkPulse
               </span>
               <span className="inline-block w-2 h-2 rounded-full bg-[#ff2d2d] ml-1 animate-pulse" />
             </Link>
@@ -74,7 +74,7 @@ export default function LoginPage() {
             >
               Welcome back
             </h1>
-            <p className="text-[#666] text-sm">Log in to keep baiting</p>
+            <p className="text-[#666] text-sm">Log in to your account</p>
           </div>
 
           {error && (

@@ -27,7 +27,7 @@ const CTAButton = () => {
         letterSpacing: "0.05em",
       }}
     >
-      {user ? "Create New Bait Link" : "Create My First Bait Link"}
+      {user ? "Create New Link" : "Create My First Link"}
     </motion.button>
   );
 };

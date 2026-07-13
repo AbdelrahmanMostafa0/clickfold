@@ -39,7 +39,7 @@ export default function LinkNotFound() {
 
         {/* Description */}
         <p className="text-[#666] text-sm leading-relaxed mb-8">
-          This b8lnk doesn&apos;t exist or may have been removed.
+          This link doesn&apos;t exist or may have been removed.
           <br />
           Double-check the URL and try again.
         </p>

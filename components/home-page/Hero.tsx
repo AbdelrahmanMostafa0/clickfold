@@ -7,11 +7,11 @@ import { useRouter } from "next/navigation";
 import CTAButton from "./CTAButton";
 
 const exampleSlugs = [
-  "free-iphone-claim",
-  "leaked-footage-2024",
-  "you-won-airpods",
-  "tax-refund-portal",
-  "your-account-hacked",
+  "summer-sale",
+  "launch-2026",
+  "newsletter-july",
+  "webinar-signup",
+  "black-friday",
 ];
 
 export default function Hero() {
@@ -38,10 +38,10 @@ export default function Hero() {
           className="text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-tight text-white mb-6"
           style={{ fontFamily: "var(--font-display)" }}
         >
-          Make them click.
+          Short links.
           <br />
           <span className="text-[#ff2d2d] glow-red-text">
-            Make them regret.
+            Full picture.
           </span>
         </motion.h1>
 
@@ -51,8 +51,8 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-base sm:text-lg text-[#888] max-w-xl mx-auto mb-10 leading-relaxed"
         >
-          Create bait links that look sus, go anywhere. Perfect for pranks,
-          social experiments, and chaos.
+          Shorten links, group them into campaigns, and track every click —
+          geo, device, and referrer data included.
         </motion.p>
         <div className="flex flex-col gap-8">
           <motion.div
@@ -71,7 +71,7 @@ export default function Hero() {
                 transition={{ duration: 0.3 }}
                 className="text-[#00ff88] text-sm font-mono"
               >
-                b8lnk.com/{exampleSlugs[currentExample]}
+                linkpulse.app/{exampleSlugs[currentExample]}
               </motion.span>
             </AnimatePresence>
           </motion.div>

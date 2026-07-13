@@ -13,8 +13,8 @@ interface StatItem {
 
 const stats: StatItem[] = [
   { label: "Links Created", end: 127430, suffix: "", prefix: "" },
-  { label: "People Baited", end: 84291, suffix: "", prefix: "" },
-  { label: "Click Rate on Sus Links", end: 99.1, suffix: "%", decimals: 1 },
+  { label: "Clicks Tracked", end: 842910, suffix: "", prefix: "" },
+  { label: "Uptime", end: 99.9, suffix: "%", decimals: 1 },
 ];
 
 function AnimatedNumber({

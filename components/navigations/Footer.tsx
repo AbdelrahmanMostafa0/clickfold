@@ -9,12 +9,12 @@ export default function Footer() {
             className="text-xl text-[#555]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            b8lnk
+            LinkPulse
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#ff2d2d]" />
         </div>
         <p className="text-[#444] text-xs">
-          © {new Date().getFullYear()} b8lnk. Made for chaos, not for evil.
+          © {new Date().getFullYear()} LinkPulse. All rights reserved.
         </p>
         <div className="flex items-center gap-6">
           <Link
@@ -36,7 +36,7 @@ export default function Footer() {
             Privacy
           </Link>
           <a
-            href="https://github.com/b8lnk"
+            href="https://github.com/AbdelrahmanMostafa0/linkpulse"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#555] text-xs hover:text-white transition-colors"

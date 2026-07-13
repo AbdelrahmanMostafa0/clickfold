@@ -39,15 +39,15 @@ export default function PrivacyPage() {
             </h2>
             <p className="mb-4">
               We collect the minimum amount of information necessary to make
-              b8lnk work. If you create an account, we store your email address,
-              name, and an encrypted password (or Google auth token).
+              LinkPulse work. If you create an account, we store your email
+              address, name, and an encrypted password (or Google auth token).
             </p>
             <p>
-              When people click your bait links, we collect anonymous usage data
-              (like timestamps, referrers, and general location data) to provide
-              you with stats. We do not track individual users across the
-              internet or collect personally identifiable information from your
-              victims—err, visitors.
+              When people click your links, we collect anonymous usage data
+              (like timestamps, referrers, and general location data) to
+              provide you with stats. We do not track individual users across
+              the internet or collect personally identifiable information from
+              your visitors.
             </p>
           </section>
 

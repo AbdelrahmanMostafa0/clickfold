@@ -69,7 +69,7 @@ export default function RegisterPage() {
                 className="text-3xl text-white tracking-wider"
                 style={{ fontFamily: "var(--font-display)" }}
               >
-                b8lnk
+                LinkPulse
               </span>
               <span className="inline-block w-2 h-2 rounded-full bg-[#ff2d2d] ml-1 animate-pulse" />
             </Link>
@@ -77,10 +77,10 @@ export default function RegisterPage() {
               className="text-3xl text-white mb-2"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Join the chaos
+              Create your account
             </h1>
             <p className="text-[#666] text-sm">
-              Create an account and start baiting
+              Start shortening and tracking links
             </p>
           </div>
 

@@ -20,7 +20,7 @@ export const LinksStats = () => {
         <div className="space-y-4">
           <div className="bg-[#0a0a0a] rounded-lg p-4 border border-white/5">
             <p className="text-[#888] text-xs uppercase tracking-wider mb-1">
-              Total b8lnks
+              Total Links
             </p>
             <p className="text-2xl text-white font-semibold">42</p>
           </div>
@@ -49,9 +49,9 @@ export const LinksStats = () => {
         <div className="space-y-3 flex-1">
           {/* Dummy links */}
           {[
-            { slug: "free-iphone", clicks: 3200 },
-            { slug: "rick-roll-hd", clicks: 2150 },
-            { slug: "nitro-gift", clicks: 1800 },
+            { slug: "summer-sale", clicks: 3200 },
+            { slug: "launch-2026", clicks: 2150 },
+            { slug: "newsletter-july", clicks: 1800 },
           ].map((link, i) => (
             <div
               key={i}
@@ -75,7 +75,7 @@ export const LinksStats = () => {
           <Link href="/create">
             <Button className="w-full bg-white/5 hover:bg-white/10 text-[#ff2d2d] border border-[#ff2d2d]/20 transition-all group">
               <Plus className="size-4 mr-2 group-hover:scale-125 transition-transform" />
-              Create New b8lnk
+              Create New Link
             </Button>
           </Link>
         </div>

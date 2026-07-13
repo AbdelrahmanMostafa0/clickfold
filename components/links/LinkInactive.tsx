@@ -39,7 +39,7 @@ export default function LinkInactive() {
 
         {/* Description */}
         <p className="text-[#666] text-sm leading-relaxed mb-8">
-          This b8lnk has been deactivated by its owner
+          This link has been deactivated by its owner
           <br />
           and is no longer available.
         </p>

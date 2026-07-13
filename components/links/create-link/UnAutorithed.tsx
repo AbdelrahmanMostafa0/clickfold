@@ -35,8 +35,7 @@ const UnAutorithed = () => {
             Authentication Required
           </h1>
           <p className="text-[#666] text-sm mb-8 leading-relaxed">
-            You need to be logged in to create and manage your b8lnks. Join us
-            to start setting traps!
+            You need to be logged in to create and manage your links.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3">

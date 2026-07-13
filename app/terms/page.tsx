@@ -36,9 +36,9 @@ export default function TermsPage() {
               1. Acceptance of Terms
             </h2>
             <p>
-              By accessing and using b8lnk, you accept and agree to be bound by
-              these Terms of Service. If you don&apos;t agree to these terms,
-              simply don&apos;t use the service.
+              By accessing and using LinkPulse, you accept and agree to be
+              bound by these Terms of Service. If you don&apos;t agree to
+              these terms, simply don&apos;t use the service.
             </p>
           </section>
 
@@ -47,15 +47,16 @@ export default function TermsPage() {
               className="text-3xl text-[#ff2d2d] mb-4 glow-red-text"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              2. Acceptable Use (The Important Part)
+              2. Acceptable Use
             </h2>
             <p className="mb-4">
-              b8lnk is designed for humor, pranks, and social experiments.{" "}
+              LinkPulse is designed for marketing, analytics, and general link
+              management.{" "}
               <strong className="text-white">
                 It is NOT designed for malicious activities.
               </strong>
             </p>
-            <p className="mb-4">You agree not to use b8lnk to link to:</p>
+            <p className="mb-4">You agree not to use LinkPulse to link to:</p>
             <ul className="list-disc pl-5 space-y-2 text-[#888]">
               <li>Malware, viruses, or any harmful code.</li>
               <li>Actual phishing sites designed to steal credentials.</li>

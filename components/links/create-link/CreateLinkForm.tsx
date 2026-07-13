@@ -12,9 +12,6 @@ import {
   Link2,
   Sparkles,
   Loader2,
-  AlertTriangle,
-  Info,
-  Eye,
   Globe,
   EyeOff,
   Palette,
@@ -27,8 +24,6 @@ import { Label } from "@/components/ui/label";
 import { suggestedSlugs } from "@/data/slugs";
 import { createLink } from "@/services/links";
 import { goeyToast } from "goey-toast";
-import SusPopups from "@/components/ui/SusPopups";
-import { Switch } from "@/components/ui/switch";
 import SuccessView from "./SuccessView";
 import OgInputs from "./OgInputs";
 
@@ -48,7 +43,6 @@ const schema = z
     ogTitle: z.string().optional(),
     ogDescription: z.string().optional(),
     ogMode: z.enum(["custom", "original", "none"]),
-    susPopups: z.boolean(),
   })
   .superRefine((data, ctx) => {
     if (data.ogMode === "custom") {
@@ -116,7 +110,6 @@ export default function CreateLinkForm() {
   const [imageError, setImageError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [slugFocused, setSlugFocused] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
   const [createdLink, setCreatedLink] = useState<CreatedLinkData | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const slugContainerRef = useRef<HTMLDivElement>(null);
@@ -136,7 +129,6 @@ export default function CreateLinkForm() {
       ogTitle: "",
       ogDescription: "",
       ogMode: "custom",
-      susPopups: false,
     },
   });
 
@@ -215,8 +207,6 @@ export default function CreateLinkForm() {
         if (ogImage) formData.append("ogImage", ogImage);
       }
 
-      formData.append("susPopups", String(values.susPopups));
-
       const res = await createLink(formData);
       console.log(res);
 
@@ -276,9 +266,9 @@ export default function CreateLinkForm() {
             className="text-3xl sm:text-4xl text-white mb-2"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Create a <span className="text-[#ff2d2d] glow-red-text">b8lnk</span>
+            Create a <span className="text-[#ff2d2d] glow-red-text">link</span>
           </h1>
-          <p className=" text-sm">Set the trap. Choose your bait wisely.</p>
+          <p className=" text-sm">Set the destination and customize how it looks when shared.</p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="relative space-y-6">
@@ -298,11 +288,11 @@ export default function CreateLinkForm() {
             </Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444] text-sm pointer-events-none">
-                b8lnk.com/
+                linkpulse.app/
               </span>
               <Input
                 id="slug"
-                placeholder="free-iphone-claim"
+                placeholder="summer-sale"
                 className="pl-[100px] bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
                 {...register("slug")}
                 onFocus={() => setSlugFocused(true)}
@@ -344,7 +334,7 @@ export default function CreateLinkForm() {
                         className="w-full text-left px-3 py-2 rounded-md text-sm  hover:bg-[#1a1a1a] hover:text-[#ff2d2d] transition-colors flex items-center gap-2"
                       >
                         <Link2 className="size-3 text-[#444]" />
-                        <span className="text-[#444]">b8lnk.com/</span>
+                        <span className="text-[#444]">linkpulse.app/</span>
                         <span>{slug}</span>
                       </button>
                     ))}
@@ -451,92 +441,6 @@ export default function CreateLinkForm() {
             )}
           </AnimatePresence>
 
-          {/* ── Divider ── */}
-          <div className="relative py-2">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/5" />
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-[#111] px-3 text-[10px] uppercase tracking-widest text-[#444]">
-                Extras
-              </span>
-            </div>
-          </div>
-
-          {/* ── Sus Popups Toggle ── */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.45 }}
-          >
-            <div className="bg-[#0a0a0a] border border-white/8 rounded-lg p-4">
-              <div className="flex items-center justify-between gap-1">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-lg bg-[#ff2d2d]/10 flex items-center justify-center">
-                    <AlertTriangle className="size-4 text-[#ff2d2d]" />
-                  </div>
-                  <div>
-                    <Label className="text-white text-sm font-medium block cursor-pointer">
-                      Sus Popups
-                    </Label>
-                    <p className=" text-xs mt-0.5 ">
-                      Flood the screen with fake pop-ups
-                    </p>
-                  </div>
-                </div>
-
-                {/* Toggle switch */}
-                <Switch
-                  checked={watch("susPopups")}
-                  onCheckedChange={(checked: boolean) =>
-                    setValue("susPopups", checked)
-                  }
-                />
-              </div>
-
-              {/* Expanded description when enabled */}
-              <AnimatePresence>
-                {watch("susPopups") && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="mt-3 flex items-start gap-2 bg-[#ff2d2d]/5 border border-[#ff2d2d]/10 rounded-md px-3 py-2.5">
-                      <Info className="size-3.5 text-[#ff2d2d] mt-0.5 shrink-0" />
-                      <div>
-                        <p className="text-[11px] leading-relaxed ">
-                          When enabled, visitors will be bombarded with
-                          retro-style pop-up windows before reaching the
-                          destination. Maximum chaos — perfect for pranks!
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      type="button"
-                      size={"sm"}
-                      onClick={() => setShowPreview(true)}
-                      disabled={showPreview}
-                      className="mt-2"
-                    >
-                      <Eye className="size-3" />
-                      {showPreview ? "Previewing…" : "Preview popups"}
-                    </Button>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-
-          {/* Sus Popups Preview */}
-          <SusPopups
-            isActive={showPreview}
-            onComplete={() => setShowPreview(false)}
-            duration={3000}
-          />
-
           {/* ── Submit ── */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -557,7 +461,7 @@ export default function CreateLinkForm() {
               ) : (
                 <>
                   <Link2 className="size-4" />
-                  Create b8lnk
+                  Create Link
                 </>
               )}
             </Button>

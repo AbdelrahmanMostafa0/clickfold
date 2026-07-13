@@ -175,7 +175,7 @@ export default function NavMenu() {
                 <div>
                   <SheetTitle className="text-white text-lg">Menu</SheetTitle>
                   <SheetDescription className="text-[#666] text-xs">
-                    Navigate b8lnk
+                    Navigate LinkPulse
                   </SheetDescription>
                 </div>
               )}

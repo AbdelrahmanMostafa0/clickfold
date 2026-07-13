@@ -20,21 +20,21 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "b8lnk — Make them click. Make them regret.",
+  title: "LinkPulse — Link Management & Campaign Analytics",
   description:
-    "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+    "Shorten links, organize them into campaigns, and see every click in real time. Geo, device, and referrer analytics built in.",
   openGraph: {
-    title: "b8lnk — Make them click. Make them regret.",
+    title: "LinkPulse — Link Management & Campaign Analytics",
     description:
-      "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+      "Shorten links, organize them into campaigns, and see every click in real time. Geo, device, and referrer analytics built in.",
     images: ["/og-image.png"],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "b8lnk — Make them click. Make them regret.",
+    title: "LinkPulse — Link Management & Campaign Analytics",
     description:
-      "Create bait links that look sus, go anywhere. Perfect for pranks, social experiments, and chaos.",
+      "Shorten links, organize them into campaigns, and see every click in real time. Geo, device, and referrer analytics built in.",
     images: ["/og-image.png"],
   },
 };

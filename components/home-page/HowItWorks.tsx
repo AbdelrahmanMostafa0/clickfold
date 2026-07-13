@@ -6,23 +6,23 @@ import { MousePointerClick, Link2, Eye } from "lucide-react";
 const steps = [
   {
     icon: MousePointerClick,
-    title: "Pick your bait",
+    title: "Pick a slug",
     description:
-      'Choose a slug that screams "definitely not a virus." The sketchier, the better.',
+      "Choose a memorable slug or let us generate one. Group it under a campaign if you're tracking a launch.",
     step: "01",
   },
   {
     icon: Link2,
-    title: "Set the trap",
+    title: "Set the destination",
     description:
-      "Paste your real destination URL. YouTube, Google Docs, your ex's Spotify playlist — we don't judge.",
+      "Paste your real URL, add UTM parameters, and customize the OG preview shown when it's shared.",
     step: "02",
   },
   {
     icon: Eye,
-    title: "Watch them fall",
+    title: "Watch the analytics",
     description:
-      "Share the link and watch the clicks roll in. Bonus points if they screenshot it.",
+      "Share the link and track clicks in real time — location, device, browser, and referrer, all in your dashboard.",
     step: "03",
   },
 ];
@@ -64,7 +64,7 @@ export default function HowItWorks() {
             How it works
           </h2>
           <p className="text-[#666] text-sm">
-            Three steps. Zero accountability.
+            Three steps. Full visibility.
           </p>
         </motion.div>
 

@@ -42,11 +42,11 @@ export default function AboutPage() {
             className="text-5xl sm:text-7xl text-white mb-6 tracking-tight"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            What is <span className="text-[#ff2d2d]">b8lnk</span>?
+            What is <span className="text-[#ff2d2d]">LinkPulse</span>?
           </h1>
           <p className="text-xl text-[#888] max-w-2xl mx-auto">
-            The link shortener built for humor, pranks, analytics, and social
-            experiments. We track the clicks so you can enjoy the chaos.
+            A link management platform for marketing campaigns. Shorten,
+            organize, and track every click across your channels.
           </p>
         </motion.div>
 
@@ -57,11 +57,10 @@ export default function AboutPage() {
         >
           <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#ff2d2d]/30 transition-colors group">
             <Zap className="w-8 h-8 text-[#ff2d2d] mb-4 group-hover:scale-110 transition-transform" />
-            <h3 className="text-xl font-bold mb-2">Chaotic Redirections</h3>
+            <h3 className="text-xl font-bold mb-2">Fast Redirects</h3>
             <p className="text-[#999] text-sm">
-              Hit your audience with a barrage of suspicious-looking popups for
-              a brief moment of pure panic before safely landing on your target
-              page.
+              Links resolve server-side with no client-side delay, so your
+              audience lands on the destination instantly.
             </p>
           </div>
           <div className="p-8 rounded-2xl bg-white/5 border border-white/10 hover:border-[#4da6ff]/30 transition-colors group">
@@ -76,8 +75,8 @@ export default function AboutPage() {
             <Shield className="w-8 h-8 text-[#00ff88] mb-4 group-hover:scale-110 transition-transform" />
             <h3 className="text-xl font-bold mb-2">Safe & Moderated</h3>
             <p className="text-[#999] text-sm">
-              We enforce strict policies against phishing and malicious content.
-              Pure fun is allowed; harmful links are banned.
+              We enforce strict policies against phishing and malicious
+              content to keep the platform trustworthy for everyone.
             </p>
           </div>
         </motion.div>
@@ -94,16 +93,15 @@ export default function AboutPage() {
             Our Mission
           </h2>
           <p className="text-lg">
-            We built b8lnk because we were tired of boring, corporate link
-            shorteners. We wanted a tool that not only abbreviated long, ugly
-            URLs but also embraced the chaotic, fun nature of the internet.
-            Whether you are rickrolling your friends, tracking a marketing
-            campaign, or running an elaborate social experiment, b8lnk is your
-            toolkit.
+            We built LinkPulse because most link shorteners stop at "here's
+            your short URL." We wanted a tool that helps you organize links
+            into campaigns and actually understand how they perform — who's
+            clicking, from where, and on what device.
           </p>
           <p className="text-lg">
-            The internet should be fun. We are here to make sure it stays that
-            way.
+            Whether you're running a product launch, a newsletter, or a
+            multi-channel ad campaign, LinkPulse gives you one place to manage
+            and measure all of it.
           </p>
         </motion.div>
 

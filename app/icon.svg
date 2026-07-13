@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <rect width="512" height="512" fill="#0a0a0a"/>
-  <!-- The '8' symbol with aggressive styling -->
-  <path d="M190 140 h132 v90 h-132 z" fill="none" stroke="#f0f0f0" stroke-width="48" stroke-linejoin="miter"/>
-  <path d="M190 280 h132 v92 h-132 z" fill="none" stroke="#f0f0f0" stroke-width="48" stroke-linejoin="miter"/>
-  <!-- The toxic red dot -->
-  <circle cx="390" cy="256" r="32" fill="#ff2d2d"/>
+  <!-- Chain-link mark -->
+  <rect x="120" y="176" width="180" height="160" rx="80" fill="none" stroke="#f0f0f0" stroke-width="40"/>
+  <rect x="212" y="176" width="180" height="160" rx="80" fill="none" stroke="#f0f0f0" stroke-width="40"/>
+  <!-- Pulse accent dot -->
+  <circle cx="392" cy="256" r="30" fill="#ff2d2d"/>
 </svg>

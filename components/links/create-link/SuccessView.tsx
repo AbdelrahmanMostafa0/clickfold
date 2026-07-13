@@ -71,7 +71,7 @@ export default function SuccessView({
           >
             Link <span className="text-[#00ff88]">Created!</span>
           </h2>
-          <p className="text-[#666] text-sm">Your b8lnk is ready to share</p>
+          <p className="text-[#666] text-sm">Your link is ready to share</p>
         </motion.div>
 
         {/* Short URL display */}

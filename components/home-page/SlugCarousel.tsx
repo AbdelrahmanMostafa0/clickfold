@@ -3,39 +3,39 @@
 import { motion } from "framer-motion";
 
 const row1Slugs = [
-  "girls-in-your-area",
-  "free-robux-generator",
-  "irs-final-notice",
-  "click-or-lose-account",
-  "leaked-celebrity-dms",
-  "youve-been-selected",
-  "verify-your-identity",
-  "claim-your-reward",
-  "hot-singles-nearby",
-  "nigerian-prince-offer",
-  "free-vbucks-2024",
-  "your-icloud-hacked",
+  "spring-launch",
+  "product-hunt",
+  "email-blast-03",
+  "instagram-bio",
+  "partner-referral",
+  "podcast-ad",
+  "linkedin-post",
+  "beta-invite",
+  "affiliate-q3",
+  "press-kit",
+  "demo-request",
+  "app-download",
 ];
 
 const row2Slugs = [
-  "confirm-bank-details",
-  "exclusive-footage-leak",
-  "you-won-1000-dollars",
-  "urgent-security-alert",
-  "download-free-movies",
-  "secret-onlyfans-leak",
-  "password-expired-now",
-  "apple-id-suspended",
-  "get-rich-quick-method",
-  "fbi-warning-notice",
-  "bitcoin-giveaway-live",
-  "update-payment-info",
+  "holiday-promo",
+  "webinar-replay",
+  "case-study",
+  "twitter-thread",
+  "newsletter-cta",
+  "youtube-desc",
+  "landing-v2",
+  "referral-program",
+  "early-access",
+  "changelog",
+  "conference-2026",
+  "trial-signup",
 ];
 
 function SlugPill({ text }: { text: string }) {
   return (
     <span className="inline-flex items-center px-4 py-2 mx-2 bg-[#111] border border-white/5 rounded-full text-xs text-[#888] whitespace-nowrap hover:border-[#ff2d2d]/30 hover:text-[#ff2d2d] transition-all cursor-default select-none">
-      <span className="text-[#444] mr-1.5">b8lnk.com/</span>
+      <span className="text-[#444] mr-1.5">linkpulse.app/</span>
       {text}
     </span>
   );

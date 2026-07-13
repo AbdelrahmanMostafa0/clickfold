@@ -34,7 +34,7 @@ export default function Navbar() {
             className="text-3xl tracking-wider text-white group-hover:text-[#ff2d2d] transition-colors"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            b8lnk
+            LinkPulse
           </span>
           <span className="w-2 h-2 rounded-full bg-[#ff2d2d] group-hover:bg-[#00ff88] transition-colors animate-pulse" />
         </Link>

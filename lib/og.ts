@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Link } from "@/types/link";
 
 /**
- * Builds Next.js Metadata for a b8lnk based on its ogMode:
+ * Builds Next.js Metadata for a link based on its ogMode:
  * - "custom" / "original" → uses link.og (API populates it for both)
  * - "none" → disables OG with noindex
  */

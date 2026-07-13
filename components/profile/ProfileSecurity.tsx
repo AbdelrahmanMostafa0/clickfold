@@ -136,7 +136,7 @@ const ProfileSecurity = () => {
           Danger Zone
         </h3>
         <p className="text-[#888] text-xs mb-4">
-          Permanently delete your account and all associated b8lnks. This action
+          Permanently delete your account and all associated links. This action
           cannot be reversed.
         </p>
         <DeleteAccountDialog />

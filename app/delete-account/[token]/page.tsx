@@ -85,7 +85,7 @@ export default function DeleteAccountConfirmPage() {
 
         <p className="text-[#888] text-center mb-6 text-sm">
           You are about to permanently delete your account. This action cannot
-          be undone and you will lose all your data, b8lnks, and settings
+          be undone and you will lose all your data, links, and settings
           immediately.
         </p>
 
