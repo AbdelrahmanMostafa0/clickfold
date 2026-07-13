@@ -6,7 +6,7 @@ const footerLinks = [
   { href: "/terms", label: "Terms" },
   { href: "/privacy", label: "Privacy" },
   {
-    href: "https://github.com/AbdelrahmanMostafa0/linkpulse",
+    href: "https://github.com/AbdelrahmanMostafa0/clickfold",
     label: "GitHub",
     external: true,
   },
@@ -24,7 +24,10 @@ export default function Footer() {
           </p>
         </div>
         <div className="space-y-5 md:text-right">
-          <nav aria-label="Footer navigation" className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end">
+          <nav
+            aria-label="Footer navigation"
+            className="flex flex-wrap gap-x-6 gap-y-3 md:justify-end"
+          >
             {footerLinks.map((link) => (
               <Link
                 key={link.href}
