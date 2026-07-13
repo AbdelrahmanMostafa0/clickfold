@@ -1,11 +1,13 @@
-import api from "./api";
+import api, { setCsrfToken } from "./api";
 
 const userLogin = async (email: string, password: string) => {
   try {
-    return await api.post("/auth/login", {
+    const response = await api.post("/auth/login", {
       email,
       password,
     });
+    setCsrfToken(response.data?.csrfToken);
+    return response;
   } catch (error) {
     throw error;
   }
@@ -21,11 +23,13 @@ const userRegister = async ({
   name: string;
 }) => {
   try {
-    return await api.post("/auth/register", {
+    const response = await api.post("/auth/register", {
       email,
       password,
       name,
     });
+    setCsrfToken(response.data?.csrfToken);
+    return response;
   } catch (error) {
     throw error;
   }
@@ -33,15 +37,17 @@ const userRegister = async ({
 const userLogout = async () => {
   try {
     return await api.post("/auth/logout");
-  } catch (error) {
-    throw error;
+  } finally {
+    setCsrfToken(null);
   }
 };
 const googleLogin = async (access_token: string) => {
   try {
-    return await api.post("/auth/google", {
+    const response = await api.post("/auth/google", {
       access_token,
     });
+    setCsrfToken(response.data?.csrfToken);
+    return response;
   } catch (error) {
     throw error;
   }

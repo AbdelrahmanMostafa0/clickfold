@@ -1,8 +1,9 @@
-import api from "./api";
+import api, { setCsrfToken } from "./api";
 
 const getProfile = async () => {
   try {
     const response = await api.get("/profile");
+    setCsrfToken(response.data?.csrfToken);
     return response.data;
   } catch (error) {
     throw error;
