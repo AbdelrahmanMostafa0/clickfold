@@ -99,8 +99,11 @@ export default function NavMenu() {
   const isSignedIn = Boolean(user) && !isLoading;
 
   const handleLogout = async () => {
-    await userLogout();
-    refetchUser();
+    try {
+      await userLogout();
+    } finally {
+      refetchUser();
+    }
   };
 
   return (
