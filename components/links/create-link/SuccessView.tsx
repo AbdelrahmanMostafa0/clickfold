@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { goeyToast } from "goey-toast";
+import QrCodeCard from "@/components/links/QrCodeCard";
 
 interface SuccessViewProps {
   link: {
@@ -103,6 +104,16 @@ export default function SuccessView({
           <p className="text-[10px] text-[#444] mt-2 text-center">
             Redirects to <span className="text-[#666]">{link.destination}</span>
           </p>
+        </motion.div>
+
+        {/* QR Code */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35 }}
+          className="mb-6"
+        >
+          <QrCodeCard url={shortUrl} slug={link.slug} />
         </motion.div>
 
         {/* Link preview card */}

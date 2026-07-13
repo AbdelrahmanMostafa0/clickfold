@@ -15,6 +15,7 @@ import type { LinkAnalytics } from "@/types/analytics";
 import StatCard from "@/components/analytics/StatCard";
 import ClicksLineChart from "@/components/analytics/ClicksLineChart";
 import BreakdownList from "@/components/analytics/BreakdownList";
+import QrCodeCard from "@/components/links/QrCodeCard";
 
 export default function LinkAnalyticsPage({ slug }: { slug: string }) {
   const [data, setData] = useState<LinkAnalytics | null>(null);
@@ -35,8 +36,9 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
     fetchAnalytics();
   }, [slug]);
 
+  const shortUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/l/${slug}`;
+
   const copyToClipboard = () => {
-    const shortUrl = `${window.location.origin}/l/${slug}`;
     navigator.clipboard.writeText(shortUrl);
     goeyToast.success("Link copied to clipboard");
   };
@@ -123,6 +125,8 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
             accent={link.isActive ? "#00ff88" : "#888"}
           />
         </div>
+
+        <QrCodeCard url={shortUrl} slug={link.slug} />
 
         <div className="bg-[#111] border border-white/5 rounded-xl p-6">
           <h2 className="text-white text-sm font-medium mb-4">

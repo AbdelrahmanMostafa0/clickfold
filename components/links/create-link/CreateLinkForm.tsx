@@ -15,6 +15,7 @@ import {
   Globe,
   EyeOff,
   Palette,
+  ChevronDown,
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
@@ -47,6 +48,9 @@ const schema = z
     ogMode: z.enum(["custom", "original", "none"]),
     campaignId: z.string().optional(),
     tags: z.string().optional(),
+    utmSource: z.string().optional(),
+    utmMedium: z.string().optional(),
+    utmCampaign: z.string().optional(),
   })
   .superRefine((data, ctx) => {
     if (data.ogMode === "custom") {
@@ -108,6 +112,21 @@ interface CreatedLinkData {
   };
 }
 
+function buildDestinationWithUtm(
+  destination: string,
+  utm: { utmSource?: string; utmMedium?: string; utmCampaign?: string },
+) {
+  try {
+    const url = new URL(destination);
+    if (utm.utmSource) url.searchParams.set("utm_source", utm.utmSource);
+    if (utm.utmMedium) url.searchParams.set("utm_medium", utm.utmMedium);
+    if (utm.utmCampaign) url.searchParams.set("utm_campaign", utm.utmCampaign);
+    return url.toString();
+  } catch {
+    return destination;
+  }
+}
+
 export default function CreateLinkForm() {
   const [ogImage, setOgImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -116,6 +135,7 @@ export default function CreateLinkForm() {
   const [slugFocused, setSlugFocused] = useState(false);
   const [createdLink, setCreatedLink] = useState<CreatedLinkData | null>(null);
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [showUtm, setShowUtm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const slugContainerRef = useRef<HTMLDivElement>(null);
 
@@ -142,6 +162,9 @@ export default function CreateLinkForm() {
       ogMode: "custom",
       campaignId: "",
       tags: "",
+      utmSource: "",
+      utmMedium: "",
+      utmCampaign: "",
     },
   });
 
@@ -208,9 +231,15 @@ export default function CreateLinkForm() {
     setImageError(null);
     setIsSubmitting(true);
     try {
+      const finalDestination = buildDestinationWithUtm(values.destination, {
+        utmSource: values.utmSource,
+        utmMedium: values.utmMedium,
+        utmCampaign: values.utmCampaign,
+      });
+
       const formData = new FormData();
       formData.append("slug", values.slug);
-      formData.append("destination", values.destination);
+      formData.append("destination", finalDestination);
       formData.append("ogMode", values.ogMode);
 
       if (values.ogMode === "custom") {
@@ -229,7 +258,7 @@ export default function CreateLinkForm() {
       // Build the created link data for success view
       const linkData: CreatedLinkData = {
         slug: values.slug,
-        destination: values.destination,
+        destination: finalDestination,
         ogMode: values.ogMode,
       };
 
@@ -426,6 +455,83 @@ export default function CreateLinkForm() {
                 {...register("tags")}
               />
             </div>
+          </motion.div>
+
+          {/* ── UTM Parameters (collapsible) ── */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.24 }}
+          >
+            <button
+              type="button"
+              onClick={() => setShowUtm((prev) => !prev)}
+              className="w-full flex items-center justify-between text-xs uppercase tracking-wider text-[#888] hover:text-white transition-colors py-1"
+            >
+              UTM Parameters
+              <ChevronDown
+                className={`size-3.5 transition-transform ${showUtm ? "rotate-180" : ""}`}
+              />
+            </button>
+            <AnimatePresence>
+              {showUtm && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="overflow-hidden"
+                >
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3">
+                    <div>
+                      <Label
+                        htmlFor="utmSource"
+                        className=" text-xs uppercase tracking-wider mb-2 block"
+                      >
+                        Source
+                      </Label>
+                      <Input
+                        id="utmSource"
+                        placeholder="newsletter"
+                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        {...register("utmSource")}
+                      />
+                    </div>
+                    <div>
+                      <Label
+                        htmlFor="utmMedium"
+                        className=" text-xs uppercase tracking-wider mb-2 block"
+                      >
+                        Medium
+                      </Label>
+                      <Input
+                        id="utmMedium"
+                        placeholder="email"
+                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        {...register("utmMedium")}
+                      />
+                    </div>
+                    <div>
+                      <Label
+                        htmlFor="utmCampaign"
+                        className=" text-xs uppercase tracking-wider mb-2 block"
+                      >
+                        Campaign Tag
+                      </Label>
+                      <Input
+                        id="utmCampaign"
+                        placeholder="july-launch"
+                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        {...register("utmCampaign")}
+                      />
+                    </div>
+                  </div>
+                  <p className="text-[10px] text-[#444] mt-2">
+                    Appended to the destination URL as query parameters.
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           {/* ── OG Divider with Mode Toggle ── */}
