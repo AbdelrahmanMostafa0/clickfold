@@ -1,47 +1,27 @@
-import { useUser } from "@/context/UserContext";
 import Image from "next/image";
-import React from "react";
+import { useUser } from "@/context/UserContext";
 
-const ProfileHeader = ({
-  avatarPreview,
-}: {
-  avatarPreview: string | null | undefined;
-}) => {
-  const { user, isLoading, refetchUser } = useUser();
+export default function ProfileHeader({ avatarPreview }: { avatarPreview?: string | null }) {
+  const { user } = useUser();
   const userInitials = user?.name
-    ? user.name
-        .split(" ")
-        .map((n: string) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2)
+    ? user.name.split(" ").map((name: string) => name[0]).join("").toUpperCase().slice(0, 2)
     : "?";
+  const avatar = avatarPreview || user?.avatar;
 
   return (
-    <div className="flex items-center gap-4 flex-wrap sm:justify-start justify-center border-b border-white/10 pb-6">
-      <div className="w-16 h-16 rounded-full bg-[#111] border border-white/10 flex items-center justify-center overflow-hidden">
-        {(avatarPreview as string) || (user?.avatar as string) ? (
-          <Image
-            src={(avatarPreview as string) || (user?.avatar as string)}
-            alt={user?.name || ""}
-            className="w-full h-full object-cover"
-            width={64}
-            height={64}
-          />
+    <header className="grid gap-7 border-b-2 border-foreground pb-9 sm:grid-cols-[auto_1fr] sm:items-end">
+      <div className="flex size-24 items-center justify-center overflow-hidden border-2 border-foreground bg-primary">
+        {avatar ? (
+          <Image src={avatar} alt={user?.name || "Profile image"} className="h-full w-full object-cover" width={96} height={96} />
         ) : (
-          <span className="text-xl font-bold text-[#ff2d2d]">
-            {userInitials}
-          </span>
+          <span className="text-3xl font-black text-primary-foreground">{userInitials}</span>
         )}
       </div>
-      <div className="text-center sm:text-start">
-        <h1 className="text-2xl sm:text-3xl font-semibold text-white">
-          {user?.name}
-        </h1>
-        <p className="text-[#666] text-sm">{user?.email}</p>
+      <div>
+        <span className="eyebrow">Profile and security</span>
+        <h1 className="mt-4 text-4xl font-black tracking-[-0.045em] sm:text-5xl">{user?.name || "Your workspace"}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{user?.email}</p>
       </div>
-    </div>
+    </header>
   );
-};
-
-export default ProfileHeader;
+}

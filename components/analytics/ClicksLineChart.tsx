@@ -2,26 +2,29 @@
 
 import type { ReactNode } from "react";
 import {
-  ResponsiveContainer,
-  AreaChart,
   Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
 } from "recharts";
 import type { ClicksByDate } from "@/types/analytics";
 
 function formatDate(date: ReactNode) {
-  const d = new Date(String(date));
-  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const value = new Date(String(date));
+  return value.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 }
 
 export default function ClicksLineChart({ data }: { data: ClicksByDate[] }) {
   if (data.length === 0) {
     return (
-      <div className="h-64 flex items-center justify-center text-[#555] text-sm">
-        No click data yet
+      <div className="grid h-64 place-items-center border border-dashed border-border bg-background/60 px-6 text-center">
+        <div>
+          <p className="font-bold text-foreground">The chart is ready for its first click.</p>
+          <p className="mt-1 text-sm text-muted-foreground">Share a campaign link and activity will appear here.</p>
+        </div>
       </div>
     );
   }
@@ -30,45 +33,41 @@ export default function ClicksLineChart({ data }: { data: ClicksByDate[] }) {
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
-          <defs>
-            <linearGradient id="clicksGradient" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#ff2d2d" stopOpacity={0.35} />
-              <stop offset="100%" stopColor="#ff2d2d" stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#ffffff0d" vertical={false} />
+          <CartesianGrid strokeDasharray="4 4" stroke="var(--border)" vertical={false} />
           <XAxis
             dataKey="date"
             tickFormatter={formatDate}
-            stroke="#555"
-            tick={{ fill: "#666", fontSize: 11 }}
+            stroke="var(--border)"
+            tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
             tickLine={false}
-            axisLine={{ stroke: "#ffffff14" }}
+            axisLine={{ stroke: "var(--border)" }}
           />
           <YAxis
             allowDecimals={false}
-            stroke="#555"
-            tick={{ fill: "#666", fontSize: 11 }}
+            stroke="var(--border)"
+            tick={{ fill: "var(--muted-foreground)", fontSize: 11 }}
             tickLine={false}
             axisLine={false}
             width={32}
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#111",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 8,
+              backgroundColor: "var(--foreground)",
+              color: "var(--background)",
+              border: "1px solid var(--foreground)",
+              borderRadius: 0,
               fontSize: 12,
             }}
-            labelStyle={{ color: "#888" }}
+            labelStyle={{ color: "var(--background)" }}
             labelFormatter={formatDate}
           />
           <Area
             type="monotone"
             dataKey="clicks"
-            stroke="#ff2d2d"
-            strokeWidth={2}
-            fill="url(#clicksGradient)"
+            stroke="var(--primary)"
+            strokeWidth={3}
+            fill="var(--primary)"
+            fillOpacity={0.12}
           />
         </AreaChart>
       </ResponsiveContainer>

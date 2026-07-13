@@ -1,15 +1,17 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { userLinks } from "@/services/links";
 import { goeyToast } from "goey-toast";
+import { userLinks } from "@/services/links";
+import type { Link } from "@/types/link";
 import LinksTable from "./LinksTable";
 import MyLinksHeader from "./MyLinksHeader";
 import LinksPagination from "./LinksPagination";
 
-const MyLinksPage = () => {
-  const [links, setLinks] = useState<any[]>([]);
+export default function MyLinksPage() {
+  const [links, setLinks] = useState<Link[]>([]);
   const [loading, setLoading] = useState(true);
-  const [sort, setSort] = useState<string>("newest");
+  const [sort, setSort] = useState("newest");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
@@ -17,19 +19,15 @@ const MyLinksPage = () => {
     const fetchLinks = async () => {
       setLoading(true);
       try {
-        const response = await userLinks({
-          page,
-          limit: 10,
-          sortBy: sort,
-        });
+        const response = await userLinks({ page, limit: 10, sortBy: sort });
         if (response?.success && response?.data?.links) {
-          setLinks(response.data.links);
+          setLinks(response.data.links as Link[]);
           setTotalPages(response.data.pagination?.pages || 1);
         } else {
-          goeyToast.error("Failed to load links");
+          goeyToast.error("We couldn't load your links. Try refreshing the page.");
         }
-      } catch (error) {
-        goeyToast.error("Failed to fetch links");
+      } catch {
+        goeyToast.error("We couldn't reach your link index. Check your connection and try again.");
       } finally {
         setLoading(false);
       }
@@ -43,18 +41,12 @@ const MyLinksPage = () => {
   };
 
   return (
-    <div className="w-full space-y-6 py-24 min-h-screen max-w-6xl mx-auto px-4">
-      <MyLinksHeader sort={sort} setSort={handleSortChange} />
-      <LinksTable links={links} loading={loading} />
-      {totalPages > 1 && (
-        <LinksPagination
-          page={page}
-          totalPages={totalPages}
-          onPageChange={setPage}
-        />
-      )}
-    </div>
+    <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <MyLinksHeader sort={sort} setSort={handleSortChange} />
+        <LinksTable links={links} loading={loading} />
+        {totalPages > 1 && <LinksPagination page={page} totalPages={totalPages} onPageChange={setPage} />}
+      </div>
+    </main>
   );
-};
-
-export default MyLinksPage;
+}

@@ -8,7 +8,6 @@ import {
   useCallback,
   ReactNode,
 } from "react";
-import api from "@/services/api";
 import { getProfile } from "@/services/profile";
 
 interface User {
@@ -34,11 +33,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   const fetchUser = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
     try {
       const { data } = await getProfile();
+      setError(null);
       setUser(data);
     } catch {
       setUser(null);
@@ -49,8 +46,20 @@ export function UserProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    fetchUser();
+    // The profile session is resolved by the client API after hydration.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void fetchUser();
   }, [fetchUser]);
+
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      setUser(null);
+      setIsLoading(false);
+    };
+    window.addEventListener("auth:unauthorized", handleUnauthorized);
+    return () =>
+      window.removeEventListener("auth:unauthorized", handleUnauthorized);
+  }, []);
 
   return (
     <UserContext.Provider

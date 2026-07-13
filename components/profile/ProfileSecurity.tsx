@@ -53,67 +53,67 @@ const ProfileSecurity = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3 }}
-      className="bg-[#111] border border-white/5 rounded-xl p-6"
+      className="border-2 border-foreground bg-card p-6"
     >
-      <h2 className="text-white text-lg font-medium flex items-center gap-2 mb-6">
-        <Settings className="size-4 text-[#ff2d2d]" /> Security
+      <h2 className="text-foreground text-lg font-medium flex items-center gap-2 mb-6">
+        <Settings className="size-4 text-primary" /> Security
       </h2>
 
       <form
         onSubmit={handlePasswordSubmit(onPasswordUpdate)}
-        className="space-y-4 pb-6 border-b border-white/10 mb-6"
+        className="space-y-4 pb-6 border-b border-border mb-6"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="sm:col-span-2">
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
+            <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
               Current Password
             </Label>
             <Input
               type="password"
               {...registerPassword("password")}
-              className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground focus-visible:ring-primary/20"
             />
             {passwordErrors.password && (
-              <p className="text-[#ff2d2d] text-xs mt-1.5">
+              <p className="mt-1.5 text-xs text-destructive" role="alert">
                 {passwordErrors.password.message}
               </p>
             )}
           </div>
 
           <div>
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
+            <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
               New Password
             </Label>
             <Input
               type="password"
               {...registerPassword("newPassword")}
-              className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground focus-visible:ring-primary/20"
             />
             {passwordErrors.newPassword && (
-              <p className="text-[#ff2d2d] text-xs mt-1.5">
+              <p className="mt-1.5 text-xs text-destructive" role="alert">
                 {passwordErrors.newPassword.message}
               </p>
             )}
           </div>
 
           <div>
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
+            <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
               Confirm New Password
             </Label>
             <Input
               type="password"
               {...registerPassword("confirmPassword")}
-              className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground focus-visible:ring-primary/20"
             />
             {passwordErrors.confirmPassword && (
-              <p className="text-[#ff2d2d] text-xs mt-1.5">
+              <p className="mt-1.5 text-xs text-destructive" role="alert">
                 {passwordErrors.confirmPassword.message}
               </p>
             )}
           </div>
 
           {passwordError && (
-            <p className="text-[#ff2d2d] text-xs mt-1.5">{passwordError}</p>
+            <p className="mt-1.5 text-xs text-destructive" role="alert">{passwordError}</p>
           )}
         </div>
 
@@ -121,7 +121,7 @@ const ProfileSecurity = () => {
           <Button
             type="submit"
             disabled={isPasswordSubmitting}
-            className="bg-white/10 hover:bg-white/20 text-white"
+            className="border-2 border-foreground bg-secondary text-foreground hover:bg-background"
           >
             <ShieldAlert className="size-4 mr-2" />
             {isPasswordSubmitting ? "Updating..." : "Update Password"}
@@ -131,10 +131,10 @@ const ProfileSecurity = () => {
 
       {/* Danger Zone */}
       <div>
-        <h3 className="text-[#ff2d2d] text-sm font-medium mb-2 uppercase tracking-wide">
+        <h3 className="mb-2 text-sm font-bold uppercase tracking-wide text-destructive">
           Danger Zone
         </h3>
-        <p className="text-[#888] text-xs mb-4">
+        <p className="text-muted-foreground text-xs mb-4">
           Permanently delete your account and all associated links. This action
           cannot be reversed.
         </p>

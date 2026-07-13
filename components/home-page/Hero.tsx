@@ -1,82 +1,103 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useUser } from "@/context/UserContext";
-import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowDownRight, CircleCheck, MousePointer2 } from "lucide-react";
 import CTAButton from "./CTAButton";
 
-const exampleSlugs = [
-  "summer-sale",
-  "launch-2026",
-  "newsletter-july",
-  "webinar-signup",
-  "black-friday",
+const channels = [
+  { name: "Newsletter", path: "/field-notes", clicks: "1,284", color: "bg-primary" },
+  { name: "Instagram", path: "/summer-cut", clicks: "732", color: "bg-accent" },
+  { name: "Pop-up QR", path: "/scan-here", clicks: "189", color: "bg-success" },
 ];
 
 export default function Hero() {
-  const [slug, setSlug] = useState("");
-  const [currentExample, setCurrentExample] = useState(0);
-  const router = useRouter();
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentExample((prev) => (prev + 1) % exampleSlugs.length);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-  const { user } = useUser();
   return (
-    <section className="relative min-h-screen flex items-center justify-center px-6 pt-16 noise-bg overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#ff2d2d]/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-[#00ff88]/3 rounded-full blur-[100px] pointer-events-none" />
-
-      <div className="relative z-10 max-w-3xl mx-auto text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+    <section className="studio-grid relative overflow-hidden border-b border-foreground px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-28 lg:pt-40">
+      <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-6xl sm:text-7xl md:text-8xl leading-[0.9] tracking-tight text-white mb-6"
-          style={{ fontFamily: "var(--font-display)" }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-2xl"
         >
-          Short links.
-          <br />
-          <span className="text-[#ff2d2d] glow-red-text">
-            Full picture.
-          </span>
-        </motion.h1>
+          <span className="eyebrow mb-7">Campaign link studio</span>
+          <h1 className="max-w-[11ch] text-[clamp(4rem,10vw,7.75rem)] font-black leading-[0.82] tracking-[-0.07em]">
+            Every link has a <span className="text-primary">job.</span>
+          </h1>
+          <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">
+            Build campaign-ready links, shape how they appear, and see what
+            earns attention—without an enterprise analytics maze.
+          </p>
+          <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
+            <CTAButton />
+            <Link
+              href="#workflow"
+              className="inline-flex min-h-11 items-center gap-2 px-1 font-bold text-foreground underline decoration-primary decoration-2 underline-offset-4"
+            >
+              See the workflow
+              <ArrowDownRight className="size-4" />
+            </Link>
+          </div>
+        </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-base sm:text-lg text-[#888] max-w-xl mx-auto mb-10 leading-relaxed"
+        <motion.div
+          initial={{ opacity: 0, x: 30, rotate: 1.5 }}
+          animate={{ opacity: 1, x: 0, rotate: -1 }}
+          transition={{ duration: 0.8, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
+          className="relative lg:ml-auto lg:w-[94%]"
         >
-          Shorten links, group them into campaigns, and track every click —
-          geo, device, and referrer data included.
-        </motion.p>
-        <div className="flex flex-col gap-8">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="h-8 flex items-center justify-center"
-          >
-            <span className="text-[#555] text-xs mr-2">try:</span>
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={currentExample}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="text-[#00ff88] text-sm font-mono"
-              >
-                linkpulse.app/{exampleSlugs[currentExample]}
-              </motion.span>
-            </AnimatePresence>
-          </motion.div>
-          <CTAButton />
-        </div>
+          <div className="absolute -left-5 -top-6 z-10 bg-accent px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-accent-foreground sm:-left-8">
+            Live campaign
+          </div>
+          <div className="hard-shadow route-strip border-2 border-foreground bg-card p-5 sm:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-foreground pb-5">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                  Summer field notes
+                </p>
+                <h2 className="mt-1 text-3xl font-black tracking-[-0.04em] sm:text-4xl">
+                  Three routes. One read.
+                </h2>
+              </div>
+              <span className="inline-flex items-center gap-1.5 bg-success/20 px-3 py-1.5 text-xs font-bold text-success-foreground">
+                <CircleCheck className="size-3.5" /> Live
+              </span>
+            </div>
+
+            <div className="divide-y divide-border">
+              {channels.map((channel, index) => (
+                <motion.div
+                  key={channel.path}
+                  initial={{ opacity: 0, x: 16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.45, delay: 0.3 + index * 0.09 }}
+                  className="grid grid-cols-[auto_1fr_auto] items-center gap-4 py-5"
+                >
+                  <span className={`size-3 ${channel.color}`} aria-hidden="true" />
+                  <div className="min-w-0">
+                    <p className="font-bold">{channel.name}</p>
+                    <p className="truncate text-sm text-muted-foreground">clickfold.app{channel.path}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="data-number text-xl font-black">{channel.clicks}</p>
+                    <p className="text-[0.68rem] font-bold uppercase tracking-wider text-muted-foreground">clicks</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+
+            <div className="mt-2 grid gap-4 bg-foreground p-4 text-background sm:grid-cols-[1fr_auto] sm:items-center">
+              <div className="flex items-center gap-3">
+                <MousePointer2 className="size-5 text-primary" />
+                <p className="text-sm font-semibold">
+                  Newsletter is carrying 58% of this campaign.
+                </p>
+              </div>
+              <span className="text-xs font-bold uppercase tracking-wider text-background/60">Demo data</span>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

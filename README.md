@@ -1,6 +1,6 @@
-# LinkPulse
+# Clickfold
 
-**LinkPulse** is a link management platform: shorten URLs, group them into campaigns, and track every click with geo, device, and referrer analytics. Frontend for the [LinkPulse API](https://github.com/AbdelrahmanMostafa0/linkpulse-api).
+**Clickfold** is a link management platform: shorten URLs, group them into campaigns, and track every click with geo, device, and referrer analytics. Frontend for the [Clickfold API](https://github.com/AbdelrahmanMostafa0/linkpulse-api).
 
 ---
 
@@ -92,7 +92,7 @@ Rather than a client-side redirect (extra round trip, visible flash), `/l/[slug]
 ### Prerequisites
 
 - Node.js 20+
-- A running instance of the [LinkPulse API](https://github.com/AbdelrahmanMostafa0/linkpulse-api)
+- A running instance of the [Clickfold API](https://github.com/AbdelrahmanMostafa0/linkpulse-api)
 
 ### Installation
 
@@ -124,11 +124,14 @@ Open [http://localhost:3000](http://localhost:3000).
 ## Environment Variables
 
 ```env
-# Base URL of the LinkPulse API
+# Base URL of the Clickfold API
 NEXT_PUBLIC_API_URL=http://localhost:9000/api
 
 # Google OAuth client ID
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-client-id>
+
+# Canonical production URL used by metadata, robots.txt, and sitemap.xml
+NEXT_PUBLIC_SITE_URL=https://clickfold.app
 ```
 
 ---

@@ -1,14 +1,11 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Upload,
-  X,
-  Image as ImageIcon,
   Link2,
   Sparkles,
   Loader2,
@@ -19,7 +16,6 @@ import {
 } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { suggestedSlugs } from "@/data/slugs";
@@ -58,14 +54,14 @@ const schema = z
       if (!data.ogTitle || data.ogTitle.trim().length === 0) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "OG Title is required in custom mode",
+          message: "Preview title is required",
           path: ["ogTitle"],
         });
       }
       if (!data.ogDescription || data.ogDescription.trim().length === 0) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
-          message: "OG Description is required in custom mode",
+          message: "Preview description is required",
           path: ["ogDescription"],
         });
       }
@@ -84,21 +80,21 @@ const ogModeOptions: {
 }[] = [
   {
     value: "custom",
-    label: "Custom",
+    label: "Custom preview",
     icon: <Palette className="size-3.5" />,
-    description: "Set your own OG metadata",
+    description: "Art-direct the card people see when this link is shared.",
   },
   {
     value: "original",
-    label: "Use Original",
+    label: "Destination preview",
     icon: <Globe className="size-3.5" />,
-    description: "Use destination page's OG data",
+    description: "Reuse the title, description, and image from the destination.",
   },
   {
     value: "none",
-    label: "No OG",
+    label: "No preview",
     icon: <EyeOff className="size-3.5" />,
-    description: "Disable all OG metadata",
+    description: "Keep the route plain and skip a social share card.",
   },
 ];
 
@@ -149,7 +145,7 @@ export default function CreateLinkForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     reset,
     formState: { errors },
@@ -169,8 +165,8 @@ export default function CreateLinkForm() {
     },
   });
 
-  const slugValue = watch("slug");
-  const ogMode = watch("ogMode");
+  const slugValue = useWatch({ control, name: "slug" });
+  const ogMode = useWatch({ control, name: "ogMode" });
 
   /* Filter suggestions */
   const filteredSuggestions = slugValue
@@ -272,7 +268,7 @@ export default function CreateLinkForm() {
       }
 
       setCreatedLink(linkData);
-      goeyToast.success("Link created successfully!");
+      goeyToast.success("Campaign route is live");
     } catch (error: unknown) {
       goeyToast.error(getApiErrorMessage(error, "Failed to create link"));
     } finally {
@@ -298,22 +294,23 @@ export default function CreateLinkForm() {
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className="w-full max-w-xl mx-auto"
+      className="mx-auto w-full max-w-3xl"
     >
-      <div className="bg-[#111] border border-white/5 rounded-xl p-6 sm:p-8 relative overflow-hidden">
-        {/* Subtle glow */}
-        <div className="absolute -top-20 -right-20 w-40 h-40 bg-[#ff2d2d]/5 rounded-full blur-[80px] pointer-events-none" />
-        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-[#00ff88]/3 rounded-full blur-[80px] pointer-events-none" />
-
+      <div className="relative border-2 border-foreground bg-card p-6 hard-shadow sm:p-9">
         {/* Header */}
-        <div className="relative mb-8">
+        <div className="relative mb-9 max-w-2xl">
+          <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+            Route builder / 01
+          </p>
           <h1
-            className="text-3xl sm:text-4xl text-white mb-2"
+            className="mb-3 text-4xl leading-none text-foreground sm:text-5xl"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Create a <span className="text-[#ff2d2d] glow-red-text">link</span>
+            Build a campaign link.
           </h1>
-          <p className=" text-sm">Set the destination and customize how it looks when shared.</p>
+          <p className="max-w-xl text-sm leading-6 text-muted-foreground">
+            Give the route a memorable path, add clean campaign signals, then decide exactly how it should look when shared.
+          </p>
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="relative space-y-6">
@@ -327,25 +324,25 @@ export default function CreateLinkForm() {
           >
             <Label
               htmlFor="slug"
-              className=" text-xs uppercase tracking-wider mb-2 block"
+              className="mb-2 block text-xs font-bold uppercase tracking-wider"
             >
-              Slug <span className="text-[#ff2d2d]">*</span>
+              Link path <span className="text-destructive">*</span>
             </Label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#444] text-sm pointer-events-none">
-                linkpulse.app/
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm pointer-events-none">
+                clickfold.app/
               </span>
               <Input
                 id="slug"
                 placeholder="summer-sale"
-                className="pl-[100px] bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                className="pl-[100px] bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
                 {...register("slug")}
                 onFocus={() => setSlugFocused(true)}
                 autoComplete="off"
               />
             </div>
             {errors.slug && (
-              <p className="text-[#ff2d2d] text-xs mt-1.5">
+              <p className="mt-1.5 text-xs text-destructive" role="alert">
                 {errors.slug.message}
               </p>
             )}
@@ -358,12 +355,12 @@ export default function CreateLinkForm() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute z-20 left-0 right-0 mt-1 max-h-48 overflow-y-auto bg-[#0a0a0a] border border-white/8 rounded-lg shadow-xl"
+                  className="absolute z-20 left-0 right-0 mt-1 max-h-48 overflow-y-auto border-2 border-foreground bg-background hard-shadow"
                 >
                   <div className="p-1.5">
                     <div className="flex items-center gap-1.5 px-2 py-1.5 mb-1">
-                      <Sparkles className="size-3 text-[#00ff88]" />
-                      <span className="text-[10px] uppercase tracking-wider text-[#555]">
+                      <Sparkles className="size-3 text-success" />
+                      <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
                         Suggestions
                       </span>
                     </div>
@@ -376,10 +373,10 @@ export default function CreateLinkForm() {
                           setValue("slug", slug, { shouldValidate: true });
                           setSlugFocused(false);
                         }}
-                        className="w-full text-left px-3 py-2 rounded-md text-sm  hover:bg-[#1a1a1a] hover:text-[#ff2d2d] transition-colors flex items-center gap-2"
+                        className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-secondary hover:text-primary"
                       >
-                        <Link2 className="size-3 text-[#444]" />
-                        <span className="text-[#444]">linkpulse.app/</span>
+                        <Link2 className="size-3 text-muted-foreground" />
+                        <span className="text-muted-foreground">clickfold.app/</span>
                         <span>{slug}</span>
                       </button>
                     ))}
@@ -397,18 +394,18 @@ export default function CreateLinkForm() {
           >
             <Label
               htmlFor="destination"
-              className=" text-xs uppercase tracking-wider mb-2 block"
+              className="mb-2 block text-xs font-bold uppercase tracking-wider"
             >
-              Destination URL <span className="text-[#ff2d2d]">*</span>
+              Where it leads <span className="text-destructive">*</span>
             </Label>
             <Input
               id="destination"
               placeholder="https://youtube.com/watch?v=dQw4w9WgXcQ"
-              className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
               {...register("destination")}
             />
             {errors.destination && (
-              <p className="text-[#ff2d2d] text-xs mt-1.5">
+              <p className="mt-1.5 text-xs text-destructive" role="alert">
                 {errors.destination.message}
               </p>
             )}
@@ -424,14 +421,14 @@ export default function CreateLinkForm() {
             <div>
               <Label
                 htmlFor="campaignId"
-                className=" text-xs uppercase tracking-wider mb-2 block"
+                className="mb-2 block text-xs font-bold uppercase tracking-wider"
               >
                 Campaign
               </Label>
               <select
                 id="campaignId"
                 {...register("campaignId")}
-                className="w-full h-10 rounded-md bg-[#0a0a0a] border border-white/8 text-white text-sm px-3 outline-none focus-visible:border-[#ff2d2d]/50 focus-visible:ring-1 focus-visible:ring-[#ff2d2d]/20"
+                className="h-10 w-full rounded-sm border border-input bg-background px-3 text-sm text-foreground outline-none focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20"
               >
                 <option value="">No campaign</option>
                 {campaigns.map((campaign) => (
@@ -444,14 +441,14 @@ export default function CreateLinkForm() {
             <div>
               <Label
                 htmlFor="tags"
-                className=" text-xs uppercase tracking-wider mb-2 block"
+                className="mb-2 block text-xs font-bold uppercase tracking-wider"
               >
                 Tags
               </Label>
               <Input
                 id="tags"
                 placeholder="launch, email, q3"
-                className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
                 {...register("tags")}
               />
             </div>
@@ -466,9 +463,9 @@ export default function CreateLinkForm() {
             <button
               type="button"
               onClick={() => setShowUtm((prev) => !prev)}
-              className="w-full flex items-center justify-between text-xs uppercase tracking-wider text-[#888] hover:text-white transition-colors py-1"
+              className="flex w-full items-center justify-between border-y border-border py-3 text-xs font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
             >
-              UTM Parameters
+              Campaign tracking
               <ChevronDown
                 className={`size-3.5 transition-transform ${showUtm ? "rotate-180" : ""}`}
               />
@@ -493,7 +490,7 @@ export default function CreateLinkForm() {
                       <Input
                         id="utmSource"
                         placeholder="newsletter"
-                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
                         {...register("utmSource")}
                       />
                     </div>
@@ -507,7 +504,7 @@ export default function CreateLinkForm() {
                       <Input
                         id="utmMedium"
                         placeholder="email"
-                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
                         {...register("utmMedium")}
                       />
                     </div>
@@ -521,13 +518,13 @@ export default function CreateLinkForm() {
                       <Input
                         id="utmCampaign"
                         placeholder="july-launch"
-                        className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#ff2d2d]/50 focus-visible:ring-[#ff2d2d]/20"
+                        className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-primary/50 focus-visible:ring-primary/20"
                         {...register("utmCampaign")}
                       />
                     </div>
                   </div>
-                  <p className="text-[10px] text-[#444] mt-2">
-                    Appended to the destination URL as query parameters.
+                  <p className="text-[10px] text-muted-foreground mt-2">
+                    These signals are added to the destination so campaign traffic stays attributable.
                   </p>
                 </motion.div>
               )}
@@ -537,11 +534,11 @@ export default function CreateLinkForm() {
           {/* ── OG Divider with Mode Toggle ── */}
           <div className="relative py-2">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-white/5" />
+              <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center">
-              <span className="bg-[#111] px-3 text-[10px] uppercase tracking-widest">
-                OG Meta
+              <span className="bg-card px-3 text-[10px] uppercase tracking-widest">
+                Share preview
               </span>
             </div>
           </div>
@@ -562,17 +559,17 @@ export default function CreateLinkForm() {
                     onClick={() =>
                       setValue("ogMode", option.value, { shouldValidate: true })
                     }
-                    className={`relative flex flex-col items-center gap-1.5 rounded-lg border p-3 transition-all cursor-pointer ${
+                    className={`relative flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-sm border p-3 text-center transition-all ${
                       isActive
-                        ? "border-[#00ff88]/40 bg-[#00ff88]/5 text-white"
-                        : "border-white/8 bg-[#0a0a0a]  hover:border-white/15 hover:bg-[#0a0a0a]/80"
+                        ? "border-foreground bg-secondary text-foreground"
+                        : "border-input bg-background  hover:border-foreground/20 hover:bg-background/80"
                     }`}
                   >
                     <div
-                      className={`w-7 h-7 rounded-md flex items-center justify-center transition-colors ${
+                      className={`flex size-7 items-center justify-center rounded-sm transition-colors ${
                         isActive
-                          ? "bg-[#00ff88]/15 text-[#00ff88]"
-                          : "bg-white/5 text-[#555]"
+                          ? "bg-foreground text-background"
+                          : "bg-secondary text-muted-foreground"
                       }`}
                     >
                       {option.icon}
@@ -584,7 +581,7 @@ export default function CreateLinkForm() {
                 );
               })}
             </div>
-            <p className="text-[10px] mt-2 text-center">
+            <p className="mt-3 text-center text-xs text-muted-foreground">
               {ogModeOptions.find((o) => o.value === ogMode)?.description}
             </p>
           </motion.div>
@@ -616,17 +613,17 @@ export default function CreateLinkForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-11 bg-[#ff2d2d] hover:bg-[#ff2d2d]/90 text-white font-semibold glow-red transition-all"
+              className="h-12 w-full border-2 border-foreground bg-primary font-bold text-primary-foreground hard-shadow transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
             >
               {isSubmitting ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
-                  Creating…
+                  Building route…
                 </>
               ) : (
                 <>
                   <Link2 className="size-4" />
-                  Create Link
+                  Build campaign link
                 </>
               )}
             </Button>

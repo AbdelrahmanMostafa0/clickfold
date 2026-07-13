@@ -33,25 +33,25 @@ const InfoUpdate = () => {
     const formData = new FormData();
     formData.append("name", data.name);
     try {
-      const { data } = await updateProfile(formData);
-      goeyToast.success("Profile updated successfully");
+      await updateProfile(formData);
+      goeyToast.success("Display name updated");
       refetchUser();
-    } catch (error) {
+    } catch {
       goeyToast.error("Failed to update profile");
     }
   };
   useEffect(() => {
     setValue("name", user?.name || "");
-  }, [user]);
+  }, [setValue, user]);
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="bg-[#111] border border-white/5 rounded-xl p-6"
+      className="border-2 border-foreground bg-card p-6"
     >
-      <h2 className="text-white text-lg font-medium flex items-center gap-2 mb-6">
-        <UserIcon className="size-4 text-[#ff2d2d]" /> Display Settings
+      <h2 className="text-foreground text-lg font-medium flex items-center gap-2 mb-6">
+        <UserIcon className="size-4 text-primary" /> Display Settings
       </h2>
 
       <form
@@ -61,17 +61,17 @@ const InfoUpdate = () => {
         <div>
           <Label
             htmlFor="name"
-            className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
+            className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block"
           >
             Display Name
           </Label>
           <Input
             id="name"
             {...registerProfile("name")}
-            className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+            className="bg-background border-input text-foreground focus-visible:ring-primary/20"
           />
           {profileErrors.name && (
-            <p className="text-[#ff2d2d] text-xs mt-1.5">
+            <p className="mt-1.5 text-xs text-destructive" role="alert">
               {profileErrors.name.message}
             </p>
           )}
@@ -81,7 +81,7 @@ const InfoUpdate = () => {
           <Button
             type="submit"
             disabled={isProfileSubmitting}
-            className="bg-white/10 hover:bg-white/20 text-white"
+            className="border-2 border-foreground bg-secondary text-foreground hover:bg-background"
           >
             <Save className="size-4 mr-2" />
             {isProfileSubmitting ? "Saving..." : "Save Changes"}

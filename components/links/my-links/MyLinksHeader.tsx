@@ -1,75 +1,52 @@
-import React from "react";
+import Link from "next/link";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
-import Link from "next/link";
-const MyLinksHeader = ({
+
+const sortLabels: Record<string, string> = {
+  newest: "Newest first",
+  oldest: "Oldest first",
+  mostClicked: "Most clicked",
+};
+
+export default function MyLinksHeader({
   sort,
   setSort,
 }: {
   sort: string;
   setSort: (sort: string) => void;
-}) => {
-  const sortLabels: Record<string, string> = {
-    newest: "Newest first",
-    oldest: "Oldest first",
-    mostClicked: "Most clicked",
-  };
-
+}) {
   return (
-    <div className="flex items-center justify-between flex-wrap gap-4">
-      <h1 className="text-2xl font-semibold text-white">My Links</h1>
-      <div className="flex items-center gap-3">
+    <header className="grid gap-8 border-b-2 border-foreground pb-9 md:grid-cols-[1fr_auto] md:items-end">
+      <div>
+        <span className="eyebrow">Link index</span>
+        <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.055em] sm:text-6xl">Every route, in one place.</h1>
+        <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">Copy, review, and compare the links carrying your campaigns.</p>
+      </div>
+      <div className="flex flex-wrap items-center gap-3">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              variant="outline"
-              className="bg-[#111] border-white/10 text-white hover:bg-white/5 hover:text-white flex items-center gap-2"
-            >
-              {sortLabels[sort]}
-              <ChevronDown className="size-4 opacity-50" />
+            <Button variant="outline" className="min-h-11 rounded-none border-foreground bg-card px-4 text-foreground hover:bg-secondary hover:text-foreground">
+              {sortLabels[sort]} <ChevronDown className="size-4" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent
-            align="end"
-            className="bg-[#1a1a1a] border-white/10 text-white min-w-[160px]"
-          >
-            <DropdownMenuItem
-              className="hover:bg-white/10 cursor-pointer focus:bg-white/10 focus:text-white"
-              onClick={() => setSort("newest")}
-            >
-              Newest first
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="hover:bg-white/10 cursor-pointer focus:bg-white/10 focus:text-white"
-              onClick={() => setSort("oldest")}
-            >
-              Oldest first
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className="hover:bg-white/10 cursor-pointer focus:bg-white/10 focus:text-white"
-              onClick={() => setSort("mostClicked")}
-            >
-              Most clicked
-            </DropdownMenuItem>
+          <DropdownMenuContent align="end" className="min-w-44 border-border bg-popover text-popover-foreground">
+            {Object.entries(sortLabels).map(([value, label]) => (
+              <DropdownMenuItem key={value} onClick={() => setSort(value)} className="cursor-pointer focus:bg-secondary focus:text-foreground">
+                {label}
+              </DropdownMenuItem>
+            ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Button
-          asChild
-          className="bg-[#ff2d2d] text-white hover:bg-[#ff2d2d]/90"
-        >
-          <Link href="/create">Create Link</Link>
-        </Button>
+        <Link href="/create" className="hard-shadow inline-flex min-h-11 items-center gap-2 border border-foreground bg-primary px-4 font-extrabold text-primary-foreground">
+          Build a link <ArrowUpRight className="size-4" />
+        </Link>
       </div>
-    </div>
+    </header>
   );
-};
-
-export default MyLinksHeader;
+}

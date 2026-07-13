@@ -9,7 +9,7 @@ const getProfile = async () => {
   }
 };
 
-const updateProfile = async (data: any) => {
+const updateProfile = async (data: FormData) => {
   try {
     const response = await api.patch("/profile", data, {
       headers: {
@@ -22,7 +22,11 @@ const updateProfile = async (data: any) => {
   }
 };
 
-const updatePassword = async (data: any) => {
+const updatePassword = async (data: {
+  password: string;
+  newPassword: string;
+  confirmPassword: string;
+}) => {
   try {
     const response = await api.patch("/profile/password", data);
     return response.data;
@@ -31,7 +35,7 @@ const updatePassword = async (data: any) => {
   }
 };
 
-const updateAvatar = async (data: any) => {
+const updateAvatar = async (data: FormData) => {
   try {
     const response = await api.patch("/profile/avatar", data, {
       headers: {

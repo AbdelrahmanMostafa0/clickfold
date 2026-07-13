@@ -47,15 +47,16 @@ export default function DeleteCampaignDialog({
       <DialogTrigger asChild>
         <Button
           variant="ghost"
-          className="size-8 p-0 text-[#888] hover:text-[#ff2d2d] hover:bg-[#ff2d2d]/10"
+          className="size-8 p-0 text-muted-foreground hover:text-primary hover:bg-primary/10"
+          aria-label={`Delete ${campaignName}`}
         >
           <Trash2 className="size-4" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#111] border-white/10 text-white sm:max-w-md [&>button>svg]:text-[#888]">
+      <DialogContent className="bg-card border-border text-foreground sm:max-w-md [&>button>svg]:text-muted-foreground">
         <DialogHeader>
           <DialogTitle>Delete &quot;{campaignName}&quot;?</DialogTitle>
-          <DialogDescription className="text-[#888] mt-2">
+          <DialogDescription className="text-muted-foreground mt-2">
             Links in this campaign won&apos;t be deleted — they&apos;ll just
             no longer be grouped under this campaign.
           </DialogDescription>
@@ -65,17 +66,17 @@ export default function DeleteCampaignDialog({
             type="button"
             variant="outline"
             onClick={() => setOpen(false)}
-            className="bg-transparent border-white/10 text-white hover:bg-white/10 hover:text-white"
+            className="bg-transparent border-border text-foreground hover:bg-secondary hover:text-foreground"
           >
-            Cancel
+            Keep campaign
           </Button>
           <Button
             variant="destructive"
             onClick={handleDelete}
             disabled={isDeleting}
-            className="bg-[#ff2d2d] text-white hover:bg-[#ff2d2d]/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
-            {isDeleting ? "Deleting..." : "Delete Campaign"}
+            {isDeleting ? "Deleting…" : "Delete campaign"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -56,16 +56,14 @@ export default function GoogleLoginButton({
     <Button
       type="button"
       variant="secondary"
-      // className=
-      className="w-full"
-      //   className="w-full bg-white dark:bg-white cursor-pointer hover:bg-white dark:hover:bg-white hover:text-black  dark:text-black drop-shadow-md"
+      className="min-h-12 w-full rounded-none border border-foreground bg-card font-bold text-foreground hover:bg-secondary"
       onClick={() => login()}
       disabled={loading}
     >
       {loading ? (
         <>
           <Loader2 className="ml-2 h-4 w-4 animate-spin" />
-          Loading...
+          Connecting…
         </>
       ) : (
         <div className="flex items-center gap-2">

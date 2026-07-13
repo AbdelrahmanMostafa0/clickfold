@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import { useUser } from "@/context/UserContext";
-import Unauthorized from "@/components/links/create-link/Unauthorized";
 import ProfileHeader from "./ProfileHeader";
 import { LinksStats } from "./LinksStats";
 import AvatarUpdate from "./AvatarUpdate";
@@ -25,13 +24,13 @@ export default function ProfilePageClient() {
     : "?";
 
   return (
-    <main className="min-h-screen pt-24 pb-20 px-4 noise-bg relative">
-      <div className="max-w-4xl mx-auto space-y-8">
+    <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl space-y-8">
         <ProfileHeader avatarPreview={avatarPreview} />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-[0.72fr_1.28fr]">
           <LinksStats />
-          <div className="md:col-span-2 space-y-6">
+          <div className="space-y-6">
             <AvatarUpdate
               avatarPreview={avatarPreview}
               userInitials={userInitials}

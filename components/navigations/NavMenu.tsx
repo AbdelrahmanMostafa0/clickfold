@@ -1,17 +1,18 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useUser } from "@/context/UserContext";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription,
   SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -22,226 +23,207 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  User,
-  Link2,
   BarChart3,
-  Megaphone,
-  LogOut,
-  Menu,
   Info,
+  Link2,
+  LogOut,
+  Megaphone,
+  Menu,
+  User,
 } from "lucide-react";
 import { userLogout } from "@/services/auth";
 
-function UserAvatar({ className }: { className?: string }) {
-  const { user } = useUser();
-
-  return (
-    <Avatar className={className}>
-      <AvatarImage src={user?.avatar || ""} alt={user?.name || "User"} />
-      <AvatarFallback className="bg-[#1a1a1a] text-[#ff2d2d] text-xs font-semibold border border-white/10">
-        {user?.name
-          ? user.name
-              .split(" ")
-              .map((n: string) => n[0])
-              .join("")
-              .toUpperCase()
-              .slice(0, 2)
-          : "?"}
-      </AvatarFallback>
-    </Avatar>
-  );
-}
-
 const NAV_LINKS = [
-  { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
-  { href: "/profile/my-links", label: "My Links", icon: Link2 },
+  { href: "/dashboard", label: "Overview", icon: BarChart3 },
+  { href: "/profile/my-links", label: "Links", icon: Link2 },
   { href: "/campaigns", label: "Campaigns", icon: Megaphone },
   { href: "/profile", label: "Profile", icon: User },
   { href: "/about", label: "About", icon: Info },
 ];
 
+function UserAvatar({ className = "" }: { className?: string }) {
+  const { user } = useUser();
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .map((name: string) => name[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "?";
+
+  return (
+    <Avatar className={className}>
+      <AvatarImage src={user?.avatar || ""} alt={user?.name || "User"} />
+      <AvatarFallback className="border border-foreground bg-primary text-xs font-bold text-primary-foreground">
+        {initials}
+      </AvatarFallback>
+    </Avatar>
+  );
+}
+
+function NavItem({
+  href,
+  label,
+  icon: Icon,
+  mobile = false,
+}: {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+  mobile?: boolean;
+}) {
+  const pathname = usePathname();
+  const active = pathname === href || (href !== "/dashboard" && pathname.startsWith(href));
+
+  return (
+    <Link
+      href={href}
+      aria-current={active ? "page" : undefined}
+      className={`flex items-center gap-3 text-sm font-semibold transition-colors ${
+        mobile ? "min-h-11 px-3 py-2" : "px-2 py-1"
+      } ${
+        active
+          ? "text-primary"
+          : "text-muted-foreground hover:text-foreground"
+      }`}
+    >
+      <Icon className="size-4" />
+      {label}
+    </Link>
+  );
+}
+
 export default function NavMenu() {
   const { user, isLoading, refetchUser } = useUser();
-  const isSignedIn = !!user && !isLoading;
+  const isSignedIn = Boolean(user) && !isLoading;
 
   const handleLogout = async () => {
     await userLogout();
     refetchUser();
   };
+
   return (
     <>
-      {/* Desktop */}
-      <div className="hidden sm:flex items-center gap-4">
+      <div className="hidden items-center gap-4 sm:flex">
         {isLoading ? (
-          <div className="w-8 h-8 rounded-full bg-white/5 animate-pulse" />
-        ) : isSignedIn ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="outline-none rounded-full ring-2 ring-transparent hover:ring-[#ff2d2d]/50 transition-all">
-                <UserAvatar />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              className="w-52 bg-[#0a0a0a] border border-white/10 text-white"
-            >
-              <DropdownMenuLabel className="font-normal">
-                <p className="text-sm font-semibold truncate">{user.name}</p>
-                <p className="text-xs text-[#666] truncate">{user.email}</p>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator className="bg-white/10" />
-              {NAV_LINKS.map(({ href, label, icon: Icon }) => (
-                <DropdownMenuItem
-                  key={href}
-                  asChild
-                  className="cursor-pointer text-[#aaa] focus:text-white focus:bg-white/5"
-                >
-                  <Link href={href} className="flex items-center gap-2">
-                    <Icon className="w-4 h-4 text-[#ff2d2d]" />
-                    {label}
-                  </Link>
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuSeparator className="bg-white/10" />
-              <DropdownMenuItem
-                onClick={handleLogout}
-                className="cursor-pointer text-[#666] focus:text-red-400 focus:bg-white/5"
-              >
-                <LogOut className="w-4 h-4 mr-2" />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
+          <div className="size-9 animate-pulse bg-secondary" aria-label="Loading account" />
+        ) : user ? (
           <>
             <Link
-              href="/about"
-              className="text-sm text-[#888] hover:text-white transition-colors mr-4"
+              href="/create"
+              className="hard-shadow border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
             >
+              Build a link
+            </Link>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="rounded-sm outline-none ring-offset-background focus-visible:ring-2 focus-visible:ring-ring">
+                  <UserAvatar />
+                  <span className="sr-only">Open account menu</span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 border-border bg-popover text-popover-foreground">
+                <DropdownMenuLabel className="font-normal">
+                  <p className="truncate text-sm font-bold">{user.name}</p>
+                  <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {NAV_LINKS.map((item) => (
+                  <DropdownMenuItem key={item.href} asChild>
+                    <NavItem {...item} />
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="cursor-pointer text-destructive focus:bg-destructive/10 focus:text-destructive"
+                >
+                  <LogOut className="mr-2 size-4" />
+                  Sign out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ) : (
+          <>
+            <Link href="/about" className="text-sm font-semibold text-muted-foreground hover:text-foreground">
               About
+            </Link>
+            <Link href="/login" className="text-sm font-semibold text-muted-foreground hover:text-foreground">
+              Sign in
             </Link>
             <Link
               href="/signup"
-              className="text-sm text-[#888] hover:text-white transition-colors"
+              className="hard-shadow border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
             >
-              Sign up
-            </Link>
-            <Link
-              href="/login"
-              className="text-sm px-4 py-2 border border-[#ff2d2d]/30 text-[#ff2d2d] hover:bg-[#ff2d2d]/10 rounded transition-all"
-            >
-              Log in
+              Start creating
             </Link>
           </>
         )}
       </div>
 
-      {/* Mobile */}
       <div className="sm:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            {isSignedIn ? (
-              <button aria-label="Open menu">
-                <UserAvatar />
-              </button>
-            ) : (
-              <button className="text-white p-2" aria-label="Menu">
-                <Menu className="w-5 h-5" />
-              </button>
-            )}
+            <button className="flex size-11 items-center justify-center border border-foreground bg-card" aria-label="Open menu">
+              {isSignedIn ? <UserAvatar className="size-8" /> : <Menu className="size-5" />}
+            </button>
           </SheetTrigger>
-
-          <SheetContent
-            side="right"
-            className="bg-[#0a0a0a] border-l border-white/10 flex flex-col"
-          >
-            <SheetHeader className="border-b border-white/10 pb-4">
-              {isSignedIn ? (
-                <div className="flex items-center gap-3">
-                  <UserAvatar className="size-10!" />
-                  <div className="flex flex-col min-w-0">
-                    <SheetTitle className="text-white text-sm font-semibold truncate">
-                      {user.name}
-                    </SheetTitle>
-                    <SheetDescription className="text-[#666] text-xs truncate">
-                      {user.email}
-                    </SheetDescription>
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <SheetTitle className="text-white text-lg">Menu</SheetTitle>
-                  <SheetDescription className="text-[#666] text-xs">
-                    Navigate LinkPulse
-                  </SheetDescription>
-                </div>
-              )}
+          <SheetContent side="right" className="flex flex-col border-border bg-background text-foreground">
+            <SheetHeader className="border-b border-border pb-5 text-left">
+              <SheetTitle className="font-display text-2xl font-black">
+                {user ? user.name : "Campaign desk"}
+              </SheetTitle>
+              <SheetDescription className="text-muted-foreground">
+                {user ? user.email : "Build, share, and read every link."}
+              </SheetDescription>
             </SheetHeader>
 
-            {/* Navigation Links */}
-            {!isSignedIn && (
-              <nav className="flex flex-col gap-1 px-2 py-4 flex-1">
+            <nav className="flex flex-1 flex-col gap-1 py-5" aria-label="Mobile navigation">
+              {(isSignedIn ? NAV_LINKS : NAV_LINKS.filter((item) => item.href === "/about")).map((item) => (
+                <SheetClose asChild key={item.href}>
+                  <NavItem {...item} mobile />
+                </SheetClose>
+              ))}
+              {isSignedIn && (
                 <SheetClose asChild>
                   <Link
-                    href="/about"
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#aaa] hover:text-white hover:bg-white/5 transition-all"
+                    href="/create"
+                    className="mt-4 flex min-h-11 items-center justify-center border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
                   >
-                    <Info className="w-4 h-4 text-[#ff2d2d]" />
-                    About
+                    Build a link
                   </Link>
                 </SheetClose>
-              </nav>
-            )}
+              )}
+            </nav>
 
-            {isSignedIn && (
-              <nav className="flex flex-col gap-1 px-2 py-4 flex-1">
-                {NAV_LINKS.map(({ href, label, icon: Icon }) => (
-                  <SheetClose asChild key={href}>
-                    <Link
-                      href={href}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#aaa] hover:text-white hover:bg-white/5 transition-all"
-                    >
-                      <Icon className="w-4 h-4 text-[#ff2d2d]" />
-                      {label}
+            <SheetFooter className="border-t border-border pt-5">
+              {isSignedIn ? (
+                <SheetClose asChild>
+                  <button
+                    onClick={handleLogout}
+                    className="flex min-h-11 w-full items-center gap-3 px-3 text-sm font-semibold text-destructive"
+                  >
+                    <LogOut className="size-4" />
+                    Sign out
+                  </button>
+                </SheetClose>
+              ) : (
+                <div className="grid w-full grid-cols-2 gap-3">
+                  <SheetClose asChild>
+                    <Link href="/login" className="flex min-h-11 items-center justify-center border border-foreground font-bold">
+                      Sign in
                     </Link>
                   </SheetClose>
-                ))}
-
-                <div className="border-t border-white/10 mt-4 pt-4">
                   <SheetClose asChild>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-[#666] hover:text-red-400 hover:bg-white/5 transition-all w-full"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Log out
-                    </button>
+                    <Link href="/signup" className="flex min-h-11 items-center justify-center border border-primary bg-primary font-bold text-primary-foreground">
+                      Create account
+                    </Link>
                   </SheetClose>
                 </div>
-              </nav>
-            )}
-
-            {/* Footer: Login/Register for unauthenticated users */}
-            {!isSignedIn && (
-              <SheetFooter className="border-t border-white/10 gap-3">
-                <SheetClose asChild>
-                  <Link
-                    href="/login"
-                    className="flex-1 text-center text-sm px-4 py-2.5 border border-[#ff2d2d]/30 text-[#ff2d2d] hover:bg-[#ff2d2d]/10 rounded-lg transition-all"
-                  >
-                    Log in
-                  </Link>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link
-                    href="/signup"
-                    className="flex-1 text-center text-sm px-4 py-2.5 bg-[#ff2d2d] text-white hover:bg-[#ff2d2d]/90 rounded-lg transition-all"
-                  >
-                    Sign up
-                  </Link>
-                </SheetClose>
-              </SheetFooter>
-            )}
+              )}
+            </SheetFooter>
           </SheetContent>
         </Sheet>
       </div>

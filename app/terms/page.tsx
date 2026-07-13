@@ -1,119 +1,60 @@
-"use client";
+import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/metadata";
 
-import { motion } from "framer-motion";
+export const metadata: Metadata = createPageMetadata({
+  title: "Terms of Service",
+  description:
+    "Read the terms that govern acceptable use, content, availability, and account responsibilities for Clickfold.",
+  path: "/terms",
+});
+
+const sections = [
+  {
+    title: "Acceptance of terms",
+    body: <p>By accessing and using Clickfold, you agree to these Terms of Service. If you do not agree, do not use the service.</p>,
+  },
+  {
+    title: "Acceptable use",
+    body: (
+      <div className="space-y-4">
+        <p>Clickfold is intended for marketing, analytics, and general link management. Do not use it to distribute malware, phishing pages, illegal content, harassment, doxxing, or targeted abuse.</p>
+        <p className="font-bold text-destructive">Accounts and links that violate these rules may be removed without notice.</p>
+      </div>
+    ),
+  },
+  {
+    title: "Service availability",
+    body: <p>We work to keep redirects and dashboards available, but cannot guarantee uninterrupted service. Clickfold is not liable for losses caused by temporary outages or failed redirects.</p>,
+  },
+  {
+    title: "Your content",
+    body: <p>You are responsible for the links, images, titles, and descriptions you publish. Only use content that you own or have permission to use.</p>,
+  },
+  {
+    title: "Changes to these terms",
+    body: <p>These terms may change as the project develops. Continuing to use Clickfold after an update means you accept the revised terms.</p>,
+  },
+];
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen container mx-auto  text-white px-6 py-24  relative">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto relative z-10"
-      >
-        {/* Header */}
-        <div className="mb-16">
-          <h1
-            className="text-5xl sm:text-6xl text-white mb-4"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Terms of Service
-          </h1>
-          <p className="text-[#666] text-sm">
-            Last updated: {new Date().toLocaleDateString()}
-          </p>
+    <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-32 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-5xl">
+        <header className="border-b-2 border-foreground pb-12">
+          <span className="eyebrow">Legal notes</span>
+          <h1 className="mt-7 text-[clamp(3.5rem,8vw,7rem)] font-black leading-[0.86] tracking-[-0.065em]">Terms of service</h1>
+          <p className="mt-5 text-sm font-semibold text-muted-foreground">Last updated July 2026</p>
+        </header>
+        <div className="divide-y-2 divide-foreground">
+          {sections.map((section, index) => (
+            <section key={section.title} className="grid gap-5 py-10 md:grid-cols-[5rem_0.75fr_1.25fr] md:gap-8">
+              <span className="data-number text-sm font-black text-primary">{String(index + 1).padStart(2, "0")}</span>
+              <h2 className="text-2xl font-black tracking-[-0.035em]">{section.title}</h2>
+              <div className="max-w-2xl text-base leading-7 text-muted-foreground">{section.body}</div>
+            </section>
+          ))}
         </div>
-
-        {/* Content */}
-        <div className="space-y-12 text-[#bbb] leading-relaxed">
-          <section>
-            <h2
-              className="text-3xl text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              1. Acceptance of Terms
-            </h2>
-            <p>
-              By accessing and using LinkPulse, you accept and agree to be
-              bound by these Terms of Service. If you don&apos;t agree to
-              these terms, simply don&apos;t use the service.
-            </p>
-          </section>
-
-          <section>
-            <h2
-              className="text-3xl text-[#ff2d2d] mb-4 glow-red-text"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              2. Acceptable Use
-            </h2>
-            <p className="mb-4">
-              LinkPulse is designed for marketing, analytics, and general link
-              management.{" "}
-              <strong className="text-white">
-                It is NOT designed for malicious activities.
-              </strong>
-            </p>
-            <p className="mb-4">You agree not to use LinkPulse to link to:</p>
-            <ul className="list-disc pl-5 space-y-2 text-[#888]">
-              <li>Malware, viruses, or any harmful code.</li>
-              <li>Actual phishing sites designed to steal credentials.</li>
-              <li>
-                Illegal content, including CSAM, terroristic content, or
-                non-consensual explicit media.
-              </li>
-              <li>Harassment, doxxing, or targeted abuse of individuals.</li>
-            </ul>
-            <p className="mt-4 text-[#ff2d2d] font-semibold">
-              We reserve the right to immediately terminate accounts and delete
-              links that violate these rules, without warning.
-            </p>
-          </section>
-
-          <section>
-            <h2
-              className="text-3xl text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              3. Service Availability
-            </h2>
-            <p>
-              We try our best to keep the servers running, but we don&apos;t
-              guarantee 100% uptime. Things break. We are not liable for any
-              damages resulting from the service being unavailable or links not
-              redirecting properly.
-            </p>
-          </section>
-
-          <section>
-            <h2
-              className="text-3xl text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              4. User Content
-            </h2>
-            <p>
-              You are solely responsible for the links you create and the
-              metadata (images, titles, descriptions) you attach to them.
-              Don&apos;t use copyrighted material you don&apos;t have the right
-              to use.
-            </p>
-          </section>
-
-          <section>
-            <h2
-              className="text-3xl text-white mb-4"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              5. Changes to Terms
-            </h2>
-            <p>
-              We may modify these terms at any time. Continued use of the
-              service constitutes acceptance of any modified terms.
-            </p>
-          </section>
-        </div>
-      </motion.div>
-    </div>
+      </div>
+    </main>
   );
 }

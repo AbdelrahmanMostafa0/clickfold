@@ -57,7 +57,7 @@ const LinksPagination = ({
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
-            className={`cursor-pointer text-white hover:bg-white/10 hover:text-white ${
+            className={`cursor-pointer text-foreground hover:bg-secondary hover:text-foreground ${
               page <= 1 ? "pointer-events-none opacity-50" : ""
             }`}
             onClick={() => page > 1 && onPageChange(page - 1)}
@@ -67,15 +67,15 @@ const LinksPagination = ({
         {pageNumbers.map((p, i) =>
           p === "ellipsis" ? (
             <PaginationItem key={`ellipsis-${i}`} className="hidden sm:block">
-              <PaginationEllipsis className="text-[#888]" />
+              <PaginationEllipsis className="text-muted-foreground" />
             </PaginationItem>
           ) : (
             <PaginationItem key={p}>
               <PaginationLink
-                className={`cursor-pointer hover:bg-white/10 hover:text-white ${
+                className={`cursor-pointer hover:bg-secondary hover:text-foreground ${
                   page === p
-                    ? "border-white/10 bg-white/10 text-white"
-                    : "text-[#888]"
+                    ? "border-border bg-secondary text-foreground"
+                    : "text-muted-foreground"
                 }`}
                 isActive={page === p}
                 onClick={() => onPageChange(p)}
@@ -88,7 +88,7 @@ const LinksPagination = ({
 
         <PaginationItem>
           <PaginationNext
-            className={`cursor-pointer text-white hover:bg-white/10 hover:text-white ${
+            className={`cursor-pointer text-foreground hover:bg-secondary hover:text-foreground ${
               page >= totalPages ? "pointer-events-none opacity-50" : ""
             }`}
             onClick={() => page < totalPages && onPageChange(page + 1)}

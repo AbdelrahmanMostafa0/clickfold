@@ -1,38 +1,25 @@
 "use client";
 
-import { useUser } from "@/context/UserContext";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import CTAButton from "./CTAButton";
 
 export default function FinalCTA() {
-  const { user } = useUser();
-  const router = useRouter();
   return (
-    <section className="py-32 px-6 relative noise-bg overflow-hidden">
-      {/* Background glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#ff2d2d]/5 rounded-full blur-[120px] pointer-events-none" />
-
+    <section className="border-y border-foreground bg-primary px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.7 }}
-        className="relative z-10 max-w-2xl mx-auto text-center"
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+        className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_auto] lg:items-end"
       >
-        <h2
-          className="text-5xl sm:text-6xl md:text-7xl text-white mb-4 leading-[0.95]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Start tracking{" "}
-          <span className="text-[#ff2d2d] glow-red-text">for free.</span>
-        </h2>
-
-        <p className="text-[#888] text-base sm:text-lg mb-10">
-          No credit card required. Set up your first campaign in minutes.
-        </p>
-
-        <CTAButton />
+        <div>
+          <span className="text-xs font-black uppercase tracking-[0.18em] text-primary-foreground/70">Your next campaign</span>
+          <h2 className="mt-5 max-w-[12ch] text-[clamp(3.5rem,8vw,7.5rem)] font-black leading-[0.84] tracking-[-0.07em] text-primary-foreground">
+            Give every click somewhere to report back.
+          </h2>
+        </div>
+        <CTAButton className="bg-background text-foreground lg:mb-2" />
       </motion.div>
     </section>
   );

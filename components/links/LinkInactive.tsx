@@ -1,57 +1,25 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { Ban, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowLeft, Pause } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function LinkInactive() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 noise-bg relative">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center max-w-md"
-      >
-        {/* Icon */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{
-            delay: 0.2,
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-          }}
-          className="mx-auto w-20 h-20 rounded-2xl bg-[#888]/10 border border-[#888]/20 flex items-center justify-center mb-6"
-        >
-          <Ban className="size-9 text-[#888]" />
-        </motion.div>
-
-        {/* Title */}
-        <h1
-          className="text-3xl sm:text-4xl text-white mb-3"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Link Disabled
-        </h1>
-
-        {/* Description */}
-        <p className="text-[#666] text-sm leading-relaxed mb-8">
-          This link has been deactivated by its owner
-          <br />
-          and is no longer available.
-        </p>
-
-        {/* Action */}
-        <Link href="/">
-          <Button className="bg-[#333] hover:bg-[#444] text-white font-semibold transition-all">
-            <ArrowLeft className="size-4" />
-            Back to Home
-          </Button>
-        </Link>
-      </motion.div>
+    <main id="main-content" className="min-h-screen px-4 py-28 noise-bg sm:py-36">
+      <section className="mx-auto max-w-4xl border-2 border-foreground bg-card hard-shadow">
+        <div className="grid sm:grid-cols-[180px_1fr]">
+          <div className="flex min-h-40 items-center justify-center border-b-2 border-foreground bg-secondary sm:border-b-0 sm:border-r-2">
+            <Pause className="size-16 text-foreground" strokeWidth={1.5} />
+          </div>
+          <div className="p-8 sm:p-12">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">Route status / paused</p>
+            <h1 className="text-5xl leading-none sm:text-7xl" style={{ fontFamily: "var(--font-display)" }}>This route is resting.</h1>
+            <p className="mt-5 max-w-xl leading-7 text-muted-foreground">Its owner has paused the campaign, so the destination is not available right now.</p>
+            <Link href="/" className="mt-8 inline-block">
+              <Button className="border-2 border-foreground bg-foreground text-background"><ArrowLeft className="size-4" />Back to Clickfold</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

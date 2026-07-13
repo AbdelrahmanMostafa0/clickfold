@@ -1,105 +1,42 @@
-"use client";
+import { ArrowUpRight } from "lucide-react";
 
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
-
-interface StatItem {
-  label: string;
-  end: number;
-  suffix: string;
-  prefix?: string;
-  decimals?: number;
-}
-
-const stats: StatItem[] = [
-  { label: "Links Created", end: 127430, suffix: "", prefix: "" },
-  { label: "Clicks Tracked", end: 842910, suffix: "", prefix: "" },
-  { label: "Uptime", end: 99.9, suffix: "%", decimals: 1 },
+const reads = [
+  { label: "Newsletter", clicks: "1,284", share: "58%", color: "bg-primary" },
+  { label: "Instagram", clicks: "732", share: "33%", color: "bg-accent" },
+  { label: "Pop-up QR", clicks: "189", share: "9%", color: "bg-success" },
 ];
 
-function AnimatedNumber({
-  end,
-  suffix,
-  prefix = "",
-  decimals = 0,
-  isInView,
-}: StatItem & { isInView: boolean }) {
-  const [current, setCurrent] = useState(0);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    if (!isInView || hasAnimated.current) return;
-    hasAnimated.current = true;
-
-    const duration = 2000;
-    const startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setCurrent(eased * end);
-
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  }, [isInView, end]);
-
-  const formatted =
-    decimals > 0
-      ? current.toFixed(decimals)
-      : Math.floor(current).toLocaleString();
-
-  return (
-    <span className="tabular-nums">
-      {prefix}
-      {formatted}
-      {suffix}
-    </span>
-  );
-}
-
 export default function StatsBar() {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-
   return (
-    <section ref={ref} className="py-12 relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#111] to-[#0a0a0a]" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+    <section className="ink-panel px-4 py-24 sm:px-6 lg:px-8 lg:py-28">
+      <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+        <div>
+          <span className="eyebrow text-background before:bg-primary">A clear read</span>
+          <h2 className="mt-7 max-w-[11ch] text-5xl font-black leading-[0.9] tracking-[-0.055em] text-background sm:text-6xl">
+            Know which route carried the campaign.
+          </h2>
+          <p className="mt-6 max-w-lg text-lg leading-8 text-background/65">
+            Clickfold keeps the useful signal close: clicks over time, channel
+            share, locations, devices, and referrers.
+          </p>
+        </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6 }}
-        className="relative z-10 max-w-4xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-8 sm:gap-4"
-      >
-        {stats.map((stat, i) => (
-          <div key={stat.label} className="text-center flex-1">
-            <div
-              className="text-4xl sm:text-5xl text-white mb-2"
-              style={{ fontFamily: "var(--font-display)" }}
-            >
-              <AnimatedNumber {...stat} isInView={isInView} />
+        <div className="border-y border-background/25">
+          {reads.map((read, index) => (
+            <div key={read.label} className="grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-background/20 py-6 last:border-b-0 sm:gap-6">
+              <span className={`size-3 ${read.color}`} />
+              <div>
+                <p className="font-bold text-background">{read.label}</p>
+                <p className="text-sm text-background/50">{read.clicks} demo clicks</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="data-number text-3xl font-black text-background sm:text-4xl">{read.share}</span>
+                {index === 0 && <ArrowUpRight className="size-5 text-primary" />}
+              </div>
             </div>
-            <p className="text-[#666] text-xs uppercase tracking-wider">
-              {stat.label}
-            </p>
-            {i < stats.length - 1 && (
-              <div
-                className="hidden sm:block absolute top-1/2 -translate-y-1/2 w-px h-8 bg-white/5"
-                style={{ left: `${((i + 1) / stats.length) * 100}%` }}
-              />
-            )}
-          </div>
-        ))}
-      </motion.div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import { Camera, Upload, Save } from "lucide-react";
+import Image from "next/image";
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
@@ -23,15 +24,17 @@ const AvatarUpdate = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const onAvatarUpload = async () => {
     if (!avatarFile) return;
+    setIsAvatarSubmitting(true);
     const formData = new FormData();
     formData.append("avatar", avatarFile);
     try {
-      const { data } = await updateAvatar(formData);
+      await updateAvatar(formData);
       goeyToast.success("Avatar updated successfully");
       refetchUser();
-    } catch (error) {
+    } catch {
       goeyToast.error("Failed to update avatar");
     } finally {
+      setIsAvatarSubmitting(false);
       setAvatarPreview(null);
       setAvatarFile(null);
     }
@@ -57,23 +60,26 @@ const AvatarUpdate = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.15 }}
-      className="bg-[#111] border border-white/5 rounded-xl p-6"
+      className="border-2 border-foreground bg-card p-6"
     >
-      <h2 className="text-white text-lg font-medium flex items-center gap-2 mb-6">
-        <Camera className="size-4 text-[#ff2d2d]" /> Profile Picture
+      <h2 className="text-foreground text-lg font-medium flex items-center gap-2 mb-6">
+        <Camera className="size-4 text-primary" /> Profile Picture
       </h2>
 
       <div className="flex flex-col sm:flex-row items-center gap-6">
         <div className="relative group">
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border border-white/10 flex items-center justify-center overflow-hidden bg-[#0a0a0a]">
+          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border border-border flex items-center justify-center overflow-hidden bg-background">
             {avatarPreview || user?.avatar ? (
-              <img
+              <Image
                 src={avatarPreview || (user?.avatar as string) || ""}
                 alt="Avatar"
+                width={112}
+                height={112}
+                unoptimized
                 className="w-full h-full object-cover"
               />
             ) : (
-              <span className="text-3xl font-bold text-[#ff2d2d]">
+              <span className="text-3xl font-bold text-primary">
                 {userInitials}
               </span>
             )}
@@ -82,9 +88,10 @@ const AvatarUpdate = ({
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="absolute inset-0 bg-black/60 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all cursor-pointer border border-[#ff2d2d]/0 group-hover:border-[#ff2d2d]/50"
+            aria-label="Choose profile picture"
+            className="absolute -bottom-1 -right-1 flex size-10 cursor-pointer items-center justify-center rounded-full border-2 border-foreground bg-primary text-primary-foreground"
           >
-            <Camera className="size-6 text-white" />
+            <Camera className="size-5" />
           </button>
           <input
             type="file"
@@ -96,7 +103,7 @@ const AvatarUpdate = ({
         </div>
 
         <div className="flex-1 text-center sm:text-left">
-          <p className="text-[#888] text-sm mb-3">
+          <p className="text-muted-foreground text-sm mb-3">
             Upload a new avatar. Recommended size: 256x256px.
             <br />
             PNG, JPG, or WebP. Max 5MB.
@@ -106,7 +113,7 @@ const AvatarUpdate = ({
               type="button"
               variant="outline"
               onClick={() => fileInputRef.current?.click()}
-              className="bg-[#0a0a0a] border-white/10 text-white hover:bg-white/5"
+              className="bg-background border-border text-foreground hover:bg-secondary"
             >
               <Upload className="size-4 mr-2" />
               Browse File
@@ -116,7 +123,7 @@ const AvatarUpdate = ({
                 type="button"
                 onClick={onAvatarUpload}
                 disabled={isAvatarSubmitting}
-                className="bg-[#ff2d2d] hover:bg-[#ff2d2d]/90 text-white glow-red transition-all"
+                className="border-2 border-foreground bg-primary text-primary-foreground hard-shadow transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
               >
                 <Save className="size-4 mr-2" />
                 {isAvatarSubmitting ? "Uploading..." : "Save Image"}

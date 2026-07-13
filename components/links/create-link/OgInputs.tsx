@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import type { UseFormRegister, FieldErrors } from "react-hook-form";
 import { motion } from "framer-motion";
 import { Label } from "@/components/ui/label";
@@ -38,73 +39,75 @@ const OgInputs = ({
       transition={{ duration: 0.3 }}
       className="overflow-hidden space-y-6"
     >
-      {/* ── OG Title ── */}
+      {/* ── Preview title ── */}
       <div>
         <Label
           htmlFor="ogTitle"
-          className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
+          className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block"
         >
-          OG Title <span className="text-[#ff2d2d]">*</span>
+          Preview title <span className="text-destructive">*</span>
         </Label>
         <Input
           id="ogTitle"
           placeholder="Introducing our Summer Sale"
-          className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20"
+          className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-success/50 focus-visible:ring-success/20"
           {...register("ogTitle")}
         />
         {errors.ogTitle && (
-          <p className="text-[#ff2d2d] text-xs mt-1.5">
+          <p className="mt-1.5 text-xs text-destructive" role="alert">
             {errors.ogTitle.message}
           </p>
         )}
       </div>
 
-      {/* ── OG Description ── */}
+      {/* ── Preview description ── */}
       <div>
         <Label
           htmlFor="ogDescription"
-          className="text-[#888] text-xs uppercase tracking-wider mb-2 block"
+          className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block"
         >
-          OG Description <span className="text-[#ff2d2d]">*</span>
+          Preview description <span className="text-destructive">*</span>
         </Label>
         <Textarea
           id="ogDescription"
           placeholder="20% off everything, this week only."
           rows={3}
-          className="bg-[#0a0a0a] border-white/8 text-white placeholder:text-[#333] focus-visible:border-[#00ff88]/50 focus-visible:ring-[#00ff88]/20 resize-none"
+          className="bg-background border-input text-foreground placeholder:text-muted-foreground focus-visible:border-success/50 focus-visible:ring-success/20 resize-none"
           {...register("ogDescription")}
         />
         {errors.ogDescription && (
-          <p className="text-[#ff2d2d] text-xs mt-1.5">
+          <p className="mt-1.5 text-xs text-destructive" role="alert">
             {errors.ogDescription.message}
           </p>
         )}
       </div>
 
-      {/* ── OG Image Upload ── */}
+      {/* ── Preview artwork ── */}
       <div>
-        <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
-          OG Image <span className="text-[#ff2d2d]">*</span>
+        <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
+          Preview artwork <span className="text-destructive">*</span>
         </Label>
 
         {imagePreview ? (
-          <div className="relative group rounded-lg overflow-hidden border border-white/8">
-            <img
+          <div className="relative overflow-hidden border-2 border-foreground">
+            <Image
               src={imagePreview}
               alt="OG preview"
+              width={1200}
+              height={630}
+              unoptimized
               className="w-full h-48 object-cover"
             />
-            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <button
-                type="button"
-                onClick={removeImage}
-                className="bg-[#ff2d2d] text-white rounded-full p-2 hover:bg-[#ff2d2d]/80 transition-colors"
-              >
-                <X className="size-4" />
-              </button>
-            </div>
-            <div className="absolute bottom-2 left-2 bg-black/70 rounded px-2 py-1">
-              <span className="text-[10px] ">{ogImage?.name}</span>
+            <button
+              type="button"
+              onClick={removeImage}
+              aria-label="Remove preview artwork"
+              className="absolute right-2 top-2 border-2 border-foreground bg-primary p-2 text-primary-foreground transition-transform hover:-translate-y-0.5"
+            >
+              <X className="size-4" />
+            </button>
+            <div className="absolute bottom-2 left-2 border border-foreground bg-background px-2 py-1">
+              <span className="text-[10px] font-bold">{ogImage?.name}</span>
             </div>
           </div>
         ) : (
@@ -112,22 +115,27 @@ const OgInputs = ({
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-[#00ff88]/30 hover:bg-[#00ff88]/2 transition-all group ${
-              imageError ? "border-[#ff2d2d]/50" : "border-white/8"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
+            }}
+            className={`group cursor-pointer border-2 border-dashed p-8 text-center transition-all hover:border-foreground hover:bg-secondary ${
+              imageError ? "border-destructive" : "border-input"
             }`}
           >
             <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-[#1a1a1a] flex items-center justify-center group-hover:bg-[#00ff88]/10 transition-colors">
-                <Upload className="size-5 text-[#555] group-hover:text-[#00ff88] transition-colors" />
+              <div className="flex size-12 items-center justify-center border border-foreground bg-secondary transition-colors group-hover:bg-background">
+                <Upload className="size-5 text-muted-foreground group-hover:text-success transition-colors" />
               </div>
               <div>
                 <p className="text-sm ">
                   Drop an image here or{" "}
-                  <span className="text-[#00ff88] underline underline-offset-2">
+                  <span className="text-success underline underline-offset-2">
                     browse
                   </span>
                 </p>
-                <p className="text-[10px] text-[#444] mt-1">
+                <p className="text-[10px] text-muted-foreground mt-1">
                   PNG, JPG, WebP — Max 5MB
                 </p>
               </div>
@@ -145,9 +153,7 @@ const OgInputs = ({
             if (file) handleImageSelect(file);
           }}
         />
-        {imageError && (
-          <p className="text-[#ff2d2d] text-xs mt-1.5">{imageError}</p>
-        )}
+        {imageError && <p className="mt-1.5 text-xs text-destructive" role="alert">{imageError}</p>}
       </div>
     </motion.div>
   );

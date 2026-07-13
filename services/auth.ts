@@ -46,4 +46,28 @@ const googleLogin = async (access_token: string) => {
     throw error;
   }
 };
-export { userLogin, userRegister, userLogout, googleLogin };
+
+const forgotPassword = async (email: string) => {
+  try {
+    return await api.post("/auth/forgot-password", { email });
+  } catch (error) {
+    throw error;
+  }
+};
+
+const resetPassword = async (token: string, password: string) => {
+  try {
+    return await api.post("/auth/reset-password", { token, password });
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  userLogin,
+  userRegister,
+  userLogout,
+  googleLogin,
+  forgotPassword,
+  resetPassword,
+};

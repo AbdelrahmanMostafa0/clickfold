@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Plus, Pencil } from "lucide-react";
 import {
   Dialog,
@@ -33,12 +33,13 @@ export default function CampaignFormDialog({
   const [description, setDescription] = useState(campaign?.description ?? "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    if (open) {
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (nextOpen) {
       setName(campaign?.name ?? "");
       setDescription(campaign?.description ?? "");
     }
-  }, [open, campaign]);
+    setOpen(nextOpen);
+  };
 
   const handleSubmit = async () => {
     if (!name.trim()) {
@@ -64,52 +65,53 @@ export default function CampaignFormDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         {isEdit ? (
           <Button
             variant="ghost"
-            className="size-8 p-0 text-[#888] hover:text-white hover:bg-white/10"
+            className="size-8 p-0 text-muted-foreground hover:text-foreground hover:bg-secondary"
+            aria-label={`Edit ${campaign.name}`}
           >
             <Pencil className="size-4" />
           </Button>
         ) : (
-          <Button className="bg-[#ff2d2d] hover:bg-[#ff2d2d]/90 text-white">
+          <Button className="hard-shadow min-h-11 border border-foreground bg-primary px-4 text-primary-foreground hover:bg-primary/90">
             <Plus className="size-4 mr-1.5" />
-            New Campaign
+            New campaign
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="bg-[#111] border-white/10 text-white sm:max-w-md [&>button>svg]:text-[#888]">
+      <DialogContent className="bg-card border-border text-foreground sm:max-w-md [&>button>svg]:text-muted-foreground">
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit Campaign" : "New Campaign"}</DialogTitle>
-          <DialogDescription className="text-[#888] mt-2">
+          <DialogTitle className="text-2xl font-black tracking-[-0.035em]">{isEdit ? "Edit campaign" : "New campaign"}</DialogTitle>
+          <DialogDescription className="text-muted-foreground mt-2">
             {isEdit
-              ? "Update this campaign's name and description."
-              : "Group related links together to track them as one campaign."}
+              ? "Update the campaign name and working note."
+              : "Group related routes so their activity reads as one effort."}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4 mt-2">
           <div>
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
-              Name
+            <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
+              Campaign name
             </Label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Summer Sale 2026"
-              className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground focus-visible:ring-primary/20"
             />
           </div>
           <div>
-            <Label className="text-[#888] text-xs uppercase tracking-wider mb-2 block">
+            <Label className="text-muted-foreground text-xs uppercase tracking-wider mb-2 block">
               Description
             </Label>
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Optional notes about this campaign"
-              className="bg-[#0a0a0a] border-white/8 text-white focus-visible:ring-[#ff2d2d]/20"
+              className="bg-background border-input text-foreground focus-visible:ring-primary/20"
             />
           </div>
         </div>
@@ -118,16 +120,16 @@ export default function CampaignFormDialog({
             type="button"
             variant="outline"
             onClick={() => setOpen(false)}
-            className="bg-transparent border-white/10 text-white hover:bg-white/10 hover:text-white"
+            className="bg-transparent border-border text-foreground hover:bg-secondary hover:text-foreground"
           >
-            Cancel
+            Keep editing
           </Button>
           <Button
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="bg-[#ff2d2d] text-white hover:bg-[#ff2d2d]/90"
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
-            {isSubmitting ? "Saving..." : isEdit ? "Save Changes" : "Create Campaign"}
+            {isSubmitting ? "Saving…" : isEdit ? "Save campaign" : "Create campaign"}
           </Button>
         </DialogFooter>
       </DialogContent>

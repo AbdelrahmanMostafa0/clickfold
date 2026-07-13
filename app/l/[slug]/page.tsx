@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { getLinkOg } from "@/services/links";
 import { Link } from "@/types/link";
 import { buildLinkMetadata } from "@/lib/og";
+import { createPageMetadata } from "@/lib/metadata";
 import LinkNotFound from "@/components/links/LinkNotFound";
 import LinkInactive from "@/components/links/LinkInactive";
 
@@ -58,14 +59,28 @@ export async function generateMetadata({
   const link = await fetchLinkOg(slug);
 
   if (!link) {
-    return { title: "Link Not Found" };
+    return createPageMetadata({
+      title: "Link Not Found",
+      description: "This Clickfold short link could not be found.",
+      path: `/l/${encodeURIComponent(slug)}`,
+      noIndex: true,
+      follow: false,
+      includeImage: false,
+    });
   }
 
   if (!link.isActive) {
-    return { title: "Link Inactive" };
+    return createPageMetadata({
+      title: "Link Inactive",
+      description: "This Clickfold short link is no longer active.",
+      path: `/l/${encodeURIComponent(slug)}`,
+      noIndex: true,
+      follow: false,
+      includeImage: false,
+    });
   }
 
-  return buildLinkMetadata(link);
+  return buildLinkMetadata(link, slug);
 }
 
 export default async function LinkRedirectPage({

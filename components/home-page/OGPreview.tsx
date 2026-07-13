@@ -1,286 +1,139 @@
 "use client";
 
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { ImageIcon, MessageCircle, Send, Sparkles } from "lucide-react";
 
-const platforms = ["iMessage", "WhatsApp", "Discord"] as const;
+const platforms = ["Messages", "WhatsApp", "Discord"] as const;
 type Platform = (typeof platforms)[number];
 
-const ogData = {
-  title: "Introducing our Summer Sale",
-  description:
-    "20% off everything, this week only. Free shipping on orders over $50.",
-  url: "linkpulse.app/summer-sale",
-  siteName: "linkpulse.app",
+const platformStyles: Record<Platform, { shell: string; bubble: string; accent: string }> = {
+  Messages: {
+    shell: "bg-[#f0f0f2] text-[#202024]",
+    bubble: "bg-[#d8d8dc]",
+    accent: "bg-[#1677ff] text-white",
+  },
+  WhatsApp: {
+    shell: "bg-[#e8e1d6] text-[#18231f]",
+    bubble: "bg-[#ffffff]",
+    accent: "bg-[#d8f8c6] text-[#183126]",
+  },
+  Discord: {
+    shell: "bg-[#313338] text-[#f2f3f5]",
+    bubble: "bg-[#2b2d31]",
+    accent: "bg-[#5865f2] text-white",
+  },
 };
 
-function IMessagePreview() {
+function ShareCard({ platform }: { platform: Platform }) {
+  const style = platformStyles[platform];
+
   return (
-    <div className="max-w-sm mx-auto">
-      {/* Phone frame */}
-      <div className="bg-[#1c1c1e] rounded-2xl p-4 border border-white/5">
-        {/* Chat header */}
-        <div className="flex items-center gap-3 mb-4 pb-3 border-b border-white/5">
-          <div className="w-8 h-8 rounded-full bg-[#333] flex items-center justify-center text-xs text-white">
-            J
-          </div>
-          <div>
-            <p className="text-white text-sm font-medium">Jordan</p>
-            <p className="text-[#666] text-xs">iMessage</p>
-          </div>
+    <motion.div
+      key={platform}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+      className={`mx-auto w-full max-w-md border border-foreground p-4 sm:p-5 ${style.shell}`}
+    >
+      <div className="flex items-center gap-3 border-b border-current/15 pb-4">
+        <div className={`flex size-9 items-center justify-center ${style.accent}`}>
+          <MessageCircle className="size-4" />
         </div>
-
-        {/* Messages */}
-        <div className="space-y-3">
-          <div className="flex justify-start">
-            <div className="bg-[#333] rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">
-                hey check out the new sale 👀
-              </p>
-            </div>
-          </div>
-
-          {/* Link preview bubble */}
-          <div className="flex justify-start">
-            <div className="bg-[#333] rounded-2xl rounded-bl-sm overflow-hidden max-w-[85%]">
-              {/* OG Image */}
-              <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-32 flex items-center justify-center border-b border-white/5">
-                <div className="text-center">
-                  <div className="text-4xl mb-1">🛍️</div>
-                  <span className="text-[#ff2d2d] text-xs font-bold">
-                    SHOP NOW
-                  </span>
-                </div>
-              </div>
-              {/* OG Meta */}
-              <div className="px-3 py-2.5">
-                <p className="text-[#999] text-[10px] uppercase tracking-wider mb-0.5">
-                  {ogData.siteName}
-                </p>
-                <p className="text-white text-sm font-semibold leading-tight mb-1">
-                  {ogData.title}
-                </p>
-                <p className="text-[#888] text-xs line-clamp-2">
-                  {ogData.description}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <div className="bg-[#0b84fe] rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">nice, adding to cart 🛒</p>
-            </div>
-          </div>
+        <div>
+          <p className="text-sm font-bold">Summer launch crew</p>
+          <p className="text-xs opacity-55">{platform}</p>
         </div>
       </div>
-    </div>
-  );
-}
 
-function WhatsAppPreview() {
-  return (
-    <div className="max-w-sm mx-auto">
-      <div className="bg-[#0b141a] rounded-2xl p-4 border border-white/5">
-        {/* Chat header */}
-        <div className="flex items-center gap-3 mb-4 pb-3 border-b border-white/5">
-          <div className="w-8 h-8 rounded-full bg-[#00a884] flex items-center justify-center text-xs text-white font-bold">
-            M
+      <div className="mt-5 space-y-3">
+        <div className={`w-fit max-w-[88%] px-3 py-2 text-sm ${style.bubble}`}>
+          The field notes are live—this edition turned out beautifully.
+        </div>
+        <div className={`w-[92%] overflow-hidden ${style.bubble}`}>
+          <div className="grid min-h-36 place-items-center bg-primary p-5 text-primary-foreground">
+            <div className="text-center">
+              <p className="text-[0.65rem] font-black uppercase tracking-[0.2em] opacity-70">Issue 08</p>
+              <p className="mt-2 text-3xl font-black leading-none tracking-[-0.05em]">Summer field notes</p>
+            </div>
           </div>
-          <div>
-            <p className="text-white text-sm font-medium">Marketing Team</p>
-            <p className="text-[#667781] text-xs">online</p>
+          <div className="p-4">
+            <p className="text-[0.65rem] font-bold uppercase tracking-[0.14em] opacity-50">clickfold.app</p>
+            <p className="mt-1 font-bold">How small ideas find a bigger audience</p>
+            <p className="mt-1 text-xs leading-5 opacity-60">A practical dispatch for independent campaign builders.</p>
           </div>
         </div>
-
-        {/* Messages */}
-        <div className="space-y-3">
-          <div className="flex justify-start">
-            <div className="bg-[#202c33] rounded-xl rounded-bl-sm overflow-hidden max-w-[85%]">
-              {/* Link preview */}
-              <div className="border-l-4 border-[#00a884]">
-                <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-28 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-3xl mb-1">📣</div>
-                    <span className="text-[#ff2d2d] text-xs font-bold">
-                      SUMMER SALE
-                    </span>
-                  </div>
-                </div>
-                <div className="px-3 py-2">
-                  <p className="text-[#00a884] text-xs mb-0.5">
-                    {ogData.siteName}
-                  </p>
-                  <p className="text-white text-sm font-semibold leading-tight mb-1">
-                    {ogData.title}
-                  </p>
-                  <p className="text-[#8696a0] text-xs line-clamp-2">
-                    {ogData.description}
-                  </p>
-                </div>
-              </div>
-              <div className="px-3 py-2">
-                <p className="text-[#53bdeb] text-sm underline">{ogData.url}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-end">
-            <div className="bg-[#005c4b] rounded-xl rounded-br-sm px-4 py-2 max-w-[80%]">
-              <p className="text-white text-sm">sending this to the list 📤</p>
-            </div>
-          </div>
+        <div className={`ml-auto flex w-fit items-center gap-2 px-3 py-2 text-sm ${style.accent}`}>
+          Sending this on <Send className="size-3.5" />
         </div>
       </div>
-    </div>
-  );
-}
-
-function DiscordPreview() {
-  return (
-    <div className="max-w-md mx-auto">
-      <div className="bg-[#313338] rounded-2xl p-4 border border-white/5">
-        {/* Channel header */}
-        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/10">
-          <span className="text-[#80848e] text-lg">#</span>
-          <span className="text-white text-sm font-medium">announcements</span>
-        </div>
-
-        {/* Messages */}
-        <div className="space-y-4">
-          <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#5865f2] flex items-center justify-center text-white font-bold text-sm shrink-0">
-              D
-            </div>
-            <div className="flex-1">
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-[#f3b3e1] text-sm font-semibold">
-                  devon
-                </span>
-                <span className="text-[#80848e] text-[10px]">
-                  Today at 4:20 PM
-                </span>
-              </div>
-              <p className="text-[#dbdee1] text-sm mb-2">
-                @everyone the summer sale is live
-              </p>
-
-              {/* Discord embed */}
-              <div className="border-l-4 border-[#ff2d2d] bg-[#2b2d31] rounded-r-lg overflow-hidden max-w-sm">
-                <div className="p-3">
-                  <p className="text-[#00a8fc] text-xs mb-1">
-                    {ogData.siteName}
-                  </p>
-                  <p className="text-[#00a8fc] text-sm font-semibold hover:underline cursor-pointer mb-1">
-                    {ogData.title}
-                  </p>
-                  <p className="text-[#dbdee1] text-xs">{ogData.description}</p>
-                </div>
-                <div className="bg-gradient-to-br from-[#ff2d2d]/20 to-[#ff2d2d]/5 h-32 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-4xl mb-1">🎉</div>
-                    <span className="text-[#ff2d2d] text-xs font-bold">
-                      20% OFF
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#ed4245] flex items-center justify-center text-white font-bold text-sm shrink-0">
-              S
-            </div>
-            <div>
-              <div className="flex items-baseline gap-2 mb-1">
-                <span className="text-[#e8c358] text-sm font-semibold">
-                  sam
-                </span>
-                <span className="text-[#80848e] text-[10px]">
-                  Today at 4:21 PM
-                </span>
-              </div>
-              <p className="text-[#dbdee1] text-sm">
-                clean preview, nice 👍
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function OGPreview() {
-  const [activePlatform, setActivePlatform] = useState<Platform>("iMessage");
+  const [activePlatform, setActivePlatform] = useState<Platform>("Messages");
 
   return (
-    <section className="py-24 px-6 relative noise-bg">
-      {/* Background accent */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#ff2d2d]/20 to-transparent" />
-
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2
-            className="text-4xl sm:text-5xl text-white mb-3"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Look good <span className="text-[#ff2d2d]">everywhere it&apos;s shared</span>
+    <section className="studio-grid border-b border-foreground px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+      <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+        <div>
+          <span className="eyebrow">Share preview</span>
+          <h2 className="mt-7 max-w-[10ch] text-[clamp(3.5rem,7vw,6.75rem)] font-black leading-[0.86] tracking-[-0.065em]">
+            Make the click feel considered.
           </h2>
-          <p className="text-[#666] text-sm max-w-md mx-auto">
-            Customize your link&apos;s title, description, and preview image.
-            Here&apos;s what it looks like when someone shares it.
+          <p className="mt-7 max-w-lg text-lg leading-8 text-muted-foreground">
+            Control the title, description, and artwork people see before they
+            visit. The same campaign can feel native wherever it travels.
           </p>
-        </motion.div>
 
-        {/* Platform tabs */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex justify-center gap-2 mb-10"
-        >
-          {platforms.map((platform) => (
-            <button
-              key={platform}
-              onClick={() => setActivePlatform(platform)}
-              className={`px-5 py-2 rounded-full text-sm transition-all ${
-                activePlatform === platform
-                  ? "bg-[#ff2d2d] text-white"
-                  : "bg-[#1a1a1a] text-[#888] hover:text-white border border-white/5"
-              }`}
-            >
-              {platform}
-            </button>
-          ))}
-        </motion.div>
+          <div className="mt-9 border-y border-foreground">
+            <div className="grid grid-cols-[auto_1fr] gap-4 border-b border-border py-5">
+              <ImageIcon className="mt-0.5 size-5 text-primary" />
+              <div>
+                <p className="font-bold">Artwork with a purpose</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">Give every link a campaign-specific visual instead of the destination page default.</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-[auto_1fr] gap-4 py-5">
+              <Sparkles className="mt-0.5 size-5 text-accent" />
+              <div>
+                <p className="font-bold">One edit, every channel</p>
+                <p className="mt-1 text-sm leading-6 text-muted-foreground">Update the preview once and keep the campaign presentation consistent.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        {/* Preview */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          <motion.div
-            key={activePlatform}
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {activePlatform === "iMessage" && <IMessagePreview />}
-            {activePlatform === "WhatsApp" && <WhatsAppPreview />}
-            {activePlatform === "Discord" && <DiscordPreview />}
-          </motion.div>
-        </motion.div>
+        <div className="relative">
+          <div className="absolute -right-3 -top-5 z-10 rotate-2 bg-success px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-success-foreground sm:-right-5">
+            Preview desk
+          </div>
+          <div className="hard-shadow border-2 border-foreground bg-card p-4 sm:p-7">
+            <div className="mb-7 flex flex-wrap gap-2" role="tablist" aria-label="Preview channel">
+              {platforms.map((platform) => (
+                <button
+                  key={platform}
+                  type="button"
+                  role="tab"
+                  aria-selected={activePlatform === platform}
+                  onClick={() => setActivePlatform(platform)}
+                  className={`min-h-11 border px-4 py-2 text-sm font-bold ${
+                    activePlatform === platform
+                      ? "border-foreground bg-foreground text-background"
+                      : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
+                  }`}
+                >
+                  {platform}
+                </button>
+              ))}
+            </div>
+            <AnimatePresence mode="wait">
+              <ShareCard platform={activePlatform} />
+            </AnimatePresence>
+          </div>
+        </div>
       </div>
     </section>
   );

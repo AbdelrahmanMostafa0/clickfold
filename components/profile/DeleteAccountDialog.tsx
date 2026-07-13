@@ -12,6 +12,7 @@ import {
 import { Trash2 } from "lucide-react";
 import { goeyToast } from "goey-toast";
 import { deleteAccount } from "@/services/profile";
+import { getApiErrorMessage } from "@/lib/utils";
 const DeleteAccountDialog = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -24,11 +25,8 @@ const DeleteAccountDialog = () => {
           "An email has been sent to confirm deletion. Please check your spam folder.",
       );
       setIsDeleteDialogOpen(false);
-    } catch (error: any) {
-      goeyToast.error(
-        error.response?.data?.message ||
-          "Failed to initiate account deletion. Please try again.",
-      );
+    } catch (error: unknown) {
+      goeyToast.error(getApiErrorMessage(error, "Failed to initiate account deletion. Please try again."));
     } finally {
       setIsDeleting(false);
     }
@@ -38,18 +36,17 @@ const DeleteAccountDialog = () => {
       <DialogTrigger asChild>
         <Button
           variant="destructive"
-          className="bg-transparent border border-[#ff2d2d]/30  hover:bg-[#ff2d2d] hover:text-white transition-all w-full sm:w-auto"
+          className="w-full border-2 border-destructive bg-transparent text-destructive transition-all hover:bg-destructive hover:text-destructive-foreground sm:w-auto"
         >
           <Trash2 className="size-4 mr-2" />
           Delete Account
         </Button>
       </DialogTrigger>
-      <DialogContent className="bg-[#111] border-white/10 text-white sm:max-w-md [&>button>svg]:text-[#888]">
+      <DialogContent className="bg-card text-foreground sm:max-w-md [&>button>svg]:text-muted-foreground">
         <DialogHeader>
-          <DialogTitle>Confirm Account Deletion</DialogTitle>
-          <DialogDescription className="text-[#888] mt-2">
-            An email will be sent to your email address to confirm deletion.
-            Note: please check your spam folder if you do not find it.
+          <DialogTitle>Request account deletion?</DialogTitle>
+          <DialogDescription className="text-muted-foreground mt-2">
+            We will email you a final confirmation link. Nothing is deleted until you use that link; check spam if it does not arrive.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="mt-4 sm:justify-end gap-2 ">
@@ -57,7 +54,7 @@ const DeleteAccountDialog = () => {
             type="button"
             variant="outline"
             onClick={() => setIsDeleteDialogOpen(false)}
-            className="bg-transparent border-white/10 text-white hover:bg-white/10 hover:text-white"
+            className="bg-transparent border-border text-foreground hover:bg-secondary hover:text-foreground"
           >
             Cancel
           </Button>
@@ -65,9 +62,9 @@ const DeleteAccountDialog = () => {
             variant="destructive"
             onClick={onDeleteAccountConfirm}
             disabled={isDeleting}
-            className="bg-[#ff2d2d] text-white hover:bg-[#ff2d2d]/90"
+            className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
           >
-            {isDeleting ? "Sending email..." : "Confirm Deletion"}
+            {isDeleting ? "Sending confirmation…" : "Send confirmation email"}
           </Button>
         </DialogFooter>
       </DialogContent>

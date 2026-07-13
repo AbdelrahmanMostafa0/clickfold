@@ -1,57 +1,25 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowLeft, SearchX } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function LinkNotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 noise-bg relative">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="text-center max-w-md"
-      >
-        {/* Icon */}
-        <motion.div
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{
-            delay: 0.2,
-            type: "spring",
-            stiffness: 200,
-            damping: 15,
-          }}
-          className="mx-auto w-20 h-20 rounded-2xl bg-[#ff2d2d]/10 border border-[#ff2d2d]/20 flex items-center justify-center mb-6"
-        >
-          <SearchX className="size-9 text-[#ff2d2d]" />
-        </motion.div>
-
-        {/* Title */}
-        <h1
-          className="text-3xl sm:text-4xl text-white mb-3"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          Link Not Found
-        </h1>
-
-        {/* Description */}
-        <p className="text-[#666] text-sm leading-relaxed mb-8">
-          This link doesn&apos;t exist or may have been removed.
-          <br />
-          Double-check the URL and try again.
-        </p>
-
-        {/* Action */}
-        <Link href="/">
-          <Button className="bg-[#ff2d2d] hover:bg-[#ff2d2d]/90 text-white font-semibold glow-red transition-all">
-            <ArrowLeft className="size-4" />
-            Back to Home
-          </Button>
-        </Link>
-      </motion.div>
+    <main id="main-content" className="min-h-screen px-4 py-28 noise-bg sm:py-36">
+      <section className="mx-auto max-w-4xl border-2 border-foreground bg-card hard-shadow">
+        <div className="grid sm:grid-cols-[180px_1fr]">
+          <div className="flex min-h-40 items-center justify-center border-b-2 border-foreground bg-primary sm:border-b-0 sm:border-r-2">
+            <SearchX className="size-16 text-primary-foreground" strokeWidth={1.5} />
+          </div>
+          <div className="p-8 sm:p-12">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">Route status / 404</p>
+            <h1 className="text-5xl leading-none sm:text-7xl" style={{ fontFamily: "var(--font-display)" }}>Nothing at this turn.</h1>
+            <p className="mt-5 max-w-xl leading-7 text-muted-foreground">The campaign route does not exist, or its owner removed it. Check the address before trying again.</p>
+            <Link href="/" className="mt-8 inline-block">
+              <Button className="border-2 border-foreground bg-foreground text-background"><ArrowLeft className="size-4" />Back to Clickfold</Button>
+            </Link>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -1,61 +1,38 @@
-import { motion } from "framer-motion";
-import { Lock, LogIn, UserPlus } from "lucide-react";
+import { ArrowRight, LockKeyhole } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-const Unauthorized = () => {
+export default function Unauthorized() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4 py-24 noise-bg relative">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="w-full max-w-md mx-auto relative"
-      >
-        <div className="bg-[#111] border border-white/5 rounded-xl p-8 relative overflow-hidden text-center">
-          {/* Icon */}
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{
-              delay: 0.2,
-              type: "spring",
-              stiffness: 200,
-              damping: 15,
-            }}
-            className="mx-auto w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-6"
-          >
-            <Lock className="size-7 text-[#ff2d2d]" />
-          </motion.div>
-
-          <h1
-            className="text-2xl sm:text-3xl text-white mb-2"
-            style={{ fontFamily: "var(--font-display)" }}
-          >
-            Authentication Required
+    <main id="main-content" className="min-h-screen px-4 py-28 noise-bg sm:py-36">
+      <section className="mx-auto grid max-w-5xl border-2 border-foreground bg-card hard-shadow lg:grid-cols-[1.15fr_.85fr]">
+        <div className="border-b-2 border-foreground p-8 lg:border-b-0 lg:border-r-2 sm:p-12">
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.18em] text-primary">Studio access</p>
+          <h1 className="max-w-xl text-5xl leading-[.92] sm:text-7xl" style={{ fontFamily: "var(--font-display)" }}>
+            Your routes need a workspace.
           </h1>
-          <p className="text-[#666] text-sm mb-8 leading-relaxed">
-            You need to be logged in to create and manage your links.
+          <p className="mt-6 max-w-lg text-base leading-7 text-muted-foreground">
+            Sign in to build campaign links, shape their share previews, and keep every click attached to the right idea.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/login?callbackUrl=/create" className="flex-1">
-              <Button className="w-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all">
-                <LogIn className="size-4 mr-2" />
-                Log in
+        </div>
+        <div className="flex flex-col justify-between bg-secondary p-8 sm:p-12">
+          <div className="mb-12 flex size-14 items-center justify-center border-2 border-foreground bg-background">
+            <LockKeyhole className="size-6 text-primary" />
+          </div>
+          <div className="space-y-3">
+            <Link href="/login?callbackUrl=/create" className="block">
+              <Button className="h-12 w-full border-2 border-foreground bg-primary font-bold text-primary-foreground hard-shadow">
+                Enter your studio <ArrowRight className="size-4" />
               </Button>
             </Link>
-            <Link href="/signup?callbackUrl=/create" className="flex-1">
-              <Button className="w-full bg-[#ff2d2d] hover:bg-[#ff2d2d]/90 text-white shadow-[0_0_15px_rgba(255,45,45,0.3)] hover:shadow-[0_0_20px_rgba(255,45,45,0.5)] transition-all">
-                <UserPlus className="size-4 mr-2" />
-                Create Account
+            <Link href="/signup?callbackUrl=/create" className="block">
+              <Button variant="outline" className="h-12 w-full border-2 border-foreground bg-background font-bold">
+                Create a workspace
               </Button>
             </Link>
           </div>
         </div>
-      </motion.div>
+      </section>
     </main>
   );
-};
-
-export default Unauthorized;
+}
