@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import RegisterPage from "@/components/auth/RegisterPage";
+import GuestOnlyPageWrapper from "@/components/auth/GuestOnlyPageWrapper";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -13,7 +14,9 @@ export const metadata: Metadata = createPageMetadata({
 const page = () => {
   return (
     <Suspense>
-      <RegisterPage />
+      <GuestOnlyPageWrapper>
+        <RegisterPage />
+      </GuestOnlyPageWrapper>
     </Suspense>
   );
 };
