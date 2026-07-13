@@ -138,7 +138,7 @@ NEXT_PUBLIC_SITE_URL=https://clickfold.app
 
 ## Related Repositories
 
-- **API** -- [linkpulse-api](https://github.com/AbdelrahmanMostafa0/linkpulse-api)
+- **API** -- [clickfold-api](https://github.com/AbdelrahmanMostafa0/clickfold-api)
 
 ---
 
