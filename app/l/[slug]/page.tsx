@@ -26,26 +26,33 @@ async function recordClickAndResolve(
   slug: string,
   incomingHeaders: Headers,
 ): Promise<RedirectResult> {
-  const res = await fetch(
+  // middleware.ts captures the real visitor IP at the very first hop
+  // (browser -> this app) and stamps it on the request; read that instead
+  // of re-deriving it here, so there's a single source of truth for it.
+  const visitorIp =
+    incomingHeaders.get("x-real-client-ip") ||
+    incomingHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    incomingHeaders.get("x-real-ip") ||
+    "";
+
+  const url = new URL(
     `${process.env.NEXT_PUBLIC_API_URL}/links/redirect/${slug}`,
-    {
-      headers: {
-        "user-agent": incomingHeaders.get("user-agent") ?? "",
-        referer: incomingHeaders.get("referer") ?? "",
-        "x-forwarded-for":
-          incomingHeaders.get("x-forwarded-for") ??
-          incomingHeaders.get("x-real-ip") ??
-          "",
-        // This fetch is server-to-server (Next.js server -> API), so Vercel
-        // would otherwise stamp geo headers for that hop instead of the
-        // visitor's. Forward the visitor's own geo headers from the
-        // original browser request through explicitly.
-        "x-vercel-ip-country": incomingHeaders.get("x-vercel-ip-country") ?? "",
-        "x-vercel-ip-city": incomingHeaders.get("x-vercel-ip-city") ?? "",
-      },
-      cache: "no-store",
-    },
   );
+  if (visitorIp) url.searchParams.set("ip", visitorIp);
+
+  const res = await fetch(url, {
+    headers: {
+      "user-agent": incomingHeaders.get("user-agent") ?? "",
+      referer: incomingHeaders.get("referer") ?? "",
+      // Kept as a fallback in case the query param is ever stripped;
+      // this fetch is server-to-server so it isn't the visitor's own
+      // x-forwarded-for chain anymore, just a best-effort mirror of it.
+      "x-forwarded-for": visitorIp,
+      "x-vercel-ip-country": incomingHeaders.get("x-vercel-ip-country") ?? "",
+      "x-vercel-ip-city": incomingHeaders.get("x-vercel-ip-city") ?? "",
+    },
+    cache: "no-store",
+  });
 
   if (!res.ok) return { status: "not-found" };
 
