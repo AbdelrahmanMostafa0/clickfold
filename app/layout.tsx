@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     title: "LinkPulse — Link Management & Campaign Analytics",
     description:
       "Shorten links, organize them into campaigns, and see every click in real time. Geo, device, and referrer analytics built in.",
-    images: ["/og-image.png"],
     type: "website",
   },
   twitter: {
@@ -35,7 +34,6 @@ export const metadata: Metadata = {
     title: "LinkPulse — Link Management & Campaign Analytics",
     description:
       "Shorten links, organize them into campaigns, and see every click in real time. Geo, device, and referrer analytics built in.",
-    images: ["/og-image.png"],
   },
 };
 
