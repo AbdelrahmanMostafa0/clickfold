@@ -55,7 +55,7 @@ function UserAvatar({ className = "" }: { className?: string }) {
   return (
     <Avatar className={className}>
       <AvatarImage src={user?.avatar || ""} alt={user?.name || "User"} />
-      <AvatarFallback className="border border-foreground bg-primary text-xs font-bold text-primary-foreground">
+      <AvatarFallback className="border border-primary bg-primary text-xs font-bold text-primary-foreground">
         {initials}
       </AvatarFallback>
     </Avatar>
@@ -115,7 +115,7 @@ export default function NavMenu() {
           <>
             <Link
               href="/create"
-              className="hard-shadow border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
+              className="btn-lift border border-primary bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
             >
               Build a link
             </Link>
@@ -158,7 +158,7 @@ export default function NavMenu() {
             </Link>
             <Link
               href="/signup"
-              className="hard-shadow border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
+              className="btn-lift border border-primary bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
             >
               Start creating
             </Link>
@@ -169,7 +169,7 @@ export default function NavMenu() {
       <div className="sm:hidden">
         <Sheet>
           <SheetTrigger asChild>
-            <button className="flex size-11 items-center justify-center border border-foreground bg-card" aria-label="Open menu">
+            <button className="flex size-11 items-center justify-center border border-border bg-card" aria-label="Open menu">
               {isSignedIn ? <UserAvatar className="size-8" /> : <Menu className="size-5" />}
             </button>
           </SheetTrigger>
@@ -193,7 +193,7 @@ export default function NavMenu() {
                 <SheetClose asChild>
                   <Link
                     href="/create"
-                    className="mt-4 flex min-h-11 items-center justify-center border border-foreground bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
+                    className="mt-4 flex min-h-11 items-center justify-center border border-primary bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
                   >
                     Build a link
                   </Link>
@@ -215,7 +215,7 @@ export default function NavMenu() {
               ) : (
                 <div className="grid w-full grid-cols-2 gap-3">
                   <SheetClose asChild>
-                    <Link href="/login" className="flex min-h-11 items-center justify-center border border-foreground font-bold">
+                    <Link href="/login" className="flex min-h-11 items-center justify-center border border-border font-bold">
                       Sign in
                     </Link>
                   </SheetClose>

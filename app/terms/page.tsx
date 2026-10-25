@@ -40,12 +40,12 @@ export default function TermsPage() {
   return (
     <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-32 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-5xl">
-        <header className="border-b-2 border-foreground pb-12">
+        <header className="border-b border-border pb-12">
           <span className="eyebrow">Legal notes</span>
-          <h1 className="mt-7 text-[clamp(3.5rem,8vw,7rem)] font-black leading-[0.86] tracking-[-0.065em]">Terms of service</h1>
+          <h1 className="mt-7 text-[clamp(3.5rem,8vw,7rem)] font-black leading-[0.86] tracking-[-0.045em]">Terms of service</h1>
           <p className="mt-5 text-sm font-semibold text-muted-foreground">Last updated July 2026</p>
         </header>
-        <div className="divide-y-2 divide-foreground">
+        <div className="divide-y divide-border">
           {sections.map((section, index) => (
             <section key={section.title} className="grid gap-5 py-10 md:grid-cols-[5rem_0.75fr_1.25fr] md:gap-8">
               <span className="data-number text-sm font-black text-primary">{String(index + 1).padStart(2, "0")}</span>

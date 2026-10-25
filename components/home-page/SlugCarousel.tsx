@@ -8,12 +8,12 @@ const routes = [
 
 export default function SlugCarousel() {
   return (
-    <section className="overflow-hidden border-b border-foreground px-4 py-20 sm:px-6 lg:px-8">
+    <section className="overflow-hidden border-b border-border px-4 py-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-end">
           <div>
             <span className="eyebrow">One campaign, many routes</span>
-            <h2 className="mt-6 max-w-[10ch] text-5xl font-black leading-[0.9] tracking-[-0.055em] sm:text-6xl">
+            <h2 className="mt-6 max-w-[10ch] text-5xl font-black leading-[0.9] tracking-[-0.04em] sm:text-6xl">
               Name links like you mean it.
             </h2>
           </div>
@@ -27,7 +27,7 @@ export default function SlugCarousel() {
           {routes.map((route, index) => (
             <div
               key={route.slug}
-              className={`route-strip min-h-40 border border-foreground p-4 ${route.tone} ${index === 1 ? "lg:translate-y-6" : ""} ${index === 3 ? "lg:-translate-y-4" : ""}`}
+              className={`route-strip min-h-40 p-4 ${route.tone} ${index === 1 ? "lg:translate-y-6" : ""} ${index === 3 ? "lg:-translate-y-4" : ""}`}
             >
               <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] opacity-70">{route.channel}</p>
               <p className="mt-10 text-sm font-semibold opacity-70">clickfold.app/</p>

@@ -30,7 +30,7 @@ export default function CampaignDetailPage({ id }: { id: string }) {
   if (loading && !data) {
     return (
       <main id="main-content" className="studio-grid grid min-h-screen place-items-center px-4">
-        <div className="flex items-center gap-3 border border-foreground bg-card px-5 py-4 font-bold">
+        <div className="flex items-center gap-3 border border-border bg-card px-5 py-4 font-bold">
           <Loader2 className="size-5 animate-spin text-primary" /> Reading campaign…
         </div>
       </main>
@@ -40,7 +40,7 @@ export default function CampaignDetailPage({ id }: { id: string }) {
   if (notFound || !data) {
     return (
       <main id="main-content" className="studio-grid grid min-h-screen place-items-center px-4">
-        <div className="hard-shadow max-w-lg border-2 border-foreground bg-card p-8">
+        <div className="fold-card max-w-lg border border-border bg-card p-8">
           <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">Missing campaign</p>
           <h1 className="mt-4 text-4xl font-black tracking-[-0.045em]">This campaign is no longer in the index.</h1>
           <Link href="/campaigns" className="mt-7 inline-flex items-center gap-2 font-bold text-primary underline underline-offset-4"><ArrowLeft className="size-4" />Back to campaigns</Link>
@@ -54,12 +54,12 @@ export default function CampaignDetailPage({ id }: { id: string }) {
   return (
     <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-28 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <header className="border-b-2 border-foreground pb-9">
+        <header className="border-b border-border pb-9">
           <Link href="/campaigns" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground"><ArrowLeft className="size-4" />Campaign index</Link>
           <div className="mt-4 grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
             <div>
               <span className="eyebrow">Campaign read · {days} days</span>
-              <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.055em] sm:text-6xl">{campaign.name}</h1>
+              <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.04em] sm:text-6xl">{campaign.name}</h1>
               {campaign.description && <p className="mt-4 max-w-2xl text-base leading-7 text-muted-foreground">{campaign.description}</p>}
             </div>
             <div className="flex flex-col items-start gap-3 md:items-end">
@@ -85,7 +85,7 @@ export default function CampaignDetailPage({ id }: { id: string }) {
           <BreakdownList title="Top devices" items={analytics.topDevices} accent="var(--success)" />
         </section>
 
-        <section className="mt-8 border-y-2 border-foreground" aria-labelledby="campaign-routes">
+        <section className="mt-8 border-y border-border" aria-labelledby="campaign-routes">
           <h2 id="campaign-routes" className="border-b border-border py-5 text-2xl font-black tracking-[-0.035em]">Routes in this campaign</h2>
           {links.length === 0 ? (
             <p className="py-8 text-sm text-muted-foreground">No links are assigned yet. Choose this campaign when building a link.</p>

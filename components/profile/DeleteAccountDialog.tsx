@@ -36,7 +36,7 @@ const DeleteAccountDialog = () => {
       <DialogTrigger asChild>
         <Button
           variant="destructive"
-          className="w-full border-2 border-destructive bg-transparent text-destructive transition-all hover:bg-destructive hover:text-destructive-foreground sm:w-auto"
+          className="w-full border border-destructive bg-transparent text-destructive transition-all hover:bg-destructive hover:text-destructive-foreground sm:w-auto"
         >
           <Trash2 className="size-4 mr-2" />
           Delete Account

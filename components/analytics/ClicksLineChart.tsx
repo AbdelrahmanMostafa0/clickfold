@@ -55,7 +55,7 @@ export default function ClicksLineChart({ data }: { data: ClicksByDate[] }) {
               backgroundColor: "var(--foreground)",
               color: "var(--background)",
               border: "1px solid var(--foreground)",
-              borderRadius: 0,
+              borderRadius: 8,
               fontSize: 12,
             }}
             labelStyle={{ color: "var(--background)" }}

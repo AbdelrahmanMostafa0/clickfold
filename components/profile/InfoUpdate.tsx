@@ -48,7 +48,7 @@ const InfoUpdate = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="border-2 border-foreground bg-card p-6"
+      className="border border-border bg-card p-6"
     >
       <h2 className="text-foreground text-lg font-medium flex items-center gap-2 mb-6">
         <UserIcon className="size-4 text-primary" /> Display Settings
@@ -81,7 +81,7 @@ const InfoUpdate = () => {
           <Button
             type="submit"
             disabled={isProfileSubmitting}
-            className="border-2 border-foreground bg-secondary text-foreground hover:bg-background"
+            className="border border-border bg-secondary text-foreground hover:bg-background"
           >
             <Save className="size-4 mr-2" />
             {isProfileSubmitting ? "Saving..." : "Save Changes"}

@@ -13,7 +13,7 @@ const channels = [
 
 export default function Hero() {
   return (
-    <section className="studio-grid relative overflow-hidden border-b border-foreground px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-28 lg:pt-40">
+    <section className="studio-grid relative overflow-hidden border-b border-border px-4 pb-20 pt-32 sm:px-6 lg:px-8 lg:pb-28 lg:pt-40">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -22,8 +22,8 @@ export default function Hero() {
           className="max-w-2xl"
         >
           <span className="eyebrow mb-7">Campaign link studio</span>
-          <h1 className="max-w-[11ch] text-[clamp(4rem,10vw,7.75rem)] font-black leading-[0.82] tracking-[-0.07em]">
-            Every link has a <span className="text-primary">job.</span>
+          <h1 className="max-w-[11ch] text-[clamp(4rem,10vw,7.75rem)] font-black leading-[0.82] tracking-[-0.045em]">
+            Every link has a <span className="text-accent">job.</span>
           </h1>
           <p className="mt-8 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl">
             Build campaign-ready links, shape how they appear, and see what
@@ -50,8 +50,8 @@ export default function Hero() {
           <div className="absolute -left-5 -top-6 z-10 bg-accent px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-accent-foreground sm:-left-8">
             Live campaign
           </div>
-          <div className="hard-shadow route-strip border-2 border-foreground bg-card p-5 sm:p-7">
-            <div className="flex items-start justify-between gap-4 border-b border-foreground pb-5">
+          <div className="fold-card bg-card p-5 sm:p-7">
+            <div className="flex items-start justify-between gap-4 border-b border-border pb-5">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted-foreground">
                   Summer field notes
@@ -87,7 +87,7 @@ export default function Hero() {
               ))}
             </div>
 
-            <div className="mt-2 grid gap-4 bg-foreground p-4 text-background sm:grid-cols-[1fr_auto] sm:items-center">
+            <div className="mt-2 grid gap-4 rounded-md bg-foreground p-4 text-background sm:grid-cols-[1fr_auto] sm:items-center">
               <div className="flex items-center gap-3">
                 <MousePointer2 className="size-5 text-primary" />
                 <p className="text-sm font-semibold">

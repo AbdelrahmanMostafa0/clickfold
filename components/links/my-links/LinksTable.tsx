@@ -35,7 +35,7 @@ export default function LinksTable({ links, loading }: { links: Link[]; loading:
 
   if (links.length === 0) {
     return (
-      <section className="hard-shadow border-2 border-foreground bg-card p-7 sm:p-10">
+      <section className="fold-card border border-border bg-card p-7 sm:p-10">
         <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">Empty index</p>
         <h2 className="mt-4 max-w-[13ch] text-4xl font-black tracking-[-0.045em]">Build a route and it will report back here.</h2>
         <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">Your link index keeps destinations, share previews, status, and analytics within reach.</p>
@@ -46,9 +46,9 @@ export default function LinksTable({ links, loading }: { links: Link[]; loading:
 
   return (
     <>
-      <div className="hidden overflow-hidden border-2 border-foreground bg-card md:block">
+      <div className="hidden overflow-hidden border border-border bg-card md:block">
         <Table>
-          <TableHeader className="border-b border-foreground bg-secondary">
+          <TableHeader className="border-b border-border bg-secondary">
             <TableRow className="border-border hover:bg-transparent">
               <TableHead>Route</TableHead>
               <TableHead>Short link</TableHead>
@@ -84,7 +84,7 @@ export default function LinksTable({ links, loading }: { links: Link[]; loading:
 
       <div className="space-y-4 md:hidden">
         {links.map((link) => (
-          <article key={link._id} className="border-2 border-foreground bg-card p-5">
+          <article key={link._id} className="border border-border bg-card p-5">
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
                 <NextLink href={`/profile/my-links/${link.slug}`} className="block truncate text-xl font-black tracking-[-0.03em] hover:text-primary">{link.og?.title || link.slug}</NextLink>

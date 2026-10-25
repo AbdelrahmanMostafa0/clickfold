@@ -296,7 +296,7 @@ export default function CreateLinkForm() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="mx-auto w-full max-w-3xl"
     >
-      <div className="relative border-2 border-foreground bg-card p-6 hard-shadow sm:p-9">
+      <div className="relative border border-border bg-card p-6 fold-card sm:p-9">
         {/* Header */}
         <div className="relative mb-9 max-w-2xl">
           <p className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-primary">
@@ -355,7 +355,7 @@ export default function CreateLinkForm() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute z-20 left-0 right-0 mt-1 max-h-48 overflow-y-auto border-2 border-foreground bg-background hard-shadow"
+                  className="absolute z-20 left-0 right-0 mt-1 max-h-48 overflow-y-auto border border-border bg-background soft-card"
                 >
                   <div className="p-1.5">
                     <div className="flex items-center gap-1.5 px-2 py-1.5 mb-1">
@@ -561,8 +561,8 @@ export default function CreateLinkForm() {
                     }
                     className={`relative flex min-h-24 cursor-pointer flex-col items-center justify-center gap-1.5 rounded-sm border p-3 text-center transition-all ${
                       isActive
-                        ? "border-foreground bg-secondary text-foreground"
-                        : "border-input bg-background  hover:border-foreground/20 hover:bg-background/80"
+                        ? "border-border bg-secondary text-foreground"
+                        : "border-input bg-background  hover:border-primary/20 hover:bg-background/80"
                     }`}
                   >
                     <div
@@ -613,7 +613,7 @@ export default function CreateLinkForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="h-12 w-full border-2 border-foreground bg-primary font-bold text-primary-foreground hard-shadow transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
+              className="h-12 w-full border border-primary bg-primary font-bold text-primary-foreground btn-lift transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
             >
               {isSubmitting ? (
                 <>

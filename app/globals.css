@@ -4,8 +4,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-display: var(--font-anybody);
-  --font-sans: var(--font-schibsted);
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-plex-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -33,27 +34,29 @@
 }
 
 :root {
-  --radius: 0.375rem;
-  --background: oklch(0.965 0.018 88);
-  --foreground: oklch(0.2 0.018 75);
-  --card: oklch(0.992 0.009 88);
-  --card-foreground: oklch(0.2 0.018 75);
-  --popover: oklch(0.992 0.009 88);
-  --popover-foreground: oklch(0.2 0.018 75);
-  --primary: oklch(0.66 0.22 35);
-  --primary-foreground: oklch(0.985 0.009 88);
-  --secondary: oklch(0.91 0.028 88);
-  --secondary-foreground: oklch(0.28 0.02 75);
-  --muted: oklch(0.925 0.02 88);
-  --muted-foreground: oklch(0.46 0.028 75);
-  --accent: oklch(0.55 0.23 265);
-  --accent-foreground: oklch(0.985 0.009 88);
-  --success: oklch(0.66 0.17 145);
-  --success-foreground: oklch(0.18 0.035 145);
-  --destructive: oklch(0.58 0.21 25);
-  --border: oklch(0.81 0.035 83);
-  --input: oklch(0.84 0.03 83);
-  --ring: oklch(0.55 0.23 265);
+  --radius: 0.625rem;
+  --background: #f4f6fc;
+  --foreground: #101a35;
+  --card: #ffffff;
+  --card-foreground: #101a35;
+  --popover: #ffffff;
+  --popover-foreground: #101a35;
+  --primary: #2a5bf6;
+  --primary-foreground: #ffffff;
+  --secondary: #e9edf7;
+  --secondary-foreground: #1c2747;
+  --muted: #eef1f8;
+  --muted-foreground: #5a6683;
+  --accent: #f0592b;
+  --accent-foreground: #ffffff;
+  --success: #2f9c80;
+  --success-foreground: #052a20;
+  --destructive: #c93a2a;
+  --border: #dde3f0;
+  --input: #d3daea;
+  --ring: #2a5bf6;
+  --fold: #dfe5f4;
+  --shadow-color: 16 26 53;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
   --space-md: 0.75rem;
@@ -88,7 +91,8 @@
   h3,
   h4 {
     font-family: var(--font-display), sans-serif;
-    font-variation-settings: "wdth" 112;
+    font-variation-settings: "opsz" 96;
+    text-wrap: balance;
   }
 
   button,
@@ -98,6 +102,13 @@
   select {
     transition-duration: 180ms;
     transition-timing-function: var(--ease-out-expo);
+  }
+
+  input,
+  textarea,
+  select,
+  button {
+    border-radius: var(--radius-md);
   }
 
   :focus-visible {
@@ -141,66 +152,99 @@
   transform: translateY(0);
 }
 
+/* Folded paper: two soft diagonal creases instead of a grid */
 .noise-bg,
 .studio-grid {
   background-color: var(--background);
   background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 48px 48px;
-  background-position: -1px -1px;
+    linear-gradient(135deg, transparent 0 58%, rgb(42 91 246 / 0.035) 58% 100%),
+    linear-gradient(45deg, rgb(255 255 255 / 0.7) 0 40%, transparent 40%);
 }
 
 .paper-surface {
   background: var(--card);
   border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .ink-panel {
   color: var(--background);
   background: var(--foreground);
+  border-radius: var(--radius-lg);
 }
 
 .eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--success);
   font-size: 0.75rem;
-  font-weight: 750;
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   line-height: 1;
   text-transform: uppercase;
 }
 
 .eyebrow::before {
-  width: 1.75rem;
-  height: 0.5rem;
+  width: 0.7rem;
+  height: 0.7rem;
   content: "";
-  background: var(--primary);
+  background: var(--success);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-.hard-shadow,
-.glow-red,
-.glow-green {
-  box-shadow: 5px 5px 0 var(--foreground);
+/* Card with a dog-eared top-right corner */
+.fold-card {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-color) / 0.05),
+    0 18px 36px -20px rgb(var(--shadow-color) / 0.28);
 }
 
-.glow-red-text,
-.glow-green-text {
-  text-shadow: none;
+.fold-card::after {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  z-index: 1;
+  width: 1.5rem;
+  height: 1.5rem;
+  content: "";
+  pointer-events: none;
+  border-bottom-left-radius: 0.25rem;
+  background: linear-gradient(225deg, var(--background) 50%, var(--fold) 50%);
+}
+
+/* Plain raised surface for small floating things (status pills, menus) */
+.soft-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--card);
+  box-shadow: 0 12px 28px -14px rgb(var(--shadow-color) / 0.3);
+}
+
+/* Primary call-to-action that lifts on hover */
+.btn-lift {
+  border-radius: var(--radius-md);
+  box-shadow: 0 6px 16px -8px rgb(42 91 246 / 0.6);
+  transition-property: transform, box-shadow, background-color;
 }
 
 .studio-panel {
   border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   background: var(--card);
+  box-shadow: 0 1px 2px rgb(var(--shadow-color) / 0.04);
 }
 
 .studio-panel[data-accent="orange"] {
-  border-color: var(--primary);
+  border-color: var(--accent);
 }
 
 .studio-panel[data-accent="blue"] {
-  border-color: var(--accent);
+  border-color: var(--primary);
 }
 
 .studio-rule {
@@ -210,16 +254,18 @@
 
 .route-strip {
   position: relative;
+  border-radius: var(--radius-md);
 }
 
 .route-strip::after {
   position: absolute;
+  top: -1px;
   right: -1px;
-  bottom: -1px;
-  width: 1rem;
-  height: 1rem;
+  width: 1.1rem;
+  height: 1.1rem;
   content: "";
-  background: linear-gradient(135deg, transparent 50%, var(--primary) 51%);
+  border-bottom-left-radius: 0.2rem;
+  background: linear-gradient(225deg, var(--background) 50%, rgb(var(--shadow-color) / 0.2) 50%);
 }
 
 .data-number {
@@ -268,11 +314,9 @@
 }
 
 @media (hover: hover) {
-  .hard-shadow:hover,
-  .glow-red:hover,
-  .glow-green:hover {
-    transform: translate(2px, 2px);
-    box-shadow: 3px 3px 0 var(--foreground);
+  .btn-lift:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 22px -8px rgb(42 91 246 / 0.65);
   }
 }
 

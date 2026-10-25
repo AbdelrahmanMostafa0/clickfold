@@ -12,7 +12,7 @@ export default function StatsBar() {
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div>
           <span className="eyebrow text-background before:bg-primary">A clear read</span>
-          <h2 className="mt-7 max-w-[11ch] text-5xl font-black leading-[0.9] tracking-[-0.055em] text-background sm:text-6xl">
+          <h2 className="mt-7 max-w-[11ch] text-5xl font-black leading-[0.9] tracking-[-0.04em] text-background sm:text-6xl">
             Know which route carried the campaign.
           </h2>
           <p className="mt-6 max-w-lg text-lg leading-8 text-background/65">

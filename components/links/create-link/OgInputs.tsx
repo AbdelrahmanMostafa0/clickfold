@@ -89,7 +89,7 @@ const OgInputs = ({
         </Label>
 
         {imagePreview ? (
-          <div className="relative overflow-hidden border-2 border-foreground">
+          <div className="relative overflow-hidden border border-border">
             <Image
               src={imagePreview}
               alt="OG preview"
@@ -102,11 +102,11 @@ const OgInputs = ({
               type="button"
               onClick={removeImage}
               aria-label="Remove preview artwork"
-              className="absolute right-2 top-2 border-2 border-foreground bg-primary p-2 text-primary-foreground transition-transform hover:-translate-y-0.5"
+              className="absolute right-2 top-2 border border-primary bg-primary p-2 text-primary-foreground transition-transform hover:-translate-y-0.5"
             >
               <X className="size-4" />
             </button>
-            <div className="absolute bottom-2 left-2 border border-foreground bg-background px-2 py-1">
+            <div className="absolute bottom-2 left-2 border border-border bg-background px-2 py-1">
               <span className="text-[10px] font-bold">{ogImage?.name}</span>
             </div>
           </div>
@@ -120,12 +120,12 @@ const OgInputs = ({
             onKeyDown={(event) => {
               if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
             }}
-            className={`group cursor-pointer border-2 border-dashed p-8 text-center transition-all hover:border-foreground hover:bg-secondary ${
+            className={`group cursor-pointer border border-dashed p-8 text-center transition-all hover:border-primary hover:bg-secondary ${
               imageError ? "border-destructive" : "border-input"
             }`}
           >
             <div className="flex flex-col items-center gap-3">
-              <div className="flex size-12 items-center justify-center border border-foreground bg-secondary transition-colors group-hover:bg-background">
+              <div className="flex size-12 items-center justify-center border border-border bg-secondary transition-colors group-hover:bg-background">
                 <Upload className="size-5 text-muted-foreground group-hover:text-success transition-colors" />
               </div>
               <div>

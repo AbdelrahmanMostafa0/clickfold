@@ -21,7 +21,7 @@ export const LinksStats = () => {
           ))}
         </nav>
       </section>
-      <Link href="/create" className="hard-shadow flex min-h-12 items-center justify-center gap-2 border border-foreground bg-primary px-4 font-extrabold text-primary-foreground">
+      <Link href="/create" className="btn-lift flex min-h-12 items-center justify-center gap-2 border border-primary bg-primary px-4 font-extrabold text-primary-foreground">
         <Plus className="size-4" /> Build a link
       </Link>
     </aside>

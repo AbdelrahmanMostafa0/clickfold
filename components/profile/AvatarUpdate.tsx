@@ -60,7 +60,7 @@ const AvatarUpdate = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.15 }}
-      className="border-2 border-foreground bg-card p-6"
+      className="border border-border bg-card p-6"
     >
       <h2 className="text-foreground text-lg font-medium flex items-center gap-2 mb-6">
         <Camera className="size-4 text-primary" /> Profile Picture
@@ -89,7 +89,7 @@ const AvatarUpdate = ({
             type="button"
             onClick={() => fileInputRef.current?.click()}
             aria-label="Choose profile picture"
-            className="absolute -bottom-1 -right-1 flex size-10 cursor-pointer items-center justify-center rounded-full border-2 border-foreground bg-primary text-primary-foreground"
+            className="absolute -bottom-1 -right-1 flex size-10 cursor-pointer items-center justify-center rounded-full border border-primary bg-primary text-primary-foreground"
           >
             <Camera className="size-5" />
           </button>
@@ -123,7 +123,7 @@ const AvatarUpdate = ({
                 type="button"
                 onClick={onAvatarUpload}
                 disabled={isAvatarSubmitting}
-                className="border-2 border-foreground bg-primary text-primary-foreground hard-shadow transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
+                className="border border-primary bg-primary text-primary-foreground btn-lift transition-transform hover:-translate-y-0.5 hover:bg-primary/90"
               >
                 <Save className="size-4 mr-2" />
                 {isAvatarSubmitting ? "Uploading..." : "Save Image"}

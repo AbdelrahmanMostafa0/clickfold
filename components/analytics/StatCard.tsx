@@ -18,7 +18,7 @@ export default function StatCard({
         <Icon className="size-4" style={{ color: accent }} aria-hidden="true" />
       </div>
       <div className="mt-8 flex items-end justify-between gap-4">
-        <p className="data-number truncate text-4xl font-black tracking-[-0.05em] text-foreground">{value}</p>
+        <p className="data-number truncate text-4xl font-black tracking-[-0.04em] text-foreground">{value}</p>
         <span className="size-3 shrink-0" style={{ backgroundColor: accent }} aria-hidden="true" />
       </div>
     </div>

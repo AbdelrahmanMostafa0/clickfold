@@ -9,8 +9,8 @@ export default function ProfileHeader({ avatarPreview }: { avatarPreview?: strin
   const avatar = avatarPreview || user?.avatar;
 
   return (
-    <header className="grid gap-7 border-b-2 border-foreground pb-9 sm:grid-cols-[auto_1fr] sm:items-end">
-      <div className="flex size-24 items-center justify-center overflow-hidden border-2 border-foreground bg-primary">
+    <header className="grid gap-7 border-b border-border pb-9 sm:grid-cols-[auto_1fr] sm:items-end">
+      <div className="flex size-24 items-center justify-center overflow-hidden border border-primary bg-primary">
         {avatar ? (
           <Image src={avatar} alt={user?.name || "Profile image"} className="h-full w-full object-cover" width={96} height={96} />
         ) : (

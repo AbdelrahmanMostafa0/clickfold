@@ -14,7 +14,7 @@ export default function RangeSelector({
   onChange: (days: number) => void;
 }) {
   return (
-    <div className="inline-flex border border-foreground" role="group" aria-label="Date range">
+    <div className="inline-flex border border-border" role="group" aria-label="Date range">
       {RANGES.map((range) => (
         <button
           key={range.value}

@@ -27,10 +27,10 @@ export default function CampaignsPage() {
   return (
     <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-28 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <header className="grid gap-8 border-b-2 border-foreground pb-9 md:grid-cols-[1fr_auto] md:items-end">
+        <header className="grid gap-8 border-b border-border pb-9 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <span className="eyebrow">Campaign index</span>
-            <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.055em] sm:text-6xl">Keep the routes together.</h1>
+            <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.04em] sm:text-6xl">Keep the routes together.</h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">Group email, social, partner, and QR links under the effort they belong to.</p>
           </div>
           <CampaignFormDialog onSaved={fetchCampaigns} />
@@ -41,7 +41,7 @@ export default function CampaignsPage() {
             <Loader2 className="size-5 animate-spin text-primary" /> Reading campaign index…
           </div>
         ) : campaigns.length === 0 ? (
-          <section className="mt-10 grid gap-8 border-2 border-foreground bg-card p-7 sm:p-10 md:grid-cols-[1fr_auto] md:items-end">
+          <section className="mt-10 grid gap-8 border border-border bg-card p-7 sm:p-10 md:grid-cols-[1fr_auto] md:items-end">
             <div>
               <p className="text-xs font-black uppercase tracking-[0.16em] text-primary">Empty index</p>
               <h2 className="mt-4 max-w-[12ch] text-4xl font-black tracking-[-0.045em]">Your first campaign gives every link a shared context.</h2>
@@ -50,7 +50,7 @@ export default function CampaignsPage() {
             <CampaignFormDialog onSaved={fetchCampaigns} />
           </section>
         ) : (
-          <section className="border-b-2 border-foreground" aria-label="Campaigns">
+          <section className="border-b border-border" aria-label="Campaigns">
             {campaigns.map((campaign, index) => (
               <article key={campaign._id} className="grid gap-5 border-b border-border py-7 last:border-b-0 md:grid-cols-[3rem_1fr_auto] md:items-center">
                 <span className="data-number text-sm font-black text-muted-foreground">{String(index + 1).padStart(2, "0")}</span>

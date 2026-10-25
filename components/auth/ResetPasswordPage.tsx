@@ -60,7 +60,7 @@ export default function ResetPasswordPage() {
         </div>
         <button
           onClick={() => router.push("/login")}
-          className="hard-shadow mt-7 min-h-12 w-full border border-foreground bg-primary px-5 font-extrabold text-primary-foreground"
+          className="btn-lift mt-7 min-h-12 w-full border border-primary bg-primary px-5 font-extrabold text-primary-foreground"
         >
           Go to sign in
         </button>
@@ -118,7 +118,7 @@ export default function ResetPasswordPage() {
         <button
           type="submit"
           disabled={isSubmitting || !token}
-          className="hard-shadow flex min-h-12 w-full items-center justify-center gap-2 border border-foreground bg-primary px-5 font-extrabold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-55"
+          className="btn-lift flex min-h-12 w-full items-center justify-center gap-2 border border-primary bg-primary px-5 font-extrabold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-55"
         >
           <KeyRound className="size-4" />{isSubmitting ? "Updating…" : "Update password"}
         </button>

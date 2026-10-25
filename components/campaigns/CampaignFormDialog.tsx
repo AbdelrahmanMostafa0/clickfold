@@ -76,7 +76,7 @@ export default function CampaignFormDialog({
             <Pencil className="size-4" />
           </Button>
         ) : (
-          <Button className="hard-shadow min-h-11 border border-foreground bg-primary px-4 text-primary-foreground hover:bg-primary/90">
+          <Button className="btn-lift min-h-11 border border-primary bg-primary px-4 text-primary-foreground hover:bg-primary/90">
             <Plus className="size-4 mr-1.5" />
             New campaign
           </Button>

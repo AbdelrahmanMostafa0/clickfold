@@ -35,7 +35,7 @@ export default function DashboardPage() {
   if (loading && !stats) {
     return (
       <main id="main-content" className="studio-grid grid min-h-screen place-items-center px-4">
-        <div className="flex items-center gap-3 border border-foreground bg-card px-5 py-4 font-bold">
+        <div className="flex items-center gap-3 border border-border bg-card px-5 py-4 font-bold">
           <Loader2 className="size-5 animate-spin text-primary" />
           Reading your campaign activity…
         </div>
@@ -52,10 +52,10 @@ export default function DashboardPage() {
   return (
     <main id="main-content" className="studio-grid min-h-screen px-4 pb-24 pt-28 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
-        <header className="grid gap-8 border-b-2 border-foreground pb-9 md:grid-cols-[1fr_auto] md:items-end">
+        <header className="grid gap-8 border-b border-border pb-9 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <span className="eyebrow">Workspace · Last {days} days</span>
-            <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.055em] sm:text-6xl">Campaign overview</h1>
+            <h1 className="mt-6 text-5xl font-black leading-none tracking-[-0.04em] sm:text-6xl">Campaign overview</h1>
             <p className="mt-4 max-w-xl text-base leading-7 text-muted-foreground">
               A direct read of every active link, route, and audience signal.
             </p>
@@ -64,7 +64,7 @@ export default function DashboardPage() {
             <RangeSelector value={days} onChange={setDays} />
             <Link
               href="/create"
-              className="hard-shadow inline-flex min-h-12 items-center justify-center gap-2 border border-foreground bg-primary px-5 py-3 font-extrabold text-primary-foreground"
+              className="btn-lift inline-flex min-h-12 items-center justify-center gap-2 border border-primary bg-primary px-5 py-3 font-extrabold text-primary-foreground"
             >
               Build a link <ArrowUpRight className="size-4" />
             </Link>
@@ -94,7 +94,7 @@ export default function DashboardPage() {
           <BreakdownList title="Top referrers" items={analytics?.topReferrers ?? []} accent="var(--primary)" />
         </section>
 
-        <section className="mt-8 border-y-2 border-foreground" aria-labelledby="top-links">
+        <section className="mt-8 border-y border-border" aria-labelledby="top-links">
           <div className="flex items-center justify-between gap-4 border-b border-border py-5">
             <h2 id="top-links" className="text-2xl font-black tracking-[-0.035em]">Links carrying the most traffic</h2>
             <Link href="/profile/my-links" className="text-sm font-bold text-primary underline underline-offset-4">View all links</Link>

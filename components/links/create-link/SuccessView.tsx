@@ -33,10 +33,10 @@ export default function SuccessView({ link, onCreateAnother }: SuccessViewProps)
       className="mx-auto w-full max-w-4xl"
       aria-labelledby="route-live-title"
     >
-      <div className="border-2 border-foreground bg-card hard-shadow">
-        <header className="grid gap-6 border-b-2 border-foreground p-6 sm:grid-cols-[1fr_auto] sm:items-end sm:p-9">
+      <div className="border border-border bg-card fold-card">
+        <header className="grid gap-6 border-b border-border p-6 sm:grid-cols-[1fr_auto] sm:items-end sm:p-9">
           <div>
-            <div className="mb-4 flex size-10 items-center justify-center border-2 border-foreground bg-success text-success-foreground">
+            <div className="mb-4 flex size-10 items-center justify-center border border-border bg-success text-success-foreground">
               <Check className="size-5" aria-hidden="true" />
             </div>
             <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-success">
@@ -46,18 +46,18 @@ export default function SuccessView({ link, onCreateAnother }: SuccessViewProps)
               Route is live.
             </h1>
           </div>
-          <Button onClick={onCreateAnother} variant="outline" className="border-2 border-foreground bg-background">
+          <Button onClick={onCreateAnother} variant="outline" className="border border-border bg-background">
             <Plus className="size-4" />
             Build another
           </Button>
         </header>
 
         <div className="grid lg:grid-cols-[1.25fr_.75fr]">
-          <div className="border-b-2 border-foreground p-6 lg:border-b-0 lg:border-r-2 sm:p-9">
+          <div className="border-b border-border p-6 lg:border-b-0 lg:border-r sm:p-9">
             <p className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Share route</p>
-            <div className="flex flex-col gap-3 border-2 border-foreground bg-primary p-4 text-primary-foreground sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-3 border border-primary bg-primary p-4 text-primary-foreground sm:flex-row sm:items-center sm:justify-between">
               <span className="min-w-0 truncate font-bold">{shortUrl.replace(/^https?:\/\//, "")}</span>
-              <Button type="button" size="sm" onClick={copyToClipboard} className="shrink-0 border border-foreground bg-background text-foreground hover:bg-secondary">
+              <Button type="button" size="sm" onClick={copyToClipboard} className="shrink-0 border border-border bg-background text-foreground hover:bg-secondary">
                 <Copy className="size-3.5" />
                 Copy
               </Button>
@@ -70,7 +70,7 @@ export default function SuccessView({ link, onCreateAnother }: SuccessViewProps)
             <div className="mt-8">
               <p className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Share preview</p>
               {link.ogMode === "custom" ? (
-                <div className="overflow-hidden border-2 border-foreground bg-background">
+                <div className="overflow-hidden border border-border bg-background">
                   {link.og?.image && <Image src={link.og.image} alt="Campaign share preview" width={1200} height={630} unoptimized className="h-52 w-full object-cover" />}
                   <div className="p-5">
                     <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-primary">clickfold.app</p>
@@ -79,8 +79,8 @@ export default function SuccessView({ link, onCreateAnother }: SuccessViewProps)
                   </div>
                 </div>
               ) : (
-                <div className="flex gap-4 border-2 border-foreground bg-secondary p-5">
-                  <div className="flex size-10 shrink-0 items-center justify-center border border-foreground bg-background">
+                <div className="flex gap-4 border border-border bg-secondary p-5">
+                  <div className="flex size-10 shrink-0 items-center justify-center border border-border bg-background">
                     {link.ogMode === "original" ? <Globe className="size-5 text-accent" /> : <EyeOff className="size-5 text-muted-foreground" />}
                   </div>
                   <div>

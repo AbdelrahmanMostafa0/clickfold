@@ -26,7 +26,7 @@ export default function Navbar() {
       aria-label="Main navigation"
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors ${
         scrolled
-          ? "border-foreground bg-background"
+          ? "border-border bg-background"
           : "border-border bg-background/95"
       }`}
     >

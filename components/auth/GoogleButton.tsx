@@ -56,7 +56,7 @@ export default function GoogleLoginButton({
     <Button
       type="button"
       variant="secondary"
-      className="min-h-12 w-full rounded-none border border-foreground bg-card font-bold text-foreground hover:bg-secondary"
+      className="min-h-12 w-full rounded-none border border-border bg-card font-bold text-foreground hover:bg-secondary"
       onClick={() => login()}
       disabled={loading}
     >

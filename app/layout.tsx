@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Anybody, Schibsted_Grotesk } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import GoogleOAuthWrapper from "@/components/GoogleOAuthWrapper";
 import { UserProvider } from "@/context/UserContext";
 import Navbar from "@/components/navigations/Navbar";
@@ -13,15 +13,22 @@ import {
 } from "@/lib/metadata";
 import "./globals.css";
 
-const anybody = Anybody({
-  variable: "--font-anybody",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
   display: "swap",
 });
 
-const schibsted = Schibsted_Grotesk({
-  variable: "--font-schibsted",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
 });
 
@@ -29,7 +36,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#f4efe3",
+  themeColor: "#f4f6fc",
 };
 
 export const metadata: Metadata = {
@@ -76,7 +83,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${anybody.variable} ${schibsted.variable}`}>
+      <body className={`${bricolage.variable} ${dmSans.variable} ${plexMono.variable}`}>
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>

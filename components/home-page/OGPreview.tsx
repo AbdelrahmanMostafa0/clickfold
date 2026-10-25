@@ -35,7 +35,7 @@ function ShareCard({ platform }: { platform: Platform }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-      className={`mx-auto w-full max-w-md border border-foreground p-4 sm:p-5 ${style.shell}`}
+      className={`mx-auto w-full max-w-md border border-border p-4 sm:p-5 ${style.shell}`}
     >
       <div className="flex items-center gap-3 border-b border-current/15 pb-4">
         <div className={`flex size-9 items-center justify-center ${style.accent}`}>
@@ -55,7 +55,7 @@ function ShareCard({ platform }: { platform: Platform }) {
           <div className="grid min-h-36 place-items-center bg-primary p-5 text-primary-foreground">
             <div className="text-center">
               <p className="text-[0.65rem] font-black uppercase tracking-[0.2em] opacity-70">Issue 08</p>
-              <p className="mt-2 text-3xl font-black leading-none tracking-[-0.05em]">Summer field notes</p>
+              <p className="mt-2 text-3xl font-black leading-none tracking-[-0.04em]">Summer field notes</p>
             </div>
           </div>
           <div className="p-4">
@@ -76,11 +76,11 @@ export default function OGPreview() {
   const [activePlatform, setActivePlatform] = useState<Platform>("Messages");
 
   return (
-    <section className="studio-grid border-b border-foreground px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <section className="studio-grid border-b border-border px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <span className="eyebrow">Share preview</span>
-          <h2 className="mt-7 max-w-[10ch] text-[clamp(3.5rem,7vw,6.75rem)] font-black leading-[0.86] tracking-[-0.065em]">
+          <h2 className="mt-7 max-w-[10ch] text-[clamp(3.5rem,7vw,6.75rem)] font-black leading-[0.86] tracking-[-0.045em]">
             Make the click feel considered.
           </h2>
           <p className="mt-7 max-w-lg text-lg leading-8 text-muted-foreground">
@@ -88,7 +88,7 @@ export default function OGPreview() {
             visit. The same campaign can feel native wherever it travels.
           </p>
 
-          <div className="mt-9 border-y border-foreground">
+          <div className="mt-9 border-y border-border">
             <div className="grid grid-cols-[auto_1fr] gap-4 border-b border-border py-5">
               <ImageIcon className="mt-0.5 size-5 text-primary" />
               <div>
@@ -110,7 +110,7 @@ export default function OGPreview() {
           <div className="absolute -right-3 -top-5 z-10 rotate-2 bg-success px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-success-foreground sm:-right-5">
             Preview desk
           </div>
-          <div className="hard-shadow border-2 border-foreground bg-card p-4 sm:p-7">
+          <div className="fold-card border border-border bg-card p-4 sm:p-7">
             <div className="mb-7 flex flex-wrap gap-2" role="tablist" aria-label="Preview channel">
               {platforms.map((platform) => (
                 <button
@@ -121,8 +121,8 @@ export default function OGPreview() {
                   onClick={() => setActivePlatform(platform)}
                   className={`min-h-11 border px-4 py-2 text-sm font-bold ${
                     activePlatform === platform
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-background text-muted-foreground hover:border-foreground hover:text-foreground"
+                      ? "border-border bg-foreground text-background"
+                      : "border-border bg-background text-muted-foreground hover:border-primary hover:text-foreground"
                   }`}
                 >
                   {platform}

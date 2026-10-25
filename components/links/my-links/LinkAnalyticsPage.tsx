@@ -48,8 +48,8 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
   if (loading && !data) {
     return (
       <main id="main-content" className="flex min-h-screen items-center justify-center noise-bg">
-        <div className="flex items-center gap-3 border-2 border-foreground bg-card px-5 py-4 hard-shadow" role="status">
-          <div className="size-4 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <div className="flex items-center gap-3 border border-border bg-card px-5 py-4 soft-card" role="status">
+          <div className="size-4 animate-spin rounded-full border border-primary border-t-transparent" />
           <span className="text-sm font-bold">Reading the route…</span>
         </div>
       </main>
@@ -59,7 +59,7 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
   if (notFound || !data) {
     return (
       <main id="main-content" className="min-h-screen px-4 py-32 noise-bg">
-        <section className="mx-auto max-w-xl border-2 border-foreground bg-card p-8 hard-shadow sm:p-12">
+        <section className="mx-auto max-w-xl border border-border bg-card p-8 fold-card sm:p-12">
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Analytics / unavailable</p>
           <h1 className="mt-3 text-5xl leading-none" style={{ fontFamily: "var(--font-display)" }}>No route to read.</h1>
           <p className="mt-5 leading-7 text-muted-foreground">This route may have been removed or is not part of your workspace.</p>
@@ -74,7 +74,7 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
   return (
     <main id="main-content" className="min-h-screen px-4 pb-20 pt-28 noise-bg sm:pt-32">
       <div className="mx-auto max-w-6xl space-y-8">
-        <header className="border-2 border-foreground bg-card hard-shadow">
+        <header className="border border-border bg-card fold-card">
           <div className="grid lg:grid-cols-[1fr_auto] lg:items-end">
             <div className="p-6 sm:p-9">
               <Link href="/profile/my-links" className="mb-7 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground hover:text-foreground">
@@ -89,9 +89,9 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
                 <RangeSelector value={days} onChange={setDays} />
               </div>
             </div>
-            <div className="border-t-2 border-foreground bg-secondary p-6 lg:border-l-2 lg:border-t-0 sm:p-9">
+            <div className="border-t border-border bg-secondary p-6 lg:border-l lg:border-t-0 sm:p-9">
               <p className="mb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">Ready to place</p>
-              <Button onClick={copyToClipboard} className="w-full border-2 border-foreground bg-primary font-bold text-primary-foreground hard-shadow">
+              <Button onClick={copyToClipboard} className="w-full border border-primary bg-primary font-bold text-primary-foreground btn-lift">
                 <Copy className="size-4" />Copy route
               </Button>
             </div>
@@ -105,7 +105,7 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
         </section>
 
         <section className="grid gap-4 lg:grid-cols-[1fr_280px]">
-          <div className="border-2 border-foreground bg-card p-6 sm:p-8">
+          <div className="border border-border bg-card p-6 sm:p-8">
             <div className="mb-6 flex items-center justify-between gap-4 border-b border-border pb-4">
               <div><p className="text-xs font-bold uppercase tracking-wider text-primary">Traffic rhythm</p><h2 className="mt-1 text-2xl" style={{ fontFamily: "var(--font-display)" }}>Clicks over time</h2></div>
               <span className="text-xs text-muted-foreground">{days} days</span>
@@ -124,7 +124,7 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
           <BreakdownList title="Top referrers" items={analytics.topReferrers} accent="var(--success)" />
         </section>
 
-        <section className="border-2 border-foreground bg-card" aria-labelledby="recent-clicks">
+        <section className="border border-border bg-card" aria-labelledby="recent-clicks">
           <div className="flex items-center justify-between gap-4 border-b border-border p-6 sm:p-8">
             <div>
               <p className="text-xs font-bold uppercase tracking-wider text-primary">Live feed</p>
@@ -135,7 +135,7 @@ export default function LinkAnalyticsPage({ slug }: { slug: string }) {
             <p className="p-6 text-sm text-muted-foreground sm:p-8">No visits recorded yet in this window.</p>
           ) : (
             <Table>
-              <TableHeader className="border-b border-foreground bg-secondary">
+              <TableHeader className="border-b border-border bg-secondary">
                 <TableRow className="border-border hover:bg-transparent">
                   <TableHead>Location</TableHead>
                   <TableHead>Device</TableHead>

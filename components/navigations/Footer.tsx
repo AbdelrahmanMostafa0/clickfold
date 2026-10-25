@@ -14,7 +14,7 @@ const footerLinks = [
 
 export default function Footer() {
   return (
-    <footer className="ink-panel border-t border-foreground px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-10 sm:px-6">
+    <footer className="ink-panel border-t border-border px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-10 sm:px-6">
       <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.3fr_1fr] md:items-end">
         <div className="space-y-5">
           <ClickfoldLogo inverted />

@@ -35,11 +35,11 @@ const stages = [
 
 export default function HowItWorks() {
   return (
-    <section id="workflow" className="border-b border-foreground bg-background px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <section id="workflow" className="border-b border-border bg-background px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.72fr_1.28fr]">
         <div className="lg:sticky lg:top-32 lg:self-start">
           <span className="eyebrow">The workflow</span>
-          <h2 className="mt-7 max-w-[9ch] text-[clamp(3.25rem,7vw,6.5rem)] font-black leading-[0.86] tracking-[-0.065em]">
+          <h2 className="mt-7 max-w-[9ch] text-[clamp(3.25rem,7vw,6.5rem)] font-black leading-[0.86] tracking-[-0.045em]">
             From draft to signal.
           </h2>
           <p className="mt-7 max-w-md text-lg leading-8 text-muted-foreground">
@@ -48,7 +48,7 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="border-t-2 border-foreground">
+        <div className="border-t border-border">
           {stages.map((stage, index) => (
             <motion.article
               key={stage.number}
@@ -56,9 +56,9 @@ export default function HowItWorks() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="grid gap-6 border-b-2 border-foreground py-10 sm:grid-cols-[5rem_1fr] sm:py-12"
+              className="grid gap-6 border-b border-border py-10 sm:grid-cols-[5rem_1fr] sm:py-12"
             >
-              <div className={`flex size-16 items-center justify-center ${stage.color}`}>
+              <div className={`flex size-16 items-center justify-center rounded-lg ${stage.color}`}>
                 <stage.icon className="size-7" />
               </div>
               <div>

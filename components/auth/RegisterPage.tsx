@@ -92,7 +92,7 @@ export default function RegisterPage() {
           {errors.password ? <p id="register-password-error" className="mt-2 text-sm text-destructive">{errors.password.message}</p> : <p id="register-password-hint" className="mt-2 text-xs text-muted-foreground">Use at least six characters.</p>}
         </div>
 
-        <button type="submit" disabled={isSubmitting} className="hard-shadow min-h-12 w-full border border-foreground bg-primary px-5 font-extrabold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-55">
+        <button type="submit" disabled={isSubmitting} className="btn-lift min-h-12 w-full border border-primary bg-primary px-5 font-extrabold text-primary-foreground disabled:cursor-not-allowed disabled:opacity-55">
           {isSubmitting ? "Creating your desk…" : "Create my workspace"}
         </button>
       </form>
