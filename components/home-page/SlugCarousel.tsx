@@ -30,7 +30,7 @@ export default function SlugCarousel() {
               className={`route-strip min-h-40 p-4 ${route.tone} ${index === 1 ? "lg:translate-y-6" : ""} ${index === 3 ? "lg:-translate-y-4" : ""}`}
             >
               <p className="text-[0.68rem] font-black uppercase tracking-[0.16em] opacity-70">{route.channel}</p>
-              <p className="mt-10 text-sm font-semibold opacity-70">clickfold.app/</p>
+              <p className="mt-10 text-sm font-semibold opacity-70">clkfld.link/</p>
               <p className="break-words text-2xl font-black tracking-[-0.04em]">{route.slug}</p>
             </div>
           ))}

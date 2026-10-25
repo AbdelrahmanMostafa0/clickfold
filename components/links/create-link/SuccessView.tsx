@@ -73,7 +73,7 @@ export default function SuccessView({ link, onCreateAnother }: SuccessViewProps)
                 <div className="overflow-hidden border border-border bg-background">
                   {link.og?.image && <Image src={link.og.image} alt="Campaign share preview" width={1200} height={630} unoptimized className="h-52 w-full object-cover" />}
                   <div className="p-5">
-                    <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-primary">clickfold.app</p>
+                    <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-primary">clkfld.link</p>
                     <h2 className="text-xl leading-tight" style={{ fontFamily: "var(--font-display)" }}>{link.og?.title || link.slug}</h2>
                     {link.og?.description && <p className="mt-2 text-sm leading-6 text-muted-foreground">{link.og.description}</p>}
                   </div>

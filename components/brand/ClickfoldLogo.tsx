@@ -7,22 +7,19 @@ interface ClickfoldLogoProps {
   className?: string;
 }
 
+// A sheet of paper with its top-right corner folded down and a cursor on it
 function ClickfoldMark({ className = "" }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 1129 1304"
-      aria-hidden="true"
-      className={className}
-      fill="none"
-    >
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={className} fill="none">
       <path
-        d="M1067.5 365.4L750 599.9V376.4H313.5V958.9H750V724.4L1067.5 971.4L802.5 1230.9H250.5L0 971.4V348.9L313.5 100.4H813L1067.5 365.4Z"
+        d="M7 2H20L28 10V27Q28 30 25 30H7Q4 30 4 27V5Q4 2 7 2Z"
         className="fill-primary"
       />
-      <path d="M751 100.4L750 599.9L1068 365.4L813 100.4H751Z" className="fill-accent" />
-      <path d="M750 1230.9V725.4L1066.5 971.9L803 1230.9H750Z" className="fill-accent" />
-      <path d="M313 100.4V376.4L131 245.9L313 100.4Z" className="fill-primary" />
-      <rect x="267" y="959.4" width="47" height="271" className="fill-primary" />
+      <path d="M20 2V8Q20 10 22 10H28Z" className="fill-accent" />
+      <path
+        d="M10.5 11.5V24.5L13.9 21.4L16.3 26.4L18.6 25.3L16.3 20.4L20.8 20.1Z"
+        fill="#ffffff"
+      />
     </svg>
   );
 }

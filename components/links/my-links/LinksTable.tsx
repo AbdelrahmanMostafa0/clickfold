@@ -93,7 +93,7 @@ export default function LinksTable({ links, loading }: { links: Link[]; loading:
               <Actions slug={link.slug} onCopy={() => copyToClipboard(link.slug)} />
             </div>
             <button onClick={() => copyToClipboard(link.slug)} className="mt-5 flex min-h-11 w-full items-center justify-between bg-secondary px-3 text-left text-sm font-bold" aria-label={`Copy /${link.slug}`}>
-              <span className="truncate">clickfold.app/{link.slug}</span><Copy className="size-4 shrink-0" />
+              <span className="truncate">clkfld.link/{link.slug}</span><Copy className="size-4 shrink-0" />
             </button>
             <div className="mt-5 flex items-center justify-between gap-4 border-t border-border pt-4">
               <Status active={link.isActive} />

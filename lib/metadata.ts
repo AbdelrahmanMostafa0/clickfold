@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const SITE_NAME = "Clickfold";
 export const SITE_URL = new URL(
-  process.env.NEXT_PUBLIC_SITE_URL || "https://clickfold.app",
+  process.env.NEXT_PUBLIC_SITE_URL || "https://clkfld.link",
 );
 
 export const DEFAULT_DESCRIPTION =
@@ -12,7 +12,7 @@ export const DEFAULT_OG_IMAGE = {
   url: "/clickfold-campaign-links-og.jpg",
   width: 1200,
   height: 630,
-  alt: "Clickfold — Every link has a job",
+  alt: "Clickfold — Every link has a job. Campaign-ready short links with click analytics.",
 };
 
 export function absoluteUrl(path: string) {

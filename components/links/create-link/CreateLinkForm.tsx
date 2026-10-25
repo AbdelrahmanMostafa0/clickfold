@@ -330,7 +330,7 @@ export default function CreateLinkForm() {
             </Label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm pointer-events-none">
-                clickfold.app/
+                clkfld.link/
               </span>
               <Input
                 id="slug"
@@ -376,7 +376,7 @@ export default function CreateLinkForm() {
                         className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-secondary hover:text-primary"
                       >
                         <Link2 className="size-3 text-muted-foreground" />
-                        <span className="text-muted-foreground">clickfold.app/</span>
+                        <span className="text-muted-foreground">clkfld.link/</span>
                         <span>{slug}</span>
                       </button>
                     ))}

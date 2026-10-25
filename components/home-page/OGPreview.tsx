@@ -59,7 +59,7 @@ function ShareCard({ platform }: { platform: Platform }) {
             </div>
           </div>
           <div className="p-4">
-            <p className="text-[0.65rem] font-bold uppercase tracking-[0.14em] opacity-50">clickfold.app</p>
+            <p className="text-[0.65rem] font-bold uppercase tracking-[0.14em] opacity-50">clkfld.link</p>
             <p className="mt-1 font-bold">How small ideas find a bigger audience</p>
             <p className="mt-1 text-xs leading-5 opacity-60">A practical dispatch for independent campaign builders.</p>
           </div>

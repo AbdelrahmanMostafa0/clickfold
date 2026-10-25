@@ -131,7 +131,7 @@ NEXT_PUBLIC_API_URL=http://localhost:9000/api
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=<your-google-client-id>
 
 # Canonical production URL used by metadata, robots.txt, and sitemap.xml
-NEXT_PUBLIC_SITE_URL=https://clickfold.app
+NEXT_PUBLIC_SITE_URL=https://clkfld.link
 ```
 
 ---

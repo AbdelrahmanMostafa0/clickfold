@@ -77,7 +77,7 @@ export default function Hero() {
                   <span className={`size-3 ${channel.color}`} aria-hidden="true" />
                   <div className="min-w-0">
                     <p className="font-bold">{channel.name}</p>
-                    <p className="truncate text-sm text-muted-foreground">clickfold.app{channel.path}</p>
+                    <p className="truncate text-sm text-muted-foreground">clkfld.link{channel.path}</p>
                   </div>
                   <div className="text-right">
                     <p className="data-number text-xl font-black">{channel.clicks}</p>
