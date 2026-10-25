@@ -173,17 +173,17 @@ export default function NavMenu() {
               {isSignedIn ? <UserAvatar className="size-8" /> : <Menu className="size-5" />}
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="flex flex-col border-border bg-background text-foreground">
-            <SheetHeader className="border-b border-border pb-5 text-left">
-              <SheetTitle className="font-display text-2xl font-black">
+          <SheetContent side="right" className="flex flex-col gap-0 overflow-y-auto border-border bg-background text-foreground">
+            <SheetHeader className="border-b border-border p-5 pr-14 text-left">
+              <SheetTitle className="truncate font-display text-2xl font-black">
                 {user ? user.name : "Campaign desk"}
               </SheetTitle>
-              <SheetDescription className="text-muted-foreground">
+              <SheetDescription className="truncate text-muted-foreground">
                 {user ? user.email : "Build, share, and read every link."}
               </SheetDescription>
             </SheetHeader>
 
-            <nav className="flex flex-1 flex-col gap-1 py-5" aria-label="Mobile navigation">
+            <nav className="flex flex-1 flex-col gap-1 px-2 py-4" aria-label="Mobile navigation">
               {(isSignedIn ? NAV_LINKS : NAV_LINKS.filter((item) => item.href === "/about")).map((item) => (
                 <SheetClose asChild key={item.href}>
                   <NavItem {...item} mobile />
@@ -201,7 +201,7 @@ export default function NavMenu() {
               )}
             </nav>
 
-            <SheetFooter className="border-t border-border pt-5">
+            <SheetFooter className="border-t border-border p-5 pb-[max(1.25rem,env(safe-area-inset-bottom))]">
               {isSignedIn ? (
                 <SheetClose asChild>
                   <button
@@ -213,14 +213,14 @@ export default function NavMenu() {
                   </button>
                 </SheetClose>
               ) : (
-                <div className="grid w-full grid-cols-2 gap-3">
+                <div className="flex w-full flex-col gap-3">
                   <SheetClose asChild>
-                    <Link href="/login" className="flex min-h-11 items-center justify-center border border-border font-bold">
+                    <Link href="/login" className="flex min-h-11 w-full items-center justify-center whitespace-nowrap border border-border bg-card px-4 text-sm font-bold">
                       Sign in
                     </Link>
                   </SheetClose>
                   <SheetClose asChild>
-                    <Link href="/signup" className="flex min-h-11 items-center justify-center border border-primary bg-primary font-bold text-primary-foreground">
+                    <Link href="/signup" className="flex min-h-11 w-full items-center justify-center whitespace-nowrap border border-primary bg-primary px-4 text-sm font-bold text-primary-foreground">
                       Create account
                     </Link>
                   </SheetClose>
