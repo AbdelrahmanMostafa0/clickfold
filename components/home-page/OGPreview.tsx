@@ -76,7 +76,7 @@ export default function OGPreview() {
   const [activePlatform, setActivePlatform] = useState<Platform>("Messages");
 
   return (
-    <section className="studio-grid border-b border-border px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <section className="studio-grid overflow-x-clip border-b border-border px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
         <div>
           <span className="eyebrow">Share preview</span>

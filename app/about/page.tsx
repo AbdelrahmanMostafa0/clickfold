@@ -74,7 +74,7 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="border-t border-border" aria-label="Product principles">
+        <section className="overflow-x-clip border-t border-border" aria-label="Product principles">
           {principles.map((principle, index) => (
             <motion.article
               key={principle.number}

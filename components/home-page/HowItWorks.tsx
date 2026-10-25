@@ -35,7 +35,7 @@ const stages = [
 
 export default function HowItWorks() {
   return (
-    <section id="workflow" className="border-b border-border bg-background px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+    <section id="workflow" className="overflow-x-clip border-b border-border bg-background px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
       <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-[0.72fr_1.28fr]">
         <div className="lg:sticky lg:top-32 lg:self-start">
           <span className="eyebrow">The workflow</span>
