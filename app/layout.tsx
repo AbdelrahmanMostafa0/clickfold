@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import GoogleOAuthWrapper from "@/components/GoogleOAuthWrapper";
+import {
+  GoogleTagManagerNoScript,
+  GoogleTagManagerScript,
+} from "@/components/GoogleTagManager";
 import { UserProvider } from "@/context/UserContext";
 import Navbar from "@/components/navigations/Navbar";
 import Footer from "@/components/navigations/Footer";
@@ -84,6 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${bricolage.variable} ${dmSans.variable} ${plexMono.variable}`}>
+        <GoogleTagManagerNoScript />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
@@ -95,6 +100,7 @@ export default function RootLayout({
             <Footer />
           </UserProvider>
         </GoogleOAuthWrapper>
+        <GoogleTagManagerScript />
       </body>
     </html>
   );
